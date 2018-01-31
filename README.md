@@ -24,4 +24,4 @@ A Radiology Information System, or RIS, is used to manage information and workfl
   *To Referring MD
   
 # Quick Links
-[Requirements.md](../Requirements.md)
+[Requirements.md](https://github.com/101josh10/Radiology-Information-System/blob/master/Requirements.md)
