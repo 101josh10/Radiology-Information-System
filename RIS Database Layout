@@ -1,0 +1,32 @@
+User(Radiologist)
+	Username 
+	Password
+
+Patient
+	Patient id
+	Fname
+	Lname
+	Middle initial
+	Address
+	State
+	Zip
+	Phone no
+
+Patient demographics
+	Patient id (FK)
+
+Order
+	(PK)radiology order id
+	order id
+	scheduler user id
+	performing physician user id
+	reading physician user id
+	priority
+	scheduled status
+	performed status
+	modality
+
+Order
+	order id
+	order type
+	user id
