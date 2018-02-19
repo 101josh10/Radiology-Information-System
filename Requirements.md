@@ -30,3 +30,18 @@
 1. Images have text descriptions attached to them along with timestamps, patient ID
 2. Create a button that allows the image fields to become editable
 3. Create a fillable pdf that allows the radiologist to fill in the details of the report.
+
+---
+## Scheduling
+
+### Functional
+1. User should be able to select a day and see the timeslots occupied that day
+2. User should be able to see the occupied modality at any given time
+3. User should be able to add/edit/delete appointments
+4. User should be able to search for when a given modality will be available.
+
+### Non-Functional
+1. The User should be able to see the dates in a calendar format in order to select which day. Once selected, the timeslots will automatically update.
+2. The system will use a table type system with different timeslots with the occupied timeslots blocked off.
+3. There will be an add button. If you click on an occupied timeslot, you will be given options to edit the appointment or delete it completely.
+4. The user should be able to choose which modalities to view or hide in order to view which timeslots are open for any given modality.
