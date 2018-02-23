@@ -12,16 +12,15 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="972.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="/../controller/RadiologistController.java">
   <tabs>
-    <Tab text="Patients">
+    <Tab fx:id="patientsTab" text="Patients">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <SplitPane dividerPositions="0.7771929824561403" orientation="VERTICAL" prefHeight="572.0" prefWidth="972.0">
                     <items>
@@ -43,96 +42,97 @@
                            <children>
                               <TextField fx:id="newPatLastNameField" layoutX="45.0" layoutY="14.0" promptText="Last Name" />
                               <TextField fx:id="newPatFirstNameField" layoutX="249.0" layoutY="14.0" promptText="First Name" />
-                              <MenuButton layoutX="448.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Month">
+                              <MenuButton fx:id="monthMenuButton" layoutX="448.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Month">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Action 1" />
                                   <MenuItem mnemonicParsing="false" text="Action 2" />
                                 </items>
                               </MenuButton>
-                              <MenuButton layoutX="535.0" layoutY="14.0" mnemonicParsing="false" text="Day">
+                              <MenuButton fx:id="dayMenuButton" layoutX="535.0" layoutY="14.0" mnemonicParsing="false" text="Day">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Action 1" />
                                   <MenuItem mnemonicParsing="false" text="Action 2" />
                                 </items>
                               </MenuButton>
-                              <MenuButton layoutX="604.0" layoutY="14.0" mnemonicParsing="false" text="Year">
+                              <MenuButton fx:id="yearMenuButton" layoutX="604.0" layoutY="14.0" mnemonicParsing="false" text="Year">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Action 1" />
                                   <MenuItem mnemonicParsing="false" text="Action 2" />
                                 </items>
                               </MenuButton>
-                              <TextField layoutX="699.0" layoutY="14.0" promptText="Social Security Number" />
+                              <TextField fx:id="newPatSSNField" layoutX="699.0" layoutY="14.0" promptText="Social Security Number" />
                               <Button layoutX="865.0" layoutY="14.0" mnemonicParsing="false" text="Create Patient" />
                            </children>
                         </AnchorPane>
                     </items>
                   </SplitPane>
-               </children></AnchorPane>
+               </children>
+            </AnchorPane>
       </content>
     </Tab>
-      <Tab text="Patient Info">
+      <Tab fx:id="patInfoTab" text="Patient Info">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <Separator layoutX="481.0" layoutY="49.0" orientation="VERTICAL" prefHeight="459.0" prefWidth="8.0" />
                   <Separator layoutY="49.0" prefHeight="1.0" prefWidth="972.0" />
-                  <TextField layoutX="14.0" layoutY="52.0" promptText="Last Name" />
-                  <TextField layoutX="171.0" layoutY="52.0" promptText="First Name" />
-                  <TextField layoutX="332.0" layoutY="52.0" promptText="Middle Name" />
-                  <TextField layoutX="14.0" layoutY="90.0" prefHeight="25.0" prefWidth="42.0" promptText="111" />
+                  <TextField fx:id="patInfoLastNameField" layoutX="14.0" layoutY="52.0" promptText="Last Name" />
+                  <TextField fx:id="patInfoFirstNameField" layoutX="171.0" layoutY="52.0" promptText="First Name" />
+                  <TextField fx:id="patInfoMiddleNameField" layoutX="332.0" layoutY="52.0" promptText="Middle Name" />
+                  <TextField fx:id="patInfoSSNField1" layoutX="14.0" layoutY="90.0" prefHeight="25.0" prefWidth="42.0" promptText="111" />
                   <Label layoutX="61.0" layoutY="94.0" text="-" />
-                  <TextField layoutX="73.0" layoutY="90.0" prefHeight="25.0" prefWidth="42.0" promptText="22" />
-                  <TextField layoutX="129.0" layoutY="90.0" prefHeight="25.0" prefWidth="42.0" promptText="3333" />
+                  <TextField fx:id="patInfoSSNField2" layoutX="73.0" layoutY="90.0" prefHeight="25.0" prefWidth="42.0" promptText="22" />
+                  <TextField fx:id="patInfoSSNField3" layoutX="129.0" layoutY="90.0" prefHeight="25.0" prefWidth="42.0" promptText="3333" />
                   <Label layoutX="121.0" layoutY="94.0" text="-" />
-                  <TextField layoutX="14.0" layoutY="125.0" promptText="Phone Number" />
-                  <TextField layoutX="171.0" layoutY="125.0" promptText="Email" />
-                  <MenuButton layoutX="195.0" layoutY="90.0" mnemonicParsing="false" text="Month">
+                  <TextField fx:id="phoneNumField" layoutX="14.0" layoutY="125.0" promptText="Phone Number" />
+                  <TextField fx:id="emailField" layoutX="171.0" layoutY="125.0" promptText="Email" />
+                  <MenuButton fx:id="patInfoMonthMenuButton" layoutX="195.0" layoutY="90.0" mnemonicParsing="false" text="Month">
                     <items>
                       <MenuItem mnemonicParsing="false" text="Action 1" />
                       <MenuItem mnemonicParsing="false" text="Action 2" />
                     </items>
                   </MenuButton>
-                  <MenuButton layoutX="291.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Day">
+                  <MenuButton fx:id="patInfoDayMenuButton" layoutX="291.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Day">
                     <items>
                       <MenuItem mnemonicParsing="false" text="Action 1" />
                       <MenuItem mnemonicParsing="false" text="Action 2" />
                     </items>
                   </MenuButton>
-                  <MenuButton layoutX="379.0" layoutY="90.0" mnemonicParsing="false" text="Year">
+                  <MenuButton fx:id="patInfoYearMenuButton" layoutX="379.0" layoutY="90.0" mnemonicParsing="false" text="Year">
                     <items>
                       <MenuItem mnemonicParsing="false" text="Action 1" />
                       <MenuItem mnemonicParsing="false" text="Action 2" />
                     </items>
                   </MenuButton>
                   <Label layoutX="14.0" layoutY="164.0" text="Address" />
-                  <TextField layoutX="14.0" layoutY="181.0" promptText="Address" />
-                  <TextField layoutX="171.0" layoutY="181.0" promptText="City" />
-                  <TextField layoutX="401.0" layoutY="181.0" prefHeight="25.0" prefWidth="69.0" promptText="Zip" />
-                  <MenuButton layoutX="330.0" layoutY="181.0" mnemonicParsing="false" text="State">
+                  <TextField fx:id="addressField" layoutX="14.0" layoutY="181.0" promptText="Address" />
+                  <TextField fx:id="cityField" layoutX="171.0" layoutY="181.0" promptText="City" />
+                  <TextField fx:id="zipField" layoutX="401.0" layoutY="181.0" prefHeight="25.0" prefWidth="69.0" promptText="Zip" />
+                  <MenuButton fx:id="stateMenuButton" layoutX="330.0" layoutY="181.0" mnemonicParsing="false" text="State">
                     <items>
                       <MenuItem mnemonicParsing="false" text="Action 1" />
                       <MenuItem mnemonicParsing="false" text="Action 2" />
                     </items>
                   </MenuButton>
                   <ToggleButton layoutX="12.0" layoutY="14.0" mnemonicParsing="false" text="Edit" />
-                  <MenuButton layoutX="489.0" layoutY="52.0" mnemonicParsing="false" text="Feet">
+                  <MenuButton fx:id="feetMenuButton" layoutX="489.0" layoutY="52.0" mnemonicParsing="false" text="Feet">
                     <items>
                       <MenuItem mnemonicParsing="false" text="Action 1" />
                       <MenuItem mnemonicParsing="false" text="Action 2" />
                     </items>
                   </MenuButton>
-                  <MenuButton layoutX="553.0" layoutY="52.0" mnemonicParsing="false" text="Inches">
+                  <MenuButton fx:id="inchesMenuButton" layoutX="553.0" layoutY="52.0" mnemonicParsing="false" text="Inches">
                      <items>
                         <MenuItem mnemonicParsing="false" text="Action 1" />
                         <MenuItem mnemonicParsing="false" text="Action 2" />
                      </items>
                   </MenuButton>
-                  <TextField layoutX="628.0" layoutY="52.0" prefHeight="25.0" prefWidth="83.0" promptText="Weight" />
+                  <TextField fx:id="weightField" layoutX="628.0" layoutY="52.0" prefHeight="25.0" prefWidth="83.0" promptText="Weight" />
                   <Label layoutX="711.0" layoutY="56.0" text="lbs." />
                </children></AnchorPane>
         </content>
       </Tab>
-    <Tab text="**Name** Images">
+    <Tab fx:id="patImagesTab" text="**Name** Images">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -140,26 +140,22 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <TableView prefHeight="508.0" prefWidth="286.0">
+                              <TableView fx:id="imageTableView" prefHeight="508.0" prefWidth="286.0">
                                 <columns>
-                                  <TableColumn prefWidth="68.0" text="Thumbnail" />
-                                  <TableColumn prefWidth="142.0" text="Description" />
-                                    <TableColumn prefWidth="75.0" text="Date Added" />
+                                  <TableColumn fx:id="thumbnailTableColumn" prefWidth="68.0" text="Thumbnail" />
+                                  <TableColumn fx:id="descriptionTableColumn" prefWidth="142.0" text="Description" />
+                                    <TableColumn fx:id="dateAddedTableColumn" prefWidth="75.0" text="Date Added" />
                                 </columns>
                               </TableView>
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="585.0">
                            <children>
-                              <ImageView fitHeight="507.0" fitWidth="654.0" layoutX="126.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@download.jpg" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="mainImageView" fitHeight="507.0" fitWidth="613.0" layoutX="63.0" pickOnBounds="true" preserveRatio="true" />
                               <Button layoutY="2.0" mnemonicParsing="false" text="+" />
                               <Button layoutX="-1.0" layoutY="27.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="-" />
                               <Button layoutX="-1.0" layoutY="52.0" mnemonicParsing="false" text="100%" />
-                              <Label layoutX="25.0" layoutY="19.0" text="200%" />
+                              <Label fx:id="zoomLabel" layoutX="25.0" layoutY="19.0" text="200%" />
                            </children>
                         </AnchorPane>
                     </items>
@@ -167,7 +163,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab text="**Name** Report">
+      <Tab fx:id="patReportTab" text="**Name** Report">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -175,13 +171,13 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <TableView prefHeight="454.0" prefWidth="972.0">
+                              <TableView fx:id="reportTableView" prefHeight="454.0" prefWidth="972.0">
                                 <columns>
-                                  <TableColumn prefWidth="356.0" text="Title" />
-                                  <TableColumn prefWidth="113.0" text="Date Added" />
-                                    <TableColumn prefWidth="202.0" text="Date Last Revised" />
-                                    <TableColumn prefWidth="168.0" text="Download for Revision" />
-                                    <TableColumn prefWidth="131.0" text="Upload Revision" />
+                                  <TableColumn fx:id="titleTableColumn" prefWidth="356.0" text="Title" />
+                                  <TableColumn fx:id="reportDateAddedTableColumn" prefWidth="113.0" text="Date Added" />
+                                    <TableColumn fx:id="lastRevisedTableColumn" prefWidth="202.0" text="Date Last Revised" />
+                                    <TableColumn fx:id="downloadTableColumn" prefWidth="168.0" text="Download for Revision" />
+                                    <TableColumn fx:id="uploadTableColumn" prefWidth="131.0" text="Upload Revision" />
                                 </columns>
                               </TableView>
                            </children>
