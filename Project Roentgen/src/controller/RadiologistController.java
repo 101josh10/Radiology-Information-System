@@ -27,36 +27,6 @@ public class RadiologistController {
 	@FXML private TableColumn<Patient, String> lastApptTableColumn;
 	@FXML private TableColumn<Patient, String> nextApptTableColumn;
 
-	//*** New Patient Section
-	@FXML private TextField newPatLastNameField;
-	@FXML private TextField newPatFirstNameField;
-	@FXML private MenuButton monthMenuButton;
-	@FXML private MenuButton dayMenuButton;
-	@FXML private MenuButton yearMenuButton;
-	@FXML private TextField newPatSSNField;
-
-	//** Patient Info Tab
-	@FXML private Tab patInfoTab;
-	@FXML private Button editToggleButton;
-	@FXML private TextField patInfoLastNameField;
-	@FXML private TextField patInfoFirstNameField;
-	@FXML private TextField patInfoMiddleNameField;
-	@FXML private TextField patInfoSSNField1;
-	@FXML private TextField patInfoSSNField2;
-	@FXML private TextField patInfoSSNField3;
-	@FXML private MenuButton patInfoMonthMenuButton;
-	@FXML private MenuButton patInfoDayMenuButton;
-	@FXML private MenuButton patInfoYearMenuButton;
-	@FXML private TextField phoneNumField;
-	@FXML private TextField emailField;
-	@FXML private TextField addressField;
-	@FXML private TextField cityField;
-	@FXML private TextField zipField;
-	@FXML private MenuButton stateMenuButton;
-	@FXML private MenuButton feetMenuButton;
-	@FXML private MenuButton inchesMenuButton;
-	@FXML private TextField weightField;
-
 	//** Images Tab
 	@FXML private Tab patImagesTab;
 
@@ -78,4 +48,8 @@ public class RadiologistController {
 	@FXML private TableColumn<Report, String> lastRevisedTableColumn;
 	@FXML private TableColumn<Report, Button> downloadTableColumn;
 	@FXML private TableColumn<Report, Button> uploadTableColumn;
+
+	public void initialize(){
+
+	}
 }
