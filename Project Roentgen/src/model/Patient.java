@@ -9,4 +9,5 @@ public class Patient {
 	private Date dob;
 	private String phoneNum, email;
 	private String address, city, state, zip;
+
 }
