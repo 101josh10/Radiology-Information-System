@@ -32,7 +32,7 @@
             </AnchorPane>
       </content>
     </Tab>
-    <Tab fx:id="patImagesTab" text="**Name** Images">
+    <Tab fx:id="patImagesTab" text="Patient Images">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -63,7 +63,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab fx:id="patReportTab" text="**Name** Report">
+      <Tab fx:id="patReportTab" text="Patient Report">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
