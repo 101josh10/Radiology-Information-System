@@ -1,13 +1,16 @@
 package controller;
 
+import java.sql.*;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.Patient;
@@ -22,10 +25,10 @@ public class RadiologistController {
 	@FXML private TableView<Patient> patientTableView;
 	@FXML private TableColumn<Patient, String> lastNameTableColumn;
 	@FXML private TableColumn<Patient, String> firstNameTableColumn;
-	@FXML private TableColumn<Patient, String> dobTableColumn;
-	@FXML private TableColumn<Patient, String> ssnNameTableColumn;
-	@FXML private TableColumn<Patient, String> lastApptTableColumn;
-	@FXML private TableColumn<Patient, String> nextApptTableColumn;
+	@FXML private TableColumn<Patient, Date> dobTableColumn;
+	@FXML private TableColumn<Patient, String> ssnTableColumn;
+	@FXML private TableColumn<Patient, Date> lastApptTableColumn;
+	@FXML private TableColumn<Patient, Date> nextApptTableColumn;
 
 	//** Images Tab
 	@FXML private Tab patImagesTab;
@@ -49,7 +52,53 @@ public class RadiologistController {
 	@FXML private TableColumn<Report, Button> downloadTableColumn;
 	@FXML private TableColumn<Report, Button> uploadTableColumn;
 
-	public void initialize(){
+	//* Declare Other Variables
+	private ObservableList<Patient> patientList = FXCollections.observableArrayList();
 
+	public void initialize(){
+		pullInfoFromDB();
+
+		//Configure Patient Table Columns
+		lastNameTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("firstName"));
+		firstNameTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("lastName"));
+		dobTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Date>("dob"));
+	}
+
+
+	/* pullInfoFromDB
+	 * Purpose:
+	 * To connect to the PACS system and pull all
+	 * available patients along with their images and reports
+	 */
+	public void pullInfoFromDB(){
+		try {
+			Class.forName("com.mySQL.jdbc.Driver");
+			Connection con = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/sonoo", "root", "root"); //Input with correct info
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery("select * from Patients"); //Double check name of Patient table
+		while(rs.next()){
+			Patient temp = new Patient();
+			temp.setId(rs.getInt(1));
+			temp.setFirstName(rs.getString(2));
+			//so on so forth for all properties
+			//need to see layout of DB in order to properly implement this
+			patientList.add(temp);
+		}
+
+		rs = stmt.executeQuery("select * from Images");
+		while(rs.next()){
+
+		}
+
+		rs = stmt.executeQuery("select * from Reports");
+		while(rs.next()){
+
+		}
+		con.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
