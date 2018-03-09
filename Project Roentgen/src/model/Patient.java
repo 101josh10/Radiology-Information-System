@@ -14,6 +14,11 @@ public class Patient {
 	private String phoneNum, email;
 	private String address, city, state, zip;
 	private int weight, height;
+	private boolean isMale;
+	private String race;
+	private Date mostRecentAppt;
+	private Date nextAppt;
+
 	private ObservableList<Date> appointmentHistory = FXCollections.observableArrayList();
 
 	public Patient() {
@@ -76,6 +81,14 @@ public class Patient {
 		return height;
 	}
 
+	public boolean isMale() {
+		return isMale;
+	}
+
+	public String getRace() {
+		return race;
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -131,14 +144,28 @@ public class Patient {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+	
+	public void setMale(boolean isMale) {
+		this.isMale = isMale;
+	}
+
+	public void setRace(String race) {
+		this.race = race;
+	}
 
 	public Date getMostRecentAppointment(){
 		Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		//compare appointment records with current date
-		String dateAsLong = "1111";
-		Date appt = new Date(Long.parseLong(dateAsLong));
+		String dateAsLong = "";
+		mostRecentAppt = new Date(Long.parseLong(dateAsLong));//Replace with assignment from DB
 
-		return appt;
+		return mostRecentAppt;
 	}
 
+	public Date getNextAppointment(){
+		Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		String dateAsLong = "";
+		nextAppt = new Date(Long.parseLong(dateAsLong));
+		return nextAppt;
+	}
 }
