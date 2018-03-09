@@ -54,16 +54,34 @@ public class RadiologistController {
 
 	//* Declare Other Variables
 	private ObservableList<Patient> patientList = FXCollections.observableArrayList();
+	private Patient selectedPatient;
 
 	public void initialize(){
 		pullInfoFromDB();
-
+		addStaticPatientData();
 		//Configure Patient Table Columns
 		lastNameTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("firstName"));
 		firstNameTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("lastName"));
 		dobTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Date>("dob"));
+		lastApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Date>("mostRecentAppt"));
+		nextApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Date>("nextAppt"));
+
+		patientTableView.setItems(patientList);
 	}
 
+	/*addStaticPatientData()
+	 * Purpose:
+	 * To create static patients to use for testing
+	 */
+	public void addStaticPatientData(){
+		Patient p1, p2, p3;
+
+		p1 = new Patient();
+		p1.setFirstName("Joshua");
+		p1.setLastName("Knight");
+		long dobMilli = 806558400000;
+		p1.setDob(new Date(dobMilli));
+	}
 
 	/* pullInfoFromDB
 	 * Purpose:
@@ -100,5 +118,15 @@ public class RadiologistController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	/* patientSelected()
+	 * Purpose: Assigns the selectedPatient variable the value of the
+	 * patient that the user selects from the table of patients.
+	 *
+	 * Triggered when user selects a patient from the table of available patients.
+	 */
+	public void patientSelected(){
+
 	}
 }
