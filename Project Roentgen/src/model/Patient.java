@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Comparator;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,16 +11,16 @@ public class Patient {
 	private int id;
 	private String lastName, firstName, middleName;
 	private String ssn;
-	private Date dob;
+	private Calendar dob;
 	private String phoneNum, email;
 	private String address, city, state, zip;
 	private int weight, height;
 	private boolean isMale;
 	private String race;
-	private Date mostRecentAppt;
-	private Date nextAppt;
+	private Calendar mostRecentAppt;
+	private Calendar nextAppt;
 
-	private ObservableList<Date> appointmentHistory = FXCollections.observableArrayList();
+	private ObservableList<Calendar> appointmentHistory = FXCollections.observableArrayList();
 
 	public Patient() {
 		super();
@@ -45,7 +46,7 @@ public class Patient {
 		return ssn;
 	}
 
-	public Date getDob() {
+	public Calendar getDob() {
 		return dob;
 	}
 
@@ -109,7 +110,7 @@ public class Patient {
 		this.ssn = ssn;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(Calendar dob) {
 		this.dob = dob;
 	}
 
@@ -153,19 +154,22 @@ public class Patient {
 		this.race = race;
 	}
 
-	public Date getMostRecentAppointment(){
-		Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-		//compare appointment records with current date
-		String dateAsLong = "";
-		mostRecentAppt = new Date(Long.parseLong(dateAsLong));//Replace with assignment from DB
+	public Calendar getMostRecentAppointment(){
+		Calendar today = Calendar.getInstance();
+		
 
 		return mostRecentAppt;
 	}
 
-	public Date getNextAppointment(){
-		Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-		String dateAsLong = "";
-		nextAppt = new Date(Long.parseLong(dateAsLong));
+	public Calendar getNextAppointment(){
+		
 		return nextAppt;
+	}
+	
+	private void sortApptHistory(){
+		ObservableList<Calendar> temp = appointmentHistory;
+		//Comparator<Calendar> comparator = Comparator.comparingLong(keyExtractor);
+		
+		//FXCollections.sort(appointmentHistory, comparator);
 	}
 }
