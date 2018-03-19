@@ -1,7 +1,9 @@
 package controller;
 
+import java.io.File;
 import java.sql.*;
-
+import java.time.LocalDate;
+import java.util.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +15,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import model.Patient;
 import model.Report;
 
@@ -25,10 +29,10 @@ public class RadiologistController {
 	@FXML private TableView<Patient> patientTableView;
 	@FXML private TableColumn<Patient, String> lastNameTableColumn;
 	@FXML private TableColumn<Patient, String> firstNameTableColumn;
-	@FXML private TableColumn<Patient, Date> dobTableColumn;
+	@FXML private TableColumn<Patient, Calendar> dobTableColumn;
 	@FXML private TableColumn<Patient, String> ssnTableColumn;
-	@FXML private TableColumn<Patient, Date> lastApptTableColumn;
-	@FXML private TableColumn<Patient, Date> nextApptTableColumn;
+	@FXML private TableColumn<Patient, Calendar> lastApptTableColumn;
+	@FXML private TableColumn<Patient, Calendar> nextApptTableColumn;
 
 	//** Images Tab
 	@FXML private Tab patImagesTab;
@@ -51,6 +55,7 @@ public class RadiologistController {
 	@FXML private TableColumn<Report, String> lastRevisedTableColumn;
 	@FXML private TableColumn<Report, Button> downloadTableColumn;
 	@FXML private TableColumn<Report, Button> uploadTableColumn;
+	@FXML private Label uploadFilePath;
 
 	//* Declare Other Variables
 	private ObservableList<Patient> patientList = FXCollections.observableArrayList();
@@ -62,9 +67,9 @@ public class RadiologistController {
 		//Configure Patient Table Columns
 		lastNameTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("firstName"));
 		firstNameTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("lastName"));
-		dobTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Date>("dob"));
-		lastApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Date>("mostRecentAppt"));
-		nextApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Date>("nextAppt"));
+		dobTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Calendar>("dob"));
+		lastApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Calendar>("mostRecentAppt"));
+		nextApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Calendar>("nextAppt"));
 
 		patientTableView.setItems(patientList);
 	}
@@ -79,8 +84,9 @@ public class RadiologistController {
 		p1 = new Patient();
 		p1.setFirstName("Joshua");
 		p1.setLastName("Knight");
-		long dobMilli = 806558400000;
-		p1.setDob(new Date(dobMilli));
+		Calendar dobCal = Calendar.getInstance();
+		dobCal.set(1995, 7, 24);
+		p1.setDob(dobCal);
 	}
 
 	/* pullInfoFromDB
@@ -128,5 +134,30 @@ public class RadiologistController {
 	 */
 	public void patientSelected(){
 
+	}
+	
+	/* selectFilePressed()
+	 * Purpose: Opens a file selection window for the user to select a file from the system
+	 * 
+	 * Triggered when user presses the select file button from the Patient report screen
+	 */
+	public void selectFilePressed(){
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Select Report File");
+		
+		File selectedFile = fileChooser.showOpenDialog(null);
+		
+		if(selectedFile != null){
+			System.out.println("File Name: " + selectedFile.getName());
+			System.out.println("File Path: " + selectedFile.getPath());
+			uploadFilePath.setText(selectedFile.getPath());
+		} else {
+			System.out.println("File Selection Cancelled");
+			uploadFilePath.setText("user/directory/file.docx");
+		}
+	}
+	
+	public void uploadButtonPressed(){
+		
 	}
 }
