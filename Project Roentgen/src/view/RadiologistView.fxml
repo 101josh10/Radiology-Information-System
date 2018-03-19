@@ -85,14 +85,14 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
                               <Button layoutX="175.0" layoutY="14.0" mnemonicParsing="false" onAction="#selectFilePressed" text="Select File" />
-                              <TextField layoutX="14.0" layoutY="13.0" promptText="Title" />
+                              <TextField fx:id="titleTextField" layoutX="14.0" layoutY="13.0" promptText="Title" />
                               <Label layoutX="380.0" layoutY="9.0" text="Upload New Report">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" layoutX="620.0" layoutY="18.0" prefHeight="17.0" prefWidth="271.0" text="Desktop/FileName.docx" />
-                              <Button layoutX="904.0" layoutY="13.0" mnemonicParsing="false" text="Upload" />
+                              <Label fx:id="uploadFilePath" alignment="CENTER" layoutX="620.0" layoutY="18.0" prefHeight="17.0" prefWidth="271.0" text="Desktop/FileName.docx" />
+                              <Button layoutX="904.0" layoutY="13.0" mnemonicParsing="false" onAction="#uploadButtonPressed" text="Upload" />
                            </children>
                         </AnchorPane>
                     </items>
