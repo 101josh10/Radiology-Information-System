@@ -111,6 +111,7 @@ public class Patient {
 		this.ssn = ssn;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void setDob(Calendar dob) {
 		this.dob = dob;
 		int year = dob.getTime().getYear();
