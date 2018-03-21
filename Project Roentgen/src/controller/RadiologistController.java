@@ -151,8 +151,8 @@ public class RadiologistController {
 		reportFile = fileChooser.showOpenDialog(null);
 
 		if(reportFile != null){
-			System.out.println("File Name: " + reportFile.getName());
-			System.out.println("File Path: " + reportFile.getPath());
+			//System.out.println("File Name: " + reportFile.getName()); //uncomment for testing
+			//System.out.println("File Path: " + reportFile.getPath()); //uncomment for testing
 			uploadFilePath.setText(reportFile.getPath());
 		} else {
 			System.out.println("File Selection Cancelled");
@@ -168,9 +168,18 @@ public class RadiologistController {
 	public void uploadButtonPressed(){
 		if(reportFile == null){
 			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Error");
+			alert.setTitle("Error!");
 			alert.setHeaderText("No File Selected");
 			alert.setContentText("You have not selected a file.\nTo select a file, press the \"Select File\" button and choose a file.");
+
+			alert.showAndWait();
+		} else {
+			//upload reportFile to PACS
+			//if(uploadSuccessful)
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Upload Successful!");
+			alert.setHeaderText("Your upload was successful");
+			alert.setContentText("Press \"OK\" to reload table");
 
 			alert.showAndWait();
 		}
