@@ -12,6 +12,7 @@ public class Patient {
 	private String lastName, firstName, middleName;
 	private String ssn;
 	private Calendar dob;
+	private String dobString;
 	private String phoneNum, email;
 	private String address, city, state, zip;
 	private int weight, height;
@@ -89,7 +90,7 @@ public class Patient {
 	public String getRace() {
 		return race;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -112,6 +113,12 @@ public class Patient {
 
 	public void setDob(Calendar dob) {
 		this.dob = dob;
+		int year = dob.getTime().getYear();
+		int day = dob.getTime().getDate();
+		int month = dob.getTime().getMonth();
+
+		dobString = month + "/" + day + "/" + year;
+		System.out.println(dobString);
 	}
 
 	public void setPhoneNum(String phoneNum) {
@@ -145,7 +152,7 @@ public class Patient {
 	public void setHeight(int height) {
 		this.height = height;
 	}
-	
+
 	public void setMale(boolean isMale) {
 		this.isMale = isMale;
 	}
@@ -156,20 +163,20 @@ public class Patient {
 
 	public Calendar getMostRecentAppointment(){
 		Calendar today = Calendar.getInstance();
-		
+
 
 		return mostRecentAppt;
 	}
 
 	public Calendar getNextAppointment(){
-		
+
 		return nextAppt;
 	}
-	
+
 	private void sortApptHistory(){
 		ObservableList<Calendar> temp = appointmentHistory;
 		//Comparator<Calendar> comparator = Comparator.comparingLong(keyExtractor);
-		
+
 		//FXCollections.sort(appointmentHistory, comparator);
 	}
 }
