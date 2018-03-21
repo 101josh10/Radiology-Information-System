@@ -7,6 +7,8 @@ import java.util.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -60,6 +62,7 @@ public class RadiologistController {
 	//* Declare Other Variables
 	private ObservableList<Patient> patientList = FXCollections.observableArrayList();
 	private Patient selectedPatient;
+	private File reportFile;
 
 	public void initialize(){
 		pullInfoFromDB();
@@ -135,29 +138,41 @@ public class RadiologistController {
 	public void patientSelected(){
 
 	}
-	
+
 	/* selectFilePressed()
 	 * Purpose: Opens a file selection window for the user to select a file from the system
-	 * 
+	 *
 	 * Triggered when user presses the select file button from the Patient report screen
 	 */
 	public void selectFilePressed(){
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select Report File");
-		
-		File selectedFile = fileChooser.showOpenDialog(null);
-		
-		if(selectedFile != null){
-			System.out.println("File Name: " + selectedFile.getName());
-			System.out.println("File Path: " + selectedFile.getPath());
-			uploadFilePath.setText(selectedFile.getPath());
+
+		reportFile = fileChooser.showOpenDialog(null);
+
+		if(reportFile != null){
+			System.out.println("File Name: " + reportFile.getName());
+			System.out.println("File Path: " + reportFile.getPath());
+			uploadFilePath.setText(reportFile.getPath());
 		} else {
 			System.out.println("File Selection Cancelled");
 			uploadFilePath.setText("user/directory/file.docx");
 		}
 	}
-	
+
+	/*uploadButtonPressed
+	 * Purpose: takes the selected file and uploads it to the database
+	 *
+	 * Triggered when user presses the upload button in the Reports tab
+	 */
 	public void uploadButtonPressed(){
-		
+		if(reportFile == null){
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("No File Selected");
+			alert.setContentText("You have not selected a file.\nTo select a file, press the \"Select File\" button and choose a file.");
+
+			alert.showAndWait();
+		}
 	}
 }
