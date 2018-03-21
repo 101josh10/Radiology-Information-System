@@ -91,7 +91,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="uploadFilePath" alignment="CENTER" layoutX="620.0" layoutY="18.0" prefHeight="17.0" prefWidth="271.0" text="Desktop/FileName.docx" />
+                              <Label fx:id="uploadFilePath" alignment="CENTER" layoutX="596.0" layoutY="18.0" prefHeight="17.0" prefWidth="295.0" text="Desktop/FileName.docx" wrapText="true" />
                               <Button layoutX="904.0" layoutY="13.0" mnemonicParsing="false" onAction="#uploadButtonPressed" text="Upload" />
                            </children>
                         </AnchorPane>
