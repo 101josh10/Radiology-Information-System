@@ -31,7 +31,7 @@ public class RadiologistController {
 	@FXML private TableView<Patient> patientTableView;
 	@FXML private TableColumn<Patient, String> lastNameTableColumn;
 	@FXML private TableColumn<Patient, String> firstNameTableColumn;
-	@FXML private TableColumn<Patient, Calendar> dobTableColumn;
+	@FXML private TableColumn<Patient, String> dobTableColumn;
 	@FXML private TableColumn<Patient, String> ssnTableColumn;
 	@FXML private TableColumn<Patient, Calendar> lastApptTableColumn;
 	@FXML private TableColumn<Patient, Calendar> nextApptTableColumn;
@@ -70,7 +70,8 @@ public class RadiologistController {
 		//Configure Patient Table Columns
 		lastNameTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("firstName"));
 		firstNameTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("lastName"));
-		dobTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Calendar>("dob"));
+		dobTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("dobString"));
+		ssnTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("ssn"));
 		lastApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Calendar>("mostRecentAppt"));
 		nextApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Calendar>("nextAppt"));
 
@@ -90,6 +91,25 @@ public class RadiologistController {
 		Calendar dobCal = Calendar.getInstance();
 		dobCal.set(1995, 7, 24);
 		p1.setDob(dobCal);
+		p1.setSsn("123-45-6789");
+		
+		p2 = new Patient();
+		p2.setFirstName("Jed");
+		p2.setLastName("Dockery");
+		dobCal.set(1994, 4, 13);
+		p2.setDob(dobCal);
+		p2.setSsn("987-65-4321");
+		
+		p3 = new Patient();
+		p3.setFirstName("John");
+		p3.setLastName("Doe");
+		dobCal.set(1985, 1, 8);
+		p3.setDob(dobCal);
+		p3.setSsn("589-24-1154");
+		
+		patientList.add(p1);
+		patientList.add(p2);
+		patientList.add(p3);
 	}
 
 	/* pullInfoFromDB
@@ -124,7 +144,6 @@ public class RadiologistController {
 		}
 		con.close();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
