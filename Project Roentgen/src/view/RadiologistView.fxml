@@ -8,11 +8,12 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="972.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RadiologistController">
+<TabPane fx:id="radiologistTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="972.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RadiologistController">
   <tabs>
     <Tab fx:id="patientsTab" text="Patients">
       <content>
@@ -51,11 +52,19 @@
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="585.0">
                            <children>
-                              <ImageView fx:id="mainImageView" fitHeight="507.0" fitWidth="613.0" layoutX="63.0" pickOnBounds="true" preserveRatio="true" />
-                              <Button layoutY="2.0" mnemonicParsing="false" text="+" />
-                              <Button layoutX="-1.0" layoutY="27.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" text="-" />
-                              <Button layoutX="-1.0" layoutY="52.0" mnemonicParsing="false" text="100%" />
-                              <Label fx:id="zoomLabel" layoutX="25.0" layoutY="19.0" text="200%" />
+                              <ImageView fx:id="mainImageView" fitHeight="476.0" fitWidth="613.0" layoutX="139.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../Downloads/download.jpg" />
+                                 </image></ImageView>
+                              <Button layoutY="2.0" mnemonicParsing="false" onAction="#zoomInButtonPressed" text="+" />
+                              <Button layoutX="-1.0" layoutY="27.0" mnemonicParsing="false" onAction="#zoomOutButtonPressed" prefHeight="25.0" prefWidth="26.0" text="-" />
+                              <Button layoutX="-1.0" layoutY="52.0" mnemonicParsing="false" onAction="#normalSizeButtonPressed" text="100%" />
+                              <Label fx:id="zoomLabel" layoutX="25.0" layoutY="19.0" text="100%" />
+                              <Label fx:id="selectedPatientImageLabel" alignment="CENTER" layoutX="84.0" layoutY="4.0" prefHeight="30.0" prefWidth="594.0" text="No Patient Selected">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                     </items>
@@ -71,7 +80,7 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <TableView fx:id="reportTableView" prefHeight="454.0" prefWidth="972.0">
+                              <TableView fx:id="reportTableView" layoutY="27.0" prefHeight="427.0" prefWidth="972.0">
                                 <columns>
                                   <TableColumn fx:id="titleTableColumn" prefWidth="356.0" text="Title" />
                                   <TableColumn fx:id="reportDateAddedTableColumn" prefWidth="113.0" text="Date Added" />
@@ -80,6 +89,11 @@
                                     <TableColumn fx:id="uploadTableColumn" prefWidth="131.0" text="Upload Revision" />
                                 </columns>
                               </TableView>
+                              <Label fx:id="selectedPatientReportLabel" alignment="CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="30.0" prefWidth="972.0" text="No Patient Selected">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
