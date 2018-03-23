@@ -6,17 +6,21 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import model.Patient;
@@ -24,7 +28,7 @@ import model.Report;
 
 public class RadiologistController {
 	//* Declare View Properties
-
+	@FXML private TabPane radiologistTabPane;
 	//** Patients Tab
 	@FXML private Tab patientsTab;
 	//*** Patients Table
@@ -44,6 +48,7 @@ public class RadiologistController {
 	@FXML private TableColumn<Patient, Image> thumbnailTableColumn;
 	@FXML private TableColumn<Patient, String> descriptionTableColumn;
 	@FXML private TableColumn<Patient, String> dateAddedTableColumn;
+	@FXML private Label selectedPatientImageLabel;
 
 	//*** Image Section
 	@FXML private ImageView mainImageView;
@@ -58,6 +63,7 @@ public class RadiologistController {
 	@FXML private TableColumn<Report, Button> downloadTableColumn;
 	@FXML private TableColumn<Report, Button> uploadTableColumn;
 	@FXML private Label uploadFilePath;
+	@FXML private Label selectedPatientReportLabel;
 
 	//* Declare Other Variables
 	private ObservableList<Patient> patientList = FXCollections.observableArrayList();
@@ -76,6 +82,22 @@ public class RadiologistController {
 		nextApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Calendar>("nextAppt"));
 
 		patientTableView.setItems(patientList);
+
+		patientTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent mouseEvent) {
+		        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+		            if(mouseEvent.getClickCount() == 2){
+		                selectedPatient = patientTableView.getSelectionModel().getSelectedItem();
+		            	//System.out.println(selectedPatient.getFirstName() + " " + selectedPatient.getLastName() + " selected."); //uncomment for testing purposes
+		                String displayText = selectedPatient.getLastName() + ", " + selectedPatient.getFirstName();
+		                selectedPatientImageLabel.setText(displayText);
+		                selectedPatientReportLabel.setText(displayText);
+		                radiologistTabPane.getSelectionModel().selectNext();
+		            }
+		        }
+		    }
+		});
 	}
 
 	/*addStaticPatientData()
@@ -92,21 +114,21 @@ public class RadiologistController {
 		dobCal.set(1995, 7, 24);
 		p1.setDob(dobCal);
 		p1.setSsn("123-45-6789");
-		
+
 		p2 = new Patient();
 		p2.setFirstName("Jed");
 		p2.setLastName("Dockery");
 		dobCal.set(1994, 4, 13);
 		p2.setDob(dobCal);
 		p2.setSsn("987-65-4321");
-		
+
 		p3 = new Patient();
 		p3.setFirstName("John");
 		p3.setLastName("Doe");
 		dobCal.set(1985, 1, 8);
 		p3.setDob(dobCal);
 		p3.setSsn("589-24-1154");
-		
+
 		patientList.add(p1);
 		patientList.add(p2);
 		patientList.add(p3);
@@ -148,13 +170,15 @@ public class RadiologistController {
 		}
 	}
 
-	/* patientSelected()
-	 * Purpose: Assigns the selectedPatient variable the value of the
-	 * patient that the user selects from the table of patients.
-	 *
-	 * Triggered when user selects a patient from the table of available patients.
-	 */
-	public void patientSelected(){
+	public void zoomInButtonPressed(){
+		
+	}
+
+	public void zoomOutButtonPressed(){
+
+	}
+
+	public void normalSizeButtonPressed(){
 
 	}
 
