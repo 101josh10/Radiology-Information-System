@@ -82,11 +82,10 @@
                            <children>
                               <TableView fx:id="reportTableView" layoutY="27.0" prefHeight="427.0" prefWidth="972.0">
                                 <columns>
-                                  <TableColumn fx:id="titleTableColumn" prefWidth="356.0" text="Title" />
-                                  <TableColumn fx:id="reportDateAddedTableColumn" prefWidth="113.0" text="Date Added" />
-                                    <TableColumn fx:id="lastRevisedTableColumn" prefWidth="202.0" text="Date Last Revised" />
-                                    <TableColumn fx:id="downloadTableColumn" prefWidth="168.0" text="Download for Revision" />
-                                    <TableColumn fx:id="uploadTableColumn" prefWidth="131.0" text="Upload Revision" />
+                                  <TableColumn fx:id="titleTableColumn" prefWidth="298.0" text="Title" />
+                                    <TableColumn fx:id="fileTypeTableColumn" prefWidth="145.0" text="File Type" />
+                                  <TableColumn fx:id="reportDateAddedTableColumn" prefWidth="187.0" text="Date Added" />
+                                    <TableColumn fx:id="downloadTableColumn" prefWidth="145.0" text="Download for Viewing" />
                                 </columns>
                               </TableView>
                               <Label fx:id="selectedPatientReportLabel" alignment="CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="30.0" prefWidth="972.0" text="No Patient Selected">
