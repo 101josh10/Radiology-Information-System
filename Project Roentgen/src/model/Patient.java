@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 
@@ -21,7 +22,7 @@ public class Patient {
 	private Calendar mostRecentAppt;
 	private Calendar nextAppt;
 
-	private ObservableList<Calendar> appointmentHistory = FXCollections.observableArrayList();
+	private ArrayList<Calendar> appointmentHistory = new ArrayList<>();
 
 	public Patient() {
 		super();
@@ -175,7 +176,7 @@ public class Patient {
 	}
 
 	private void sortApptHistory(){
-		ObservableList<Calendar> temp = appointmentHistory;
+		ArrayList<Calendar> temp = appointmentHistory;
 		//Comparator<Calendar> comparator = Comparator.comparingLong(keyExtractor);
 
 		//FXCollections.sort(appointmentHistory, comparator);
