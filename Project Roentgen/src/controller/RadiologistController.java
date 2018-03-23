@@ -57,11 +57,10 @@ public class RadiologistController {
 	//** Report Tab
 	@FXML private Tab patReportTab;
 	@FXML private TableView<Report> reportTableView;
-	@FXML private TableColumn<Report, String> TitleTableColumn;
+	@FXML private TableColumn<Report, String> titleTableColumn;
+	@FXML private TableColumn<Report, String> fileTypeTableColumn;
 	@FXML private TableColumn<Report, String> reportDateAddedTableColumn;
-	@FXML private TableColumn<Report, String> lastRevisedTableColumn;
 	@FXML private TableColumn<Report, Button> downloadTableColumn;
-	@FXML private TableColumn<Report, Button> uploadTableColumn;
 	@FXML private Label uploadFilePath;
 	@FXML private Label selectedPatientReportLabel;
 
@@ -93,6 +92,9 @@ public class RadiologistController {
 		                String displayText = selectedPatient.getLastName() + ", " + selectedPatient.getFirstName();
 		                selectedPatientImageLabel.setText(displayText);
 		                selectedPatientReportLabel.setText(displayText);
+
+		                //set cellvaluefactories for image columns
+		                //set cellvaluefactories for report columns
 		                radiologistTabPane.getSelectionModel().selectNext();
 		            }
 		        }
@@ -171,7 +173,7 @@ public class RadiologistController {
 	}
 
 	public void zoomInButtonPressed(){
-		
+
 	}
 
 	public void zoomOutButtonPressed(){
