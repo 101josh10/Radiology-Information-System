@@ -120,7 +120,7 @@ public class Patient {
 		int month = dob.getTime().getMonth();
 
 		dobString = month + "/" + day + "/" + year;
-		System.out.println(dobString);
+		//System.out.println(dobString);//uncomment for testing
 	}
 
 	public void setPhoneNum(String phoneNum) {
