@@ -56,10 +56,6 @@
                                  <image>
                                     <Image url="@../../../../../../Downloads/download.jpg" />
                                  </image></ImageView>
-                              <Button layoutY="2.0" mnemonicParsing="false" onAction="#zoomInButtonPressed" text="+" />
-                              <Button layoutX="-1.0" layoutY="27.0" mnemonicParsing="false" onAction="#zoomOutButtonPressed" prefHeight="25.0" prefWidth="26.0" text="-" />
-                              <Button layoutX="-1.0" layoutY="52.0" mnemonicParsing="false" onAction="#normalSizeButtonPressed" text="100%" />
-                              <Label fx:id="zoomLabel" layoutX="25.0" layoutY="19.0" text="100%" />
                               <Label fx:id="selectedPatientImageLabel" alignment="CENTER" layoutX="84.0" layoutY="4.0" prefHeight="30.0" prefWidth="594.0" text="No Patient Selected">
                                  <font>
                                     <Font size="20.0" />
@@ -82,10 +78,9 @@
                            <children>
                               <TableView fx:id="reportTableView" layoutY="27.0" prefHeight="427.0" prefWidth="972.0">
                                 <columns>
-                                  <TableColumn fx:id="titleTableColumn" prefWidth="298.0" text="Title" />
-                                    <TableColumn fx:id="fileTypeTableColumn" prefWidth="145.0" text="File Type" />
-                                  <TableColumn fx:id="reportDateAddedTableColumn" prefWidth="187.0" text="Date Added" />
-                                    <TableColumn fx:id="downloadTableColumn" prefWidth="145.0" text="Download for Viewing" />
+                                  <TableColumn fx:id="titleTableColumn" prefWidth="543.0" text="Title" />
+                                  <TableColumn fx:id="reportDateAddedTableColumn" prefWidth="212.0" text="Date Added" />
+                                    <TableColumn fx:id="downloadTableColumn" prefWidth="216.0" text="Download for Viewing" />
                                 </columns>
                               </TableView>
                               <Label fx:id="selectedPatientReportLabel" alignment="CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="30.0" prefWidth="972.0" text="No Patient Selected">
