@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javafx.scene.control.Button;
@@ -10,6 +11,7 @@ public class Report {
 	private String title;
 	private Calendar dateAdded;
 	private Button downloadButton;
+	private String dateString;
 
 	public Report(){
 		downloadButton = new Button();
@@ -42,6 +44,13 @@ public class Report {
 
 	public void setDateAdded(Calendar dateAdded) {
 		this.dateAdded = dateAdded;
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		
+		if (dateAdded != null) {
+		dateString = sdf.format(dateAdded.getTime());
+		}
+		
+		System.out.println(dateString);
 	}
 	
 	
