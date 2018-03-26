@@ -16,6 +16,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +26,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import model.Patient;
 import model.Report;
+import model.PatientImage;
 
 public class RadiologistController {
 	//* Declare View Properties
@@ -44,10 +46,10 @@ public class RadiologistController {
 	@FXML private Tab patImagesTab;
 
 	//*** Images Table
-	@FXML private TableView<Patient> imageTableView;
-	@FXML private TableColumn<Patient, Image> thumbnailTableColumn;
-	@FXML private TableColumn<Patient, String> descriptionTableColumn;
-	@FXML private TableColumn<Patient, String> dateAddedTableColumn;
+	@FXML private TableView<PatientImage> imageTableView;
+	@FXML private TableColumn<PatientImage, Image> thumbnailTableColumn;
+	@FXML private TableColumn<PatientImage, String> descriptionTableColumn;
+	@FXML private TableColumn<PatientImage, Calendar> dateAddedTableColumn;
 	@FXML private Label selectedPatientImageLabel;
 
 	//*** Image Section
@@ -58,14 +60,16 @@ public class RadiologistController {
 	@FXML private Tab patReportTab;
 	@FXML private TableView<Report> reportTableView;
 	@FXML private TableColumn<Report, String> titleTableColumn;
-	@FXML private TableColumn<Report, String> fileTypeTableColumn;
-	@FXML private TableColumn<Report, String> reportDateAddedTableColumn;
+	@FXML private TableColumn<Report, Calendar> reportDateAddedTableColumn;
 	@FXML private TableColumn<Report, Button> downloadTableColumn;
 	@FXML private Label uploadFilePath;
 	@FXML private Label selectedPatientReportLabel;
+	@FXML private TextField titleTextField;
 
 	//* Declare Other Variables
 	private ObservableList<Patient> patientList = FXCollections.observableArrayList();
+	private ObservableList<Report> patientReports = FXCollections.observableArrayList();
+	private ObservableList<PatientImage> patientImages = FXCollections.observableArrayList();
 	private Patient selectedPatient;
 	private File reportFile;
 
@@ -81,7 +85,17 @@ public class RadiologistController {
 		nextApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Calendar>("nextAppt"));
 
 		patientTableView.setItems(patientList);
-
+		
+		//Configure Image Table Columns
+		thumbnailTableColumn.setCellValueFactory(new PropertyValueFactory<PatientImage, Image>("thumbnail"));
+		descriptionTableColumn.setCellValueFactory(new PropertyValueFactory<PatientImage, String>("description"));
+		dateAddedTableColumn.setCellValueFactory(new PropertyValueFactory<PatientImage, Calendar>("dateAdded"));
+		
+		//ConfigureReportTableColumns
+		titleTableColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("title"));
+		reportDateAddedTableColumn.setCellValueFactory(new PropertyValueFactory<Report, Calendar>("dateAdded"));
+		downloadTableColumn.setCellValueFactory(new PropertyValueFactory<Report, Button>("downloadButton"));
+		
 		patientTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent mouseEvent) {
@@ -93,8 +107,10 @@ public class RadiologistController {
 		                selectedPatientImageLabel.setText(displayText);
 		                selectedPatientReportLabel.setText(displayText);
 
-		                //set cellvaluefactories for image columns
-		                //set cellvaluefactories for report columns
+		                //Select Images for selectedPatient; populate patientImages
+		                imageTableView.setItems(patientImages);
+		                //Select Reports for selectedPatient; populate patientReports
+		                reportTableView.setItems(patientReports);
 		                radiologistTabPane.getSelectionModel().selectNext();
 		            }
 		        }
@@ -172,36 +188,35 @@ public class RadiologistController {
 		}
 	}
 
-	public void zoomInButtonPressed(){
-
-	}
-
-	public void zoomOutButtonPressed(){
-
-	}
-
-	public void normalSizeButtonPressed(){
-
-	}
-
 	/* selectFilePressed()
 	 * Purpose: Opens a file selection window for the user to select a file from the system
 	 *
 	 * Triggered when user presses the select file button from the Patient report screen
 	 */
 	public void selectFilePressed(){
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Select Report File");
-
-		reportFile = fileChooser.showOpenDialog(null);
-
-		if(reportFile != null){
-			//System.out.println("File Name: " + reportFile.getName()); //uncomment for testing
-			//System.out.println("File Path: " + reportFile.getPath()); //uncomment for testing
-			uploadFilePath.setText(reportFile.getPath());
-		} else {
-			System.out.println("File Selection Cancelled");
-			uploadFilePath.setText("user/directory/file.docx");
+		if(selectedPatient == null){
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error!");
+			alert.setHeaderText("No Patient Selected");
+			alert.setContentText("You must select a patient from the Patients tab.");
+			
+			alert.showAndWait();
+		}
+		else{
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Select Report File");
+	
+			reportFile = fileChooser.showOpenDialog(null);
+	
+			
+			if(reportFile != null){
+				//System.out.println("File Name: " + reportFile.getName()); //uncomment for testing
+				//System.out.println("File Path: " + reportFile.getPath()); //uncomment for testing
+				uploadFilePath.setText(reportFile.getPath());
+			} else {
+				//ystem.out.println("File Selection Cancelled");//uncomment for testing
+				uploadFilePath.setText("user/directory/file.docx");
+			}
 		}
 	}
 
@@ -211,22 +226,52 @@ public class RadiologistController {
 	 * Triggered when user presses the upload button in the Reports tab
 	 */
 	public void uploadButtonPressed(){
-		if(reportFile == null){
+		if(selectedPatient == null){
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error!");
+			alert.setHeaderText("No Patient Selected");
+			alert.setContentText("You must select a patient from the Patients tab.");
+			
+			alert.showAndWait();
+		}
+		else if(reportFile == null){
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error!");
 			alert.setHeaderText("No File Selected");
 			alert.setContentText("You have not selected a file.\nTo select a file, press the \"Select File\" button and choose a file.");
 
 			alert.showAndWait();
-		} else {
+		} else if(titleTextField.getText().equals("") || titleTextField.getText() == null){
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error!");
+			alert.setHeaderText("Title Blank");
+			alert.setContentText("You must name your report.");
+
+			alert.showAndWait();
+		}		
+		else {
 			//upload reportFile to PACS
 			//if(uploadSuccessful)
+			Report newReport = new Report();
+			newReport.setTitle(titleTextField.getText());
+			newReport.setReportFile(reportFile);
+			Calendar thisDate = Calendar.getInstance();
+			newReport.setDateAdded(thisDate);
+			//System.out.println(thisDate.getTime().toString());//uncomment for testing
+			patientReports.add(newReport);
+			//upload report to DB
+			reportTableView.refresh();
+			
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Upload Successful!");
 			alert.setHeaderText("Your upload was successful");
 			alert.setContentText("Press \"OK\" to reload table");
 
 			alert.showAndWait();
+			
+			titleTextField.setText("");
+			uploadFilePath.setText("user/directory/file.docx");
+			
 		}
 	}
 }
