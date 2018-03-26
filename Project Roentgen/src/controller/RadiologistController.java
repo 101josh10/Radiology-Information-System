@@ -60,7 +60,7 @@ public class RadiologistController {
 	@FXML private Tab patReportTab;
 	@FXML private TableView<Report> reportTableView;
 	@FXML private TableColumn<Report, String> titleTableColumn;
-	@FXML private TableColumn<Report, Calendar> reportDateAddedTableColumn;
+	@FXML private TableColumn<Report, String> reportDateAddedTableColumn;
 	@FXML private TableColumn<Report, Button> downloadTableColumn;
 	@FXML private Label uploadFilePath;
 	@FXML private Label selectedPatientReportLabel;
@@ -93,7 +93,7 @@ public class RadiologistController {
 		
 		//ConfigureReportTableColumns
 		titleTableColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("title"));
-		reportDateAddedTableColumn.setCellValueFactory(new PropertyValueFactory<Report, Calendar>("dateAdded"));
+		reportDateAddedTableColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("dateString"));
 		downloadTableColumn.setCellValueFactory(new PropertyValueFactory<Report, Button>("downloadButton"));
 		
 		patientTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
