@@ -150,6 +150,12 @@ public class RadiologistController {
 		patientList.add(p1);
 		patientList.add(p2);
 		patientList.add(p3);
+		
+		Report e = new Report();
+		e.setTitle("Test");
+		File testFile = new File("/Users/jmknig0314/Downloads/Baker_2.png");
+		e.setReportFile(testFile);
+		patientReports.add(e);
 	}
 
 	/* pullInfoFromDB
