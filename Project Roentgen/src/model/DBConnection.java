@@ -14,11 +14,12 @@ public class DBConnection implements Runnable {
 		System.out.println("Establishing connection to database");
 		
 		try {
-			Con1 = DriverManager.getConnection("jdbc:mysql://50.62.209.15:3306","wesmdonald", DBPASSWORD);
+			Class.forName("com.mysql.jdbc.Driver");
+			Con1 = DriverManager.getConnection("jdbc:mysql://50.62.209.15:3306/ris","wesmdonald", DBPASSWORD);
 			System.out.println("Connection success!");
 			
 			Main.con = Con1;
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//replace with actual data
