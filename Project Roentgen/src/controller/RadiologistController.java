@@ -85,17 +85,17 @@ public class RadiologistController {
 		nextApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Calendar>("nextAppt"));
 
 		patientTableView.setItems(patientList);
-		
+
 		//Configure Image Table Columns
 		thumbnailTableColumn.setCellValueFactory(new PropertyValueFactory<PatientImage, Image>("thumbnail"));
 		descriptionTableColumn.setCellValueFactory(new PropertyValueFactory<PatientImage, String>("description"));
 		dateAddedTableColumn.setCellValueFactory(new PropertyValueFactory<PatientImage, Calendar>("dateAdded"));
-		
+
 		//ConfigureReportTableColumns
 		titleTableColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("title"));
 		reportDateAddedTableColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("dateString"));
 		downloadTableColumn.setCellValueFactory(new PropertyValueFactory<Report, Button>("downloadButton"));
-		
+
 		patientTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 		    @Override
 		    public void handle(MouseEvent mouseEvent) {
@@ -150,7 +150,7 @@ public class RadiologistController {
 		patientList.add(p1);
 		patientList.add(p2);
 		patientList.add(p3);
-		
+
 		Report e = new Report();
 		e.setTitle("Test");
 		File testFile = new File("/Users/jmknig0314/Downloads/Baker_2.png");
@@ -164,34 +164,7 @@ public class RadiologistController {
 	 * available patients along with their images and reports
 	 */
 	public void pullInfoFromDB(){
-		try {
-			Class.forName("com.mySQL.jdbc.Driver");
-			Connection con = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/sonoo", "root", "root"); //Input with correct info
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery("select * from Patients"); //Double check name of Patient table
-		while(rs.next()){
-			Patient temp = new Patient();
-			temp.setId(rs.getInt(1));
-			temp.setFirstName(rs.getString(2));
-			//so on so forth for all properties
-			//need to see layout of DB in order to properly implement this
-			patientList.add(temp);
-		}
-
-		rs = stmt.executeQuery("select * from Images");
-		while(rs.next()){
-
-		}
-
-		rs = stmt.executeQuery("select * from Reports");
-		while(rs.next()){
-
-		}
-		con.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 	/* selectFilePressed()
@@ -205,16 +178,16 @@ public class RadiologistController {
 			alert.setTitle("Error!");
 			alert.setHeaderText("No Patient Selected");
 			alert.setContentText("You must select a patient from the Patients tab.");
-			
+
 			alert.showAndWait();
 		}
 		else{
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle("Select Report File");
-	
+
 			reportFile = fileChooser.showOpenDialog(null);
-	
-			
+
+
 			if(reportFile != null){
 				//System.out.println("File Name: " + reportFile.getName()); //uncomment for testing
 				//System.out.println("File Path: " + reportFile.getPath()); //uncomment for testing
@@ -237,7 +210,7 @@ public class RadiologistController {
 			alert.setTitle("Error!");
 			alert.setHeaderText("No Patient Selected");
 			alert.setContentText("You must select a patient from the Patients tab.");
-			
+
 			alert.showAndWait();
 		}
 		else if(reportFile == null){
@@ -254,7 +227,7 @@ public class RadiologistController {
 			alert.setContentText("You must name your report.");
 
 			alert.showAndWait();
-		}		
+		}
 		else {
 			//upload reportFile to PACS
 			//if(uploadSuccessful)
@@ -267,17 +240,17 @@ public class RadiologistController {
 			patientReports.add(newReport);
 			//upload report to DB
 			reportTableView.refresh();
-			
+
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Upload Successful!");
 			alert.setHeaderText("Your upload was successful");
 			alert.setContentText("Press \"OK\" to reload table");
 
 			alert.showAndWait();
-			
+
 			titleTextField.setText("");
 			uploadFilePath.setText("user/directory/file.docx");
-			
+
 		}
 	}
 }
