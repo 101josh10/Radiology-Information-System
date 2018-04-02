@@ -43,7 +43,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="newAppointmentDatePicker" layoutX="7.0" layoutY="218.0" promptText="Appointment Date" />
+                  <DatePicker fx:id="newApptDatePicker" layoutX="7.0" layoutY="218.0" promptText="Appointment Date" />
                   <ChoiceBox fx:id="appointmentTimeChoiceBox" layoutX="19.0" layoutY="250.0" prefWidth="150.0" />
                   <ChoiceBox fx:id="patientChoiceBox" layoutX="19.0" layoutY="283.0" prefWidth="150.0" />
                   <ChoiceBox fx:id="modalityChoiceBox" layoutX="19.0" layoutY="317.0" prefWidth="150.0" />
@@ -60,7 +60,7 @@
                               <TableView fx:id="appointmentTableView" prefHeight="698.0" prefWidth="526.0">
                                 <columns>
                                   <TableColumn fx:id="timeTableColumn" prefWidth="75.0" text="Time" />
-                                  <TableColumn prefWidth="99.0" text="X-Ray" fx:id="xRayTableColumn" />
+                                  <TableColumn prefWidth="99.0" text="X-Ray" fx:id="xrayTableColumn" />
                                     <TableColumn fx:id="ctTableColumn" prefWidth="119.0" text="CT" />
                                     <TableColumn fx:id="ultrasoundTableColumn" prefWidth="106.0" text="Ultrasound" />
                                     <TableColumn fx:id="mriTableColumn" prefWidth="126.0" text="MRI" />
@@ -122,7 +122,7 @@
                                       </rowConstraints>
                                        <children>
                                           <DatePicker fx:id="apptInfoDatePicker" disable="true" />
-                                          <ChoiceBox fx:id="apptInfoTimeChoiceBox" prefWidth="150.0" GridPane.rowIndex="1" />
+                                          <ChoiceBox fx:id="apptInfoTimeChoiceBox" disable="true" prefWidth="150.0" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
                                  </children>
