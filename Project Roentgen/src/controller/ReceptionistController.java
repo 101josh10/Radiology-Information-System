@@ -1,6 +1,7 @@
 package controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -148,7 +149,33 @@ public class ReceptionistController {
 		
 		Appointment a1 = new Appointment();
 		a1.setPatient(patientList.get(0));
+		LocalDate a1Date = LocalDate.now();
+		LocalDateTime a1Time = LocalDateTime.of(2018, 4, 3, 9, 30);
+		a1.setDateTime(a1Time);
+		a1.setBodyPart("Arm");
+		a1.setDesc("Test Description");
+		a1.setModality("X-Ray");
 		
+		Appointment a2 = new Appointment();
+		a2.setPatient(patientList.get(1));
+		LocalDate a2Date = LocalDate.now();
+		LocalDateTime a2Time = LocalDateTime.of(2018, 4, 3, 13, 30);
+		a2.setDateTime(a2Time);
+		a2.setBodyPart("Leg");
+		a2.setDesc("Another Test");
+		a2.setModality("MRI");
+		
+		Appointment a3 = new Appointment();
+		a3.setPatient(patientList.get(2));
+		LocalDateTime a3Time = LocalDateTime.of(2018, 5, 9, 16, 15);
+		a3.setDateTime(a3Time);
+		a3.setBodyPart("Brain");
+		a3.setDesc("I dunno anymore");
+		a3.setModality("Ultrasound");
+		
+		appointmentList.add(a1);
+		appointmentList.add(a2);
+		appointmentList.add(a3);
 	}
 	
 	public void updateTimeSlots() {
