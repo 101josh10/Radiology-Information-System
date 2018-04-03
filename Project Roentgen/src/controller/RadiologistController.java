@@ -3,6 +3,7 @@ package controller;
 import java.io.File;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -128,23 +129,22 @@ public class RadiologistController {
 		p1 = new Patient();
 		p1.setFirstName("Joshua");
 		p1.setLastName("Knight");
-		Calendar dobCal = Calendar.getInstance();
-		dobCal.set(1995, 7, 24);
-		p1.setDob(dobCal);
+		LocalDate dob = LocalDate.of(1995, 7, 24);
+		p1.setDob(dob);
 		p1.setSsn("123-45-6789");
 
 		p2 = new Patient();
 		p2.setFirstName("Jed");
 		p2.setLastName("Dockery");
-		dobCal.set(1994, 4, 13);
-		p2.setDob(dobCal);
+		dob = LocalDate.of(1994, 4, 13);
+		p2.setDob(dob);
 		p2.setSsn("987-65-4321");
 
 		p3 = new Patient();
 		p3.setFirstName("John");
 		p3.setLastName("Doe");
-		dobCal.set(1985, 1, 8);
-		p3.setDob(dobCal);
+		dob = LocalDate.of(1985, 1, 8);
+		p3.setDob(dob);
 		p3.setSsn("589-24-1154");
 
 		patientList.add(p1);
@@ -234,7 +234,7 @@ public class RadiologistController {
 			Report newReport = new Report();
 			newReport.setTitle(titleTextField.getText());
 			newReport.setReportFile(reportFile);
-			Calendar thisDate = Calendar.getInstance();
+			LocalDateTime thisDate = LocalDateTime.now();
 			newReport.setDateAdded(thisDate);
 			//System.out.println(thisDate.getTime().toString());//uncomment for testing
 			patientReports.add(newReport);
