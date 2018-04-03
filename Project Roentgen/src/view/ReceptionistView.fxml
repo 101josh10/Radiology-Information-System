@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
@@ -44,11 +45,11 @@
                      </font>
                   </Label>
                   <DatePicker fx:id="newApptDatePicker" layoutX="7.0" layoutY="218.0" promptText="Appointment Date" />
-                  <ChoiceBox fx:id="appointmentTimeChoiceBox" layoutX="19.0" layoutY="250.0" prefWidth="150.0" />
-                  <ChoiceBox fx:id="patientChoiceBox" layoutX="19.0" layoutY="283.0" prefWidth="150.0" />
-                  <ChoiceBox fx:id="modalityChoiceBox" layoutX="19.0" layoutY="317.0" prefWidth="150.0" />
-                  <TextField fx:id="bodyPartsTextField" layoutX="19.0" layoutY="349.0" promptText="Body Part(s)" />
-                  <TextArea fx:id="additionalTextArea" layoutX="6.0" layoutY="383.0" prefHeight="202.0" prefWidth="174.0" promptText="Additional Info" />
+                  <ChoiceBox fx:id="modalityChoiceBox" layoutX="21.0" layoutY="322.0" prefWidth="150.0" />
+                  <TextField fx:id="bodyPartTextField" layoutX="19.0" layoutY="360.0" promptText="Body Part(s)" />
+                  <TextArea fx:id="additionalTextArea" layoutX="17.0" layoutY="399.0" prefHeight="202.0" prefWidth="174.0" promptText="Additional Info" />
+                  <ComboBox fx:id="newApptPatientComboBox" layoutX="21.0" layoutY="287.0" prefWidth="150.0" />
+                  <ComboBox fx:id="newApptTimeComboBox" layoutX="21.0" layoutY="253.0" prefWidth="150.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="588.0" prefWidth="632.0">
