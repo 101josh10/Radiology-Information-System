@@ -13,6 +13,8 @@ public class Appointment {
 	private String modality;
 	private String bodyPart;
 	private String desc;
+	private String patientName;
+	private String last4;
 	
 	public Appointment() {
 		
@@ -41,6 +43,14 @@ public class Appointment {
 	public String getModality() {
 		return modality;
 	}
+	
+	public String getLast4() {
+		return last4;
+	}
+	
+	public String getPatientName() {
+		return patientName;
+	}
 
 	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
@@ -51,6 +61,8 @@ public class Appointment {
 
 	public void setPatient(Patient patient) {
 		this.patient = patient;
+		patientName = patient.getDisplayName();
+		last4 = patient.getProtectedSSN();
 	}
 
 	public void setBodyPart(String bodyPart) {
