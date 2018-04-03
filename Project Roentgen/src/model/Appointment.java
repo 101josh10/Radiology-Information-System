@@ -1,13 +1,14 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Appointment {
-	private LocalDate dateTime;
+	private LocalDate date;
+	private LocalDateTime time;
 	private String displayTime;
-
 	private Patient patient;
 	private String modality;
 	private String bodyPart;
@@ -17,8 +18,8 @@ public class Appointment {
 		
 	}
 
-	public LocalDate getDateTime() {
-		return dateTime;
+	public LocalDate getDate() {
+		return date;
 	}
 
 	public Patient getPatient() {
@@ -41,11 +42,11 @@ public class Appointment {
 		return modality;
 	}
 
-	public void setDateTime(LocalDate dateTime) {
-		this.dateTime = dateTime;
-		Date time = this.dateTime.getTime();
-		int hours = time.getHours();
-		int mins = time.getMinutes();
+	public void setDateTime(LocalDate date, LocalDateTime time) {
+		this.date = date;
+		this.time = time;
+		int hours = time.getHour();
+		int mins = time.getMinute();
 		String afternoon = " AM";
 		if(hours >= 12) {
 			afternoon = " PM";
@@ -59,7 +60,7 @@ public class Appointment {
 			displayTime.concat("0");
 		}
 		
-		displayTime.concat(mins + afternoon);
+		displayTime += mins + afternoon;
 		System.out.println(displayTime); //uncomment for testing
 	}
 
