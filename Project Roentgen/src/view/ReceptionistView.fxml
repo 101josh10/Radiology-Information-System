@@ -48,8 +48,8 @@
                   <ChoiceBox fx:id="modalityChoiceBox" layoutX="21.0" layoutY="322.0" prefWidth="150.0" />
                   <TextField fx:id="bodyPartTextField" layoutX="19.0" layoutY="360.0" promptText="Body Part(s)" />
                   <TextArea fx:id="additionalTextArea" layoutX="17.0" layoutY="399.0" prefHeight="202.0" prefWidth="174.0" promptText="Additional Info" />
-                  <ComboBox fx:id="newApptPatientComboBox" layoutX="21.0" layoutY="287.0" prefWidth="150.0" />
-                  <ComboBox fx:id="newApptTimeComboBox" layoutX="21.0" layoutY="253.0" prefWidth="150.0" />
+                  <ComboBox fx:id="newApptPatientComboBox" layoutX="21.0" layoutY="287.0" prefWidth="150.0" promptText="Select Patient" />
+                  <ComboBox fx:id="newApptTimeComboBox" layoutX="21.0" layoutY="253.0" prefWidth="150.0" promptText="Select Time" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="588.0" prefWidth="632.0">

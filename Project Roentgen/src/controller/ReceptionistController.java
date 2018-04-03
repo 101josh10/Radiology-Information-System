@@ -13,6 +13,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -88,6 +89,8 @@ public class ReceptionistController {
 				timeSlotChoices.add(time);
 			}
 		}
+		
+		newApptTimeComboBox.setItems(timeSlotChoices);
 	}
 	
 	public void initPatientChoices() {
@@ -117,6 +120,10 @@ public class ReceptionistController {
 		patientList.add(p1);
 		patientList.add(p2);
 		patientList.add(p3);
+		
+		newApptPatientComboBox.setItems(patientList);
+		
+		newApptPatientComboBox.setButtonCell();
 	}
 	
 	public void initModalityChoices() {
