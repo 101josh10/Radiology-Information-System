@@ -6,8 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Appointment {
-	private LocalDate date;
-	private LocalDateTime time;
+	private LocalDateTime dateTime;
 	private String displayTime;
 	private Patient patient;
 	private String modality;
@@ -18,8 +17,8 @@ public class Appointment {
 		
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public LocalDateTime getDateTime() {
+		return dateTime;
 	}
 
 	public Patient getPatient() {
@@ -42,11 +41,10 @@ public class Appointment {
 		return modality;
 	}
 
-	public void setDateTime(LocalDate date, LocalDateTime time) {
-		this.date = date;
-		this.time = time;
-		int hours = time.getHour();
-		int mins = time.getMinute();
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
+		int hours = dateTime.getHour();
+		int mins = dateTime.getMinute();
 		String afternoon = " AM";
 		if(hours >= 12) {
 			afternoon = " PM";
@@ -61,7 +59,7 @@ public class Appointment {
 		}
 		
 		displayTime += mins + afternoon;
-		System.out.println(displayTime); //uncomment for testing
+		//System.out.println(displayTime); //uncomment for testing
 	}
 
 	public void setPatient(Patient patient) {
