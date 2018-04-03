@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,17 +11,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
-import javafx.util.converter.LocalTimeStringConverter;
 import model.Appointment;
 import model.Patient;
 
@@ -48,18 +44,18 @@ public class ReceptionistController {
 	//Appointment Time Slot TableView
 	@FXML private TableView<Appointment> appointmentTableView;
 	@FXML private TableColumn<Appointment, String> timeTableColumn;
-	@FXML private TableColumn<Appointment, String> xrayTableColumn;
-	@FXML private TableColumn<Appointment, String> ctTableColumn;
-	@FXML private TableColumn<Appointment, String> ultrasoundTableColumn;
-	@FXML private TableColumn<Appointment, String> mriTableColumn;
+	@FXML private TableColumn<Appointment, String> patientTableColumn;
+	@FXML private TableColumn<Appointment, String> last4TableColumn;
+	@FXML private TableColumn<Appointment, String> modalityTableColumn;
 
 	//Appointment Info
 	@FXML private DatePicker apptInfoDatePicker;
-	@FXML private ComboBox<String> apptInfoTimeComboBox;
-	@FXML private ComboBox<String> apptInfoPatientComboBox;
+	@FXML private ComboBox<LocalTime> apptInfoTimeComboBox;
+	@FXML private ComboBox<Patient> apptInfoPatientComboBox;
 	@FXML private ComboBox<String> apptInfoModalityComboBox;
 	@FXML private TextField apptInfoBodyPartsTextField;
 	@FXML private TextArea apptInfoDescTextArea;
+	@FXML private Button editButton;
 
 	//Other Variables
 	ObservableList<LocalTime> timeSlotCombos = FXCollections.observableArrayList();
@@ -75,12 +71,16 @@ public class ReceptionistController {
 		initTimeSlots(); //populates time slot combos to be used when creating a new appointment or editing one
 		initPatientCombos();//populates patient Combos
 		initModalityCombos();//populates modality Combos
+		initAppointmentList();//creates static appointment data
 		
 		displayDatePicker.setValue(selectedDate);
 		
 		getAppointmentsForDate(selectedDate);
 		
 		timeTableColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("displayTime"));
+		patientTableColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("patientName"));
+		last4TableColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("last4"));
+		modalityTableColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("modality"));
 		
 		appointmentTableView.setItems(dayView);
 	}
@@ -96,23 +96,6 @@ public class ReceptionistController {
 		}
 		
 		newApptTimeComboBox.setItems(timeSlotCombos);
-	}
-	
-	private int appointmentExistsAt(LocalDateTime dateTime){
-		int exists = -1;
-		int iterator = 0;
-		for(Appointment appt : appointmentList){
-			if(appt.getDateTime().getDayOfYear() == dateTime.getDayOfYear()){
-				if(appt.getDateTime().getHour() == dateTime.getHour()){
-					if(appt.getDateTime().getMinute() == dateTime.getMinute()){
-						exists = iterator;
-					}
-				}
-			}
-			iterator++;
-		}
-		
-		return exists;
 	}
 	
 	public void initPatientCombos() {
@@ -199,25 +182,22 @@ public class ReceptionistController {
 			appointmentList.add(a1);
 			appointmentList.add(a2);
 			appointmentList.add(a3);
+			
+			/* Comment for Testing purposes
+			for(Appointment appt: appointmentList) {
+				System.out.println(appt.getDateTime().toString() + "\n" + appt.getPatientName() + "\n" + appt.getLast4() + "\n\n");
+			}
+			// */
 	}
 	
 	public void getAppointmentsForDate(LocalDate date) {
 		//input SQL Select statement
 		
-		for(int hours = OPENING_TIME.getHour(); hours < CLOSING_TIME.getHour(); hours++) {
-			for(int mins = 0; mins < 60; mins += 15) {
-				LocalDateTime temp = LocalDateTime.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), hours, mins);
-				int apptListIndex = appointmentExistsAt(temp);
-				if(apptListIndex >= 0){
-					dayView.add(appointmentList.get(apptListIndex));
-				}
-				else{
-					Appointment tempAppt = new Appointment();
-					LocalTime tempTime = LocalTime.of(hours, mins);
-					LocalDateTime tempDT = LocalDateTime.of(date, tempTime);
-					tempAppt.setDateTime(tempDT);
-					
-					dayView.add(tempAppt);
+		dayView.clear();
+		for(Appointment appt:appointmentList) {
+			if(appt.getDateTime().getYear() == date.getYear()) {
+				if(appt.getDateTime().getDayOfYear() == date.getDayOfYear()) {
+					dayView.add(appt);
 				}
 			}
 		}
@@ -226,6 +206,7 @@ public class ReceptionistController {
 	public void updateTimeSlots() { 
 		selectedDate = displayDatePicker.getValue();
 		getAppointmentsForDate(selectedDate);
+		//System.out.println(selectedDate.toString());//uncomment for testing
 	}
 	
 	public void clearFiltersPressed() { //When the clear filters button is pressed, this sets all filter checkboxes to be unchecked
@@ -282,8 +263,34 @@ public class ReceptionistController {
 		}
 	}
 	
-	public void editAppointmentPushed() {
+	public void appointmentClicked() {
+		apptInfoPatientComboBox.setConverter(new StringConverter<Patient>(){
+			@Override
+		    public String toString(Patient object) {
+		        return object.getDisplayName();
+		    }
+
+			@Override
+			public Patient fromString(String arg0) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
 		
+		Appointment selected = appointmentTableView.getSelectionModel().getSelectedItem();
+		
+		apptInfoDatePicker.setValue(selected.getDateTime().toLocalDate());
+		apptInfoTimeComboBox.setValue(selected.getDateTime().toLocalTime());
+		apptInfoPatientComboBox.setValue(selected.getPatient());
+		apptInfoModalityComboBox.setValue(selected.getModality());
+		apptInfoBodyPartsTextField.setText(selected.getBodyPart());
+		apptInfoDescTextArea.setText(selected.getDesc());
+		
+		
+	}
+	
+	public void editAppointmentPushed() {
+		if(editButton.getText().equals("Edit Appointment"));
 	}
 	
 	public void deleteAppointmentPushed() {

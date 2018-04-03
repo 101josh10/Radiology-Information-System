@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReceptionistController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReceptionistController">
    <children>
       <SplitPane dividerPositions="0.17445742904841402" prefHeight="700.0" prefWidth="1200.0">
         <items>
@@ -57,13 +57,12 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <TableView fx:id="appointmentTableView" prefHeight="698.0" prefWidth="599.0">
+                              <TableView fx:id="appointmentTableView" onMouseClicked="#appointmentClicked" prefHeight="698.0" prefWidth="599.0">
                                 <columns>
                                   <TableColumn fx:id="timeTableColumn" prefWidth="75.0" text="Time" />
-                                  <TableColumn prefWidth="131.0" text="X-Ray" fx:id="xrayTableColumn" />
-                                    <TableColumn fx:id="ctTableColumn" prefWidth="129.22409057617188" text="CT" />
-                                    <TableColumn fx:id="ultrasoundTableColumn" prefWidth="142.77587890625" text="Ultrasound" />
-                                    <TableColumn fx:id="mriTableColumn" prefWidth="120.0" text="MRI" />
+                                  <TableColumn fx:id="patientTableColumn" prefWidth="291.0" text="Patient Name" />
+                                    <TableColumn fx:id="last4TableColumn" prefWidth="99.0" text="Last 4" />
+                                    <TableColumn fx:id="modalityTableColumn" prefWidth="133.0" text="Modality" />
                                 </columns>
                               </TableView>
                            </children>
@@ -89,7 +88,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#editAppointmentPushed" text="Edit Appointment" GridPane.rowIndex="5" />
+                                    <Button fx:id="editButton" mnemonicParsing="false" onAction="#editAppointmentPushed" text="Edit Appointment" GridPane.rowIndex="5" />
                                     <Button mnemonicParsing="false" onAction="#deleteAppointmentPushed" text="Delete Appointment" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <Label text="Date/Time:" />
                                     <GridPane GridPane.rowIndex="1">
@@ -102,7 +101,7 @@
                                       </rowConstraints>
                                        <children>
                                           <Label text="Patient:" />
-                                          <Button disable="true" mnemonicParsing="false" text="Edit Patient Info" GridPane.rowIndex="1" />
+                                          <Button disable="true" mnemonicParsing="false" text="View Patient Info" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
                                     <Label text="Modality:" GridPane.rowIndex="2" />
