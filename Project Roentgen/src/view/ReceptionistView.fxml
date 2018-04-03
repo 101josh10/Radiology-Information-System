@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -17,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReceptionistController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReceptionistController">
    <children>
       <SplitPane dividerPositions="0.17445742904841402" prefHeight="700.0" prefWidth="1200.0">
         <items>
@@ -45,11 +44,11 @@
                      </font>
                   </Label>
                   <DatePicker fx:id="newApptDatePicker" layoutX="7.0" layoutY="218.0" promptText="Appointment Date" />
-                  <ChoiceBox fx:id="modalityChoiceBox" layoutX="21.0" layoutY="322.0" prefWidth="150.0" />
                   <TextField fx:id="bodyPartTextField" layoutX="19.0" layoutY="360.0" promptText="Body Part(s)" />
                   <TextArea fx:id="additionalTextArea" layoutX="17.0" layoutY="399.0" prefHeight="202.0" prefWidth="174.0" promptText="Additional Info" />
                   <ComboBox fx:id="newApptPatientComboBox" layoutX="21.0" layoutY="287.0" prefWidth="150.0" promptText="Select Patient" />
                   <ComboBox fx:id="newApptTimeComboBox" layoutX="21.0" layoutY="253.0" prefWidth="150.0" promptText="Select Time" />
+                  <ComboBox fx:id="modalityComboBox" layoutX="21.0" layoutY="324.0" prefWidth="150.0" promptText="Select Modality" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="588.0" prefWidth="632.0">
@@ -69,9 +68,9 @@
                               </TableView>
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="80.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="705.0" prefWidth="377.0">
                            <children>
-                              <Label layoutX="114.0" layoutY="14.0" text="Appointment Information">
+                              <Label layoutX="77.0" layoutY="14.0" text="Appointment Information">
                                  <font>
                                     <Font name="System Bold" size="20.0" />
                                  </font>
@@ -106,9 +105,7 @@
                                           <Button disable="true" mnemonicParsing="false" text="Edit Patient Info" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
-                                    <ChoiceBox fx:id="apptInfoPatientChoiceBox" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <Label text="Modality:" GridPane.rowIndex="2" />
-                                    <ChoiceBox fx:id="apptInfoModalityChoiceBox" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <Label text="Selected Body Parts:" GridPane.rowIndex="3" />
                                     <Label text="Additional Info:" GridPane.rowIndex="4" />
                                     <TextField fx:id="apptInfoBodyPartsTextField" editable="false" promptText="Body Part(s)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -123,9 +120,11 @@
                                       </rowConstraints>
                                        <children>
                                           <DatePicker fx:id="apptInfoDatePicker" disable="true" />
-                                          <ChoiceBox fx:id="apptInfoTimeChoiceBox" disable="true" prefWidth="150.0" GridPane.rowIndex="1" />
+                                          <ComboBox fx:id="apptInfoTimeComboBox" disable="true" prefWidth="150.0" promptText="Select Time" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
+                                    <ComboBox fx:id="apptInfoPatientComboBox" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="apptInfoModalityComboBox" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children>
