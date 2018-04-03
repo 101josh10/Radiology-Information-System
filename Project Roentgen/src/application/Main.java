@@ -18,7 +18,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("../view/RadiologistView.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("../view/ReceptionistView.fxml"));
 			Scene scene = new Scene(root, 972, 538);
 			stage.setTitle("RIS Radiologist View");
 			stage.setScene(scene);
