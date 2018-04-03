@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -43,22 +44,8 @@ public class Appointment {
 
 	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
-		int hours = dateTime.getHour();
-		int mins = dateTime.getMinute();
-		String afternoon = " AM";
-		if(hours >= 12) {
-			afternoon = " PM";
-		}
-		if(hours > 12) {
-			hours %= 12;
-		}
-		
-		displayTime = hours + ":";
-		if(mins < 10) {
-			displayTime.concat("0");
-		}
-		
-		displayTime += mins + afternoon;
+		LocalTime time = LocalTime.of(dateTime.getHour(), dateTime.getMinute());
+		displayTime = time.toString();
 		//System.out.println(displayTime); //uncomment for testing
 	}
 
