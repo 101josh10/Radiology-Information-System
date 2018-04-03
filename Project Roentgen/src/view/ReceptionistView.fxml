@@ -16,9 +16,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReceptionistController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReceptionistController">
    <children>
-      <SplitPane dividerPositions="0.15776293823038398" prefHeight="700.0" prefWidth="1200.0">
+      <SplitPane dividerPositions="0.17445742904841402" prefHeight="700.0" prefWidth="1200.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -53,29 +53,29 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="588.0" prefWidth="632.0">
                <children>
-                  <SplitPane dividerPositions="0.5268924302788844" prefHeight="707.0" prefWidth="1006.0">
+                  <SplitPane dividerPositions="0.600597609561753" prefHeight="707.0" prefWidth="1006.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <TableView fx:id="appointmentTableView" prefHeight="698.0" prefWidth="526.0">
+                              <TableView fx:id="appointmentTableView" prefHeight="698.0" prefWidth="599.0">
                                 <columns>
                                   <TableColumn fx:id="timeTableColumn" prefWidth="75.0" text="Time" />
-                                  <TableColumn prefWidth="99.0" text="X-Ray" fx:id="xrayTableColumn" />
-                                    <TableColumn fx:id="ctTableColumn" prefWidth="119.0" text="CT" />
-                                    <TableColumn fx:id="ultrasoundTableColumn" prefWidth="106.0" text="Ultrasound" />
-                                    <TableColumn fx:id="mriTableColumn" prefWidth="126.0" text="MRI" />
+                                  <TableColumn prefWidth="131.0" text="X-Ray" fx:id="xrayTableColumn" />
+                                    <TableColumn fx:id="ctTableColumn" prefWidth="129.22409057617188" text="CT" />
+                                    <TableColumn fx:id="ultrasoundTableColumn" prefWidth="142.77587890625" text="Ultrasound" />
+                                    <TableColumn fx:id="mriTableColumn" prefWidth="120.0" text="MRI" />
                                 </columns>
                               </TableView>
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="80.0">
                            <children>
                               <Label layoutX="114.0" layoutY="14.0" text="Appointment Information">
                                  <font>
                                     <Font name="System Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <GridPane layoutX="1.0" layoutY="44.0" prefHeight="655.0" prefWidth="472.0">
+                              <GridPane layoutY="40.0" prefHeight="655.0" prefWidth="370.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -83,8 +83,8 @@
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="109.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="109.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
