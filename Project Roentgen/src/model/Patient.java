@@ -4,11 +4,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class Patient {
 	private int id;
@@ -17,6 +12,7 @@ public class Patient {
 	private String ssn;
 	private LocalDate dob;
 	private String dobString;
+	private String protectedSSN;
 	private String phoneNum, email;
 	private String address, city, state, zip;
 	private int weight, height;
@@ -98,6 +94,10 @@ public class Patient {
 	public String getRace() {
 		return race;
 	}
+	
+	public String getProtectedSSN() {
+		return protectedSSN;
+	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -119,6 +119,12 @@ public class Patient {
 
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
+		protectedSSN = "xxx-xx-";
+		if(ssn.length() == 9) {
+			protectedSSN += ssn.substring(5);
+		} else {
+			protectedSSN += ssn.substring(7);
+		}
 	}
 
 	public void setDob(LocalDate dob) {
