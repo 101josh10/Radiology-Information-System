@@ -30,11 +30,11 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <CheckBox layoutX="14.0" layoutY="23.0" mnemonicParsing="false" text="X-Ray" fx:id="xRayFilterCheckBox" />
-                        <CheckBox fx:id="ctFilterCheckBox" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" text="CT Scan" />
-                        <CheckBox fx:id="ultrasoundFilterCheckBox" layoutX="14.0" layoutY="70.0" mnemonicParsing="false" text="Ultrasound" />
-                        <CheckBox fx:id="mriFilterCheckBox" layoutX="14.0" layoutY="91.0" mnemonicParsing="false" text="MRI" />
-                        <Button layoutX="54.0" layoutY="117.0" mnemonicParsing="false" onAction="#clearFiltersPressed" text="Clear Filters" />
+                        <CheckBox layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#filterPressed" selected="true" text="X-Ray" fx:id="xRayFilterCheckBox" />
+                        <CheckBox fx:id="ctFilterCheckBox" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" onAction="#filterPressed" selected="true" text="CT Scan" />
+                        <CheckBox fx:id="ultrasoundFilterCheckBox" layoutX="14.0" layoutY="70.0" mnemonicParsing="false" onAction="#filterPressed" selected="true" text="Ultrasound" />
+                        <CheckBox fx:id="mriFilterCheckBox" layoutX="14.0" layoutY="91.0" mnemonicParsing="false" onAction="#filterPressed" selected="true" text="MRI" />
+                        <Button layoutX="54.0" layoutY="117.0" mnemonicParsing="false" onAction="#clearFiltersPressed" text="Select All" />
                      </children>
                   </AnchorPane>
                   <Button layoutX="18.0" layoutY="648.0" mnemonicParsing="false" onAction="#createAppointmentPushed" text="Create New Appointment" />
@@ -88,8 +88,8 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button fx:id="editButton" mnemonicParsing="false" onAction="#editAppointmentPushed" text="Edit Appointment" GridPane.rowIndex="5" />
-                                    <Button mnemonicParsing="false" onAction="#deleteAppointmentPushed" text="Delete Appointment" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Button fx:id="editButton" disable="true" mnemonicParsing="false" onAction="#editAppointmentPushed" text="Edit Appointment" GridPane.rowIndex="5" />
+                                    <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#deleteAppointmentPushed" text="Delete Appointment" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <Label text="Date/Time:" />
                                     <GridPane GridPane.rowIndex="1">
                                       <columnConstraints>
@@ -101,7 +101,7 @@
                                       </rowConstraints>
                                        <children>
                                           <Label text="Patient:" />
-                                          <Button disable="true" mnemonicParsing="false" text="View Patient Info" GridPane.rowIndex="1" />
+                                          <Button fx:id="patInfoButton" disable="true" mnemonicParsing="false" text="View Patient Info" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
                                     <Label text="Modality:" GridPane.rowIndex="2" />

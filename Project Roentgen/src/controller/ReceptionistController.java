@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 import model.Appointment;
@@ -56,6 +58,8 @@ public class ReceptionistController {
 	@FXML private TextField apptInfoBodyPartsTextField;
 	@FXML private TextArea apptInfoDescTextArea;
 	@FXML private Button editButton;
+	@FXML private Button patInfoButton;
+	@FXML private Button deleteButton;
 
 	//Other Variables
 	ObservableList<LocalTime> timeSlotCombos = FXCollections.observableArrayList();
@@ -68,14 +72,14 @@ public class ReceptionistController {
 	
 	public void initialize(){
 
-		initTimeSlots(); //populates time slot combos to be used when creating a new appointment or editing one
+		initTimeCombos(); //populates time slot combos to be used when creating a new appointment or editing one
 		initPatientCombos();//populates patient Combos
 		initModalityCombos();//populates modality Combos
 		initAppointmentList();//creates static appointment data
 		
 		displayDatePicker.setValue(selectedDate);
 		
-		getAppointmentsForDate(selectedDate);
+		updateTimeSlots();
 		
 		timeTableColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("displayTime"));
 		patientTableColumn.setCellValueFactory(new PropertyValueFactory<Appointment, String>("patientName"));
@@ -85,7 +89,7 @@ public class ReceptionistController {
 		appointmentTableView.setItems(dayView);
 	}
 	
-	public void initTimeSlots() {
+	public void initTimeCombos() {
 		for(int hours = OPENING_TIME.getHour(); hours < CLOSING_TIME.getHour(); hours++) {
 			for(int mins = 0; mins < 60; mins += 15) {
 				LocalTime time = LocalTime.of(hours, mins);
@@ -96,6 +100,7 @@ public class ReceptionistController {
 		}
 		
 		newApptTimeComboBox.setItems(timeSlotCombos);
+		apptInfoTimeComboBox.setItems(timeSlotCombos);
 	}
 	
 	public void initPatientCombos() {
@@ -127,8 +132,22 @@ public class ReceptionistController {
 		patientList.add(p3);
 		
 		newApptPatientComboBox.setItems(patientList);
+		apptInfoPatientComboBox.setItems(patientList);
 		
 		newApptPatientComboBox.setConverter(new StringConverter<Patient>(){
+			@Override
+		    public String toString(Patient object) {
+		        return object.getDisplayName();
+		    }
+
+			@Override
+			public Patient fromString(String arg0) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
+		
+		apptInfoPatientComboBox.setConverter(new StringConverter<Patient>(){
 			@Override
 		    public String toString(Patient object) {
 		        return object.getDisplayName();
@@ -149,6 +168,7 @@ public class ReceptionistController {
 		modalityCombos.add("MRI");
 		
 		modalityComboBox.setItems(modalityCombos);
+		apptInfoModalityComboBox.setItems(modalityCombos);
 	}
 	
 	public void initAppointmentList(){
@@ -157,7 +177,7 @@ public class ReceptionistController {
 		//using static data for now
 			Appointment a1 = new Appointment();
 			a1.setPatient(patientList.get(0));
-			LocalDateTime a1Time = LocalDateTime.of(2018, 4, 3, 9, 30);
+			LocalDateTime a1Time = LocalDateTime.of(2018, 4, 4, 9, 30);
 			a1.setDateTime(a1Time);
 			a1.setBodyPart("Arm");
 			a1.setDesc("Test Description");
@@ -165,7 +185,7 @@ public class ReceptionistController {
 			
 			Appointment a2 = new Appointment();
 			a2.setPatient(patientList.get(1));
-			LocalDateTime a2Time = LocalDateTime.of(2018, 4, 3, 13, 30);
+			LocalDateTime a2Time = LocalDateTime.of(2018, 4, 4, 13, 30);
 			a2.setDateTime(a2Time);
 			a2.setBodyPart("Leg");
 			a2.setDesc("Another Test");
@@ -190,30 +210,143 @@ public class ReceptionistController {
 			// */
 	}
 	
-	public void getAppointmentsForDate(LocalDate date) {
+	public ObservableList<Appointment> getAppointmentsForDate(LocalDate date) {
 		//input SQL Select statement
 		
-		dayView.clear();
+		ObservableList<Appointment> temp = FXCollections.observableArrayList();
 		for(Appointment appt:appointmentList) {
 			if(appt.getDateTime().getYear() == date.getYear()) {
 				if(appt.getDateTime().getDayOfYear() == date.getDayOfYear()) {
-					dayView.add(appt);
+					temp.add(appt);
 				}
 			}
 		}
+		
+		return temp;
 	}
 	
 	public void updateTimeSlots() { 
+		if(editButton.getText().equals("Save Appointment")) {
+			Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+			alert.setTitle("Save Changes?");
+			alert.setHeaderText("Would you like to save your changes?");
+			alert.setContentText("Pressing \"No\" will discard your changes.");
+			
+
+			Optional<ButtonType> result = alert.showAndWait();
+			
+			if(result.get() == ButtonType.YES) {
+				//Save the appointment if they click YES
+				editAppointmentPushed();
+			}
+		}
+		
 		selectedDate = displayDatePicker.getValue();
-		getAppointmentsForDate(selectedDate);
-		//System.out.println(selectedDate.toString());//uncomment for testing
+		dayView.clear();
+		dayView = getAppointmentsForDate(selectedDate);
+		appointmentTableView.setItems(dayView);
+		
+		apptInfoDatePicker.setValue(null);
+		apptInfoTimeComboBox.setValue(null);
+		apptInfoPatientComboBox.setValue(null);
+		apptInfoModalityComboBox.setValue(null);
+		apptInfoBodyPartsTextField.setText(null);
+		apptInfoDescTextArea.setText(null);
+		
+		patInfoButton.setDisable(true);
+		editButton.setDisable(true);
+		deleteButton.setDisable(true);
+		editButton.setText("Edit Appointment");
+		
+		/*System.out.println(selectedDate.toString());//uncomment for testing
+		System.out.println(appointmentList.toString());
+		System.out.println(dayView.toString());//*/
+	}
+	
+	public void filterPressed() {
+		ObservableList<Appointment> temp = getAppointmentsForDate(selectedDate);
+		ObservableList<Appointment> xRays = FXCollections.observableArrayList();
+		ObservableList<Appointment> ct = FXCollections.observableArrayList();
+		ObservableList<Appointment> ultrasound = FXCollections.observableArrayList();
+		ObservableList<Appointment> mri = FXCollections.observableArrayList();
+		
+		for(Appointment appt:temp) {
+			if(appt.getModality().equals("X-Ray")) {
+				xRays.add(appt);
+			}
+			if(appt.getModality().equals("CT Scan")) {
+				ct.add(appt);
+			}
+			if(appt.getModality().equals("Ultrasound")) {
+				ultrasound.add(appt);
+			}
+			if(appt.getModality().equals("MRI")) {
+				mri.add(appt);
+			}
+		}
+		
+		for(Appointment appt:dayView) {
+			boolean remove = false;
+			
+			
+			//********************If any one of these four conditions applies,	********************
+			//********************		remove the appt from the day view		********************
+			if(!xRayFilterCheckBox.isSelected() && appt.getModality().equals("X-Ray")) {
+				remove = true;
+			}
+			
+			if(!ctFilterCheckBox.isSelected() && appt.getModality().equals("CT Scan")) {
+				remove = true;
+			}
+			
+			if(!ultrasoundFilterCheckBox.isSelected() && appt.getModality().equals("Ultrasound")) {
+				remove = true;
+			}
+			
+			if(!mriFilterCheckBox.isSelected() && appt.getModality().equals("MRI")) {
+				remove = true;
+			}
+			
+			if(remove) {
+				dayView.remove(appt);
+			}
+			
+			//**************************************************************************************
+			//**************************************************************************************
+			
+			//********************If any one of these four conditions applies,	********************
+			//********************		add the appt to the day view			********************
+			
+			if(xRayFilterCheckBox.isSelected()) {
+				dayView.addAll(xRays);
+			}
+			
+			if(ctFilterCheckBox.isSelected()) {
+				dayView.addAll(ct);
+			}
+			
+			if(ultrasoundFilterCheckBox.isSelected()) {
+				dayView.addAll(ultrasound);
+			}
+			
+			if(mriFilterCheckBox.isSelected()) {
+				dayView.addAll(mri);
+			}
+			//**************************************************************************************
+			//**************************************************************************************
+		}
+		
+		appointmentTableView.setItems(dayView);
 	}
 	
 	public void clearFiltersPressed() { //When the clear filters button is pressed, this sets all filter checkboxes to be unchecked
-		xRayFilterCheckBox.setSelected(false);
-		ctFilterCheckBox.setSelected(false);
-		ultrasoundFilterCheckBox.setSelected(false);
-		mriFilterCheckBox.setSelected(false);
+		xRayFilterCheckBox.setSelected(true);
+		ctFilterCheckBox.setSelected(true);
+		ultrasoundFilterCheckBox.setSelected(true);
+		mriFilterCheckBox.setSelected(true);
+		
+		dayView = getAppointmentsForDate(selectedDate);
+		appointmentTableView.setItems(dayView);
 	}
 	
 	public void createAppointmentPushed(){
@@ -253,6 +386,10 @@ public class ReceptionistController {
 			alert.showAndWait();
 			
 			//update appointments to reflect new changes
+			
+			dayView = getAppointmentsForDate(selectedDate);
+			appointmentTableView.setItems(dayView);
+			
 		} catch (NullPointerException e){
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error!");
@@ -286,14 +423,70 @@ public class ReceptionistController {
 		apptInfoBodyPartsTextField.setText(selected.getBodyPart());
 		apptInfoDescTextArea.setText(selected.getDesc());
 		
-		
+		patInfoButton.setDisable(false);
+		editButton.setDisable(false);
+		deleteButton.setDisable(false);
 	}
 	
 	public void editAppointmentPushed() {
-		if(editButton.getText().equals("Edit Appointment"));
+		if(editButton.getText().equals("Edit Appointment")) {
+			apptInfoDatePicker.setDisable(false);
+			apptInfoTimeComboBox.setDisable(false);
+			apptInfoPatientComboBox.setDisable(false);
+			apptInfoModalityComboBox.setDisable(false);
+			apptInfoBodyPartsTextField.setEditable(true);
+			apptInfoDescTextArea.setEditable(true);
+			
+			editButton.setText("Save Appointment");
+		} else {
+			Appointment selected = appointmentTableView.getSelectionModel().getSelectedItem();
+			int selIndex = appointmentList.indexOf(selected);
+			
+			Appointment altered = new Appointment();
+			LocalDate alteredDate = apptInfoDatePicker.getValue();
+			LocalTime alteredTime = apptInfoTimeComboBox.getValue();
+			LocalDateTime alteredDT = LocalDateTime.of(alteredDate, alteredTime);
+			altered.setDateTime(alteredDT);
+			altered.setPatient(apptInfoPatientComboBox.getValue());
+			altered.setBodyPart(apptInfoBodyPartsTextField.getText());
+			altered.setModality(apptInfoModalityComboBox.getValue());
+			altered.setDesc(apptInfoDescTextArea.getText());
+			
+			appointmentList.remove(selected);
+			appointmentList.add(selIndex, altered);
+			
+			apptInfoDatePicker.setDisable(true);
+			apptInfoTimeComboBox.setDisable(true);
+			apptInfoPatientComboBox.setDisable(true);
+			apptInfoModalityComboBox.setDisable(true);
+			apptInfoBodyPartsTextField.setEditable(false);
+			apptInfoDescTextArea.setEditable(false);
+			
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Appointment Saved");
+			alert.setHeaderText("Appointment has been changed Successfully");
+			alert.setContentText("Press \"OK\" to reload appointments");
+
+			alert.showAndWait();
+			
+			dayView = getAppointmentsForDate(selectedDate);
+			appointmentTableView.setItems(dayView);
+			
+			editButton.setText("Edit Appointment");
+		}
 	}
 	
 	public void deleteAppointmentPushed() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirm Delete");
+		alert.setHeaderText("Are you sure you want to delete this appointment?");
+		//alert.setContentText("Make sure you have filled in all information necessary to create an appointment.");
+
+		Optional<ButtonType> result = alert.showAndWait();
 		
+		if(result.get() == ButtonType.OK) {
+			//Delete the appointment if they click ok
+			
+		}
 	}
 }
