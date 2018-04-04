@@ -193,15 +193,24 @@ public class ReceptionistController {
 			
 			Appointment a3 = new Appointment();
 			a3.setPatient(patientList.get(2));
-			LocalDateTime a3Time = LocalDateTime.of(2018, 5, 9, 16, 15);
+			LocalDateTime a3Time = LocalDateTime.of(2018, 4, 5, 16, 15);
 			a3.setDateTime(a3Time);
 			a3.setBodyPart("Brain");
 			a3.setDesc("I dunno anymore");
 			a3.setModality("Ultrasound");
 			
+			Appointment a4 = new Appointment();
+			a4.setPatient(patientList.get(0));
+			LocalDateTime a4Time = LocalDateTime.of(2018, 4, 5, 12, 0);
+			a4.setDateTime(a3Time);
+			a4.setBodyPart("Brain");
+			a4.setDesc("I dunno anymore");
+			a4.setModality("CT Scan");
+			
 			appointmentList.add(a1);
 			appointmentList.add(a2);
 			appointmentList.add(a3);
+			appointmentList.add(a4);
 			
 			/* Comment for Testing purposes
 			for(Appointment appt: appointmentList) {
@@ -284,56 +293,24 @@ public class ReceptionistController {
 				mri.add(appt);
 			}
 		}
+		dayView = FXCollections.observableArrayList();
 		
-		for(Appointment appt:dayView) {
-			boolean remove = false;
-			
-			
-			//********************If any one of these four conditions applies,	********************
-			//********************		remove the appt from the day view		********************
-			if(!xRayFilterCheckBox.isSelected() && appt.getModality().equals("X-Ray")) {
-				remove = true;
+		for(Appointment appt:temp) {
+			if(xRayFilterCheckBox.isSelected() && appt.getModality().equals("X-Ray")) {
+				dayView.add(appt);
 			}
 			
-			if(!ctFilterCheckBox.isSelected() && appt.getModality().equals("CT Scan")) {
-				remove = true;
+			if(ctFilterCheckBox.isSelected() && appt.getModality().equals("CT Scan")) {
+				dayView.add(appt);
 			}
 			
-			if(!ultrasoundFilterCheckBox.isSelected() && appt.getModality().equals("Ultrasound")) {
-				remove = true;
+			if(ultrasoundFilterCheckBox.isSelected() && appt.getModality().equals("Ultrasound")) {
+				dayView.add(appt);
 			}
 			
-			if(!mriFilterCheckBox.isSelected() && appt.getModality().equals("MRI")) {
-				remove = true;
+			if(mriFilterCheckBox.isSelected() && appt.getModality().equals("MRI")) {
+				dayView.add(appt);
 			}
-			
-			if(remove) {
-				dayView.remove(appt);
-			}
-			
-			//**************************************************************************************
-			//**************************************************************************************
-			
-			//********************If any one of these four conditions applies,	********************
-			//********************		add the appt to the day view			********************
-			
-			if(xRayFilterCheckBox.isSelected()) {
-				dayView.addAll(xRays);
-			}
-			
-			if(ctFilterCheckBox.isSelected()) {
-				dayView.addAll(ct);
-			}
-			
-			if(ultrasoundFilterCheckBox.isSelected()) {
-				dayView.addAll(ultrasound);
-			}
-			
-			if(mriFilterCheckBox.isSelected()) {
-				dayView.addAll(mri);
-			}
-			//**************************************************************************************
-			//**************************************************************************************
 		}
 		
 		appointmentTableView.setItems(dayView);
