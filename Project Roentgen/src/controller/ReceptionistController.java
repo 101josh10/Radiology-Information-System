@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -9,6 +10,9 @@ import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -21,6 +25,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 import model.Appointment;
 import model.Patient;
@@ -403,6 +410,21 @@ public class ReceptionistController {
 		patInfoButton.setDisable(false);
 		editButton.setDisable(false);
 		deleteButton.setDisable(false);
+	}
+	
+	public void viewPatInfoPushed() {
+		Stage stage = new Stage();
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("../view/PatientInfoView.fxml"));
+			Scene scene = new Scene(root, 1200, 700);//should match the above view's dimensions **look in scenebuilder to find dimensions**
+			stage.setTitle("Patient Information");
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 	
 	public void editAppointmentPushed() {

@@ -101,7 +101,7 @@
                                       </rowConstraints>
                                        <children>
                                           <Label text="Patient:" />
-                                          <Button fx:id="patInfoButton" disable="true" mnemonicParsing="false" text="View Patient Info" GridPane.rowIndex="1" />
+                                          <Button fx:id="patInfoButton" disable="true" mnemonicParsing="false" onAction="#viewPatInfoPushed" text="View Patient Info" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
                                     <Label text="Modality:" GridPane.rowIndex="2" />
