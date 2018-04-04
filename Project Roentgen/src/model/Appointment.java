@@ -76,4 +76,18 @@ public class Appointment {
 	public void setModality(String modality) {
 		this.modality = modality;
 	}
+	
+	/*public boolean equals(Appointment appt) {				//Doesnt work yet. Returns false even if appt1 = appt2
+		boolean equals = false;
+		if(this.dateTime.equals(appt.getDateTime()) &&
+				this.bodyPart.equals(appt.getBodyPart()) &&
+				this.desc.equals(appt.getBodyPart()) &&
+				this.modality.equals(appt.getModality()) &&
+				this.last4.equals(appt.getLast4()) &&
+				this.patient.equals(appt.getPatient())) {
+			equals = true;
+		}
+		
+		return equals;
+	}*/
 }
