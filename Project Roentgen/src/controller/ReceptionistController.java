@@ -417,7 +417,7 @@ public class ReceptionistController {
 		Parent root;
 		try {
 			root = FXMLLoader.load(getClass().getResource("../view/PatientInfoView.fxml"));
-			Scene scene = new Scene(root, 1200, 700);//should match the above view's dimensions **look in scenebuilder to find dimensions**
+			Scene scene = new Scene(root, 800, 600);//should match the above view's dimensions **look in scenebuilder to find dimensions**
 			stage.setTitle("Patient Information");
 			stage.setScene(scene);
 			stage.show();
