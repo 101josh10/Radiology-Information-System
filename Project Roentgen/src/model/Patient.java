@@ -1,28 +1,27 @@
 package model;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class Patient {
 	private int id;
 	private String lastName, firstName, middleName;
+	private String displayName;
 	private String ssn;
-	private Calendar dob;
+	private LocalDate dob;
 	private String dobString;
+	private String protectedSSN;
 	private String phoneNum, email;
 	private String address, city, state, zip;
 	private int weight, height;
 	private boolean isMale;
 	private String race;
-	private Calendar mostRecentAppt;
-	private Calendar nextAppt;
+	private LocalDate mostRecentAppt;
+	private LocalDate nextAppt;
 
-	private ArrayList<Calendar> appointmentHistory = new ArrayList<>();
+	private ArrayList<LocalDateTime> appointmentHistory = new ArrayList<>();
 
 	public Patient() {
 		super();
@@ -43,12 +42,16 @@ public class Patient {
 	public String getMiddleName() {
 		return middleName;
 	}
+	
+	public String getDisplayName() {
+		return displayName;
+	}
 
 	public String getSsn() {
 		return ssn;
 	}
 
-	public Calendar getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
 
@@ -91,6 +94,10 @@ public class Patient {
 	public String getRace() {
 		return race;
 	}
+	
+	public String getProtectedSSN() {
+		return protectedSSN;
+	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -98,10 +105,12 @@ public class Patient {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+		this.displayName = lastName + ", " + firstName;
 	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+		this.displayName = lastName + ", " + firstName;
 	}
 
 	public void setMiddleName(String middleName) {
@@ -110,14 +119,19 @@ public class Patient {
 
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
+		protectedSSN = "xxx-xx-";
+		if(ssn.length() == 9) {
+			protectedSSN += ssn.substring(5);
+		} else {
+			protectedSSN += ssn.substring(7);
+		}
 	}
 
-	@SuppressWarnings("deprecation")
-	public void setDob(Calendar dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
-		int year = dob.getTime().getYear();
-		int day = dob.getTime().getDate();
-		int month = dob.getTime().getMonth();
+		int year = dob.getYear();
+		int day = dob.getDayOfMonth();
+		int month = dob.getMonthValue();
 
 		dobString = month + "/" + day + "/" + year;
 		//System.out.println(dobString);//uncomment for testing
@@ -163,20 +177,19 @@ public class Patient {
 		this.race = race;
 	}
 
-	public Calendar getMostRecentAppointment(){
-		Calendar today = Calendar.getInstance();
-
+	public LocalDate getMostRecentAppointment(){
+		
 
 		return mostRecentAppt;
 	}
 
-	public Calendar getNextAppointment(){
+	public LocalDate getNextAppointment(){
 
 		return nextAppt;
 	}
 
 	private void sortApptHistory(){
-		ArrayList<Calendar> temp = appointmentHistory;
+		ArrayList<LocalDateTime> temp = appointmentHistory;
 		//Comparator<Calendar> comparator = Comparator.comparingLong(keyExtractor);
 
 		//FXCollections.sort(appointmentHistory, comparator);

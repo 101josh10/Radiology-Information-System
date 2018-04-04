@@ -18,8 +18,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("../view/RadiologistView.fxml"));
-			Scene scene = new Scene(root, 972, 538);
+			Parent root = FXMLLoader.load(getClass().getResource("../view/ReceptionistView.fxml"));
+			//Parent root = FXMLLoader.load(getClass().getResource("../view/RadiologistView.fxml"));
+			Scene scene = new Scene(root, 1200, 700);//should match the above view's dimensions **look in scenebuilder to find dimensions**
 			stage.setTitle("RIS Radiologist View");
 			stage.setScene(scene);
 			stage.show();

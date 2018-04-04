@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import javafx.event.ActionEvent;
@@ -15,7 +16,7 @@ import javafx.stage.FileChooser;
 public class Report {
 	private File reportFile;
 	private String title;
-	private Calendar dateAdded;
+	private LocalDateTime dateAdded;
 	private Button downloadButton;
 	private String dateString;
 
@@ -54,7 +55,7 @@ public class Report {
 		return title;
 	}
 
-	public Calendar getDateAdded() {
+	public LocalDateTime getDateAdded() {
 		return dateAdded;
 	}
 
@@ -70,12 +71,11 @@ public class Report {
 		this.title = title;
 	}
 
-	public void setDateAdded(Calendar dateAdded) {
+	public void setDateAdded(LocalDateTime dateAdded) {
 		this.dateAdded = dateAdded;
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
 		if (dateAdded != null) {
-		dateString = sdf.format(dateAdded.getTime());
+			dateString = dateAdded.toString();
 		}
 
 		System.out.println(dateString);
