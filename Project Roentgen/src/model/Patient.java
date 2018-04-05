@@ -17,7 +17,7 @@ public class Patient {
 	private String address, city, state, zip;
 	private int weight, height;
 	private boolean isMale;
-	private String race;
+	private String ethnicity;
 	private LocalDate mostRecentAppt;
 	private LocalDate nextAppt;
 
@@ -91,8 +91,8 @@ public class Patient {
 		return isMale;
 	}
 
-	public String getRace() {
-		return race;
+	public String getEthnicity() {
+		return ethnicity;
 	}
 	
 	public String getProtectedSSN() {
@@ -173,8 +173,8 @@ public class Patient {
 		this.isMale = isMale;
 	}
 
-	public void setRace(String race) {
-		this.race = race;
+	public void setEthnicity(String ethnicity) {
+		this.ethnicity = ethnicity;
 	}
 
 	public LocalDate getMostRecentAppointment(){
