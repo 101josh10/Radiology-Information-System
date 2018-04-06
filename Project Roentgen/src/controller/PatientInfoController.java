@@ -1,14 +1,18 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import model.Patient;
 
 public class PatientInfoController {
 
+	//View Objects
 	@FXML private TextField firstNameTextField;
 	@FXML private TextField lastNameTextField;
 	@FXML private TextField middleInitialTextField;
@@ -28,8 +32,32 @@ public class PatientInfoController {
 	@FXML private TextField zipTextField;
 	@FXML private Button editButton;
 	
+	//Other variables
+	ObservableList<String> ethnicityChoices = FXCollections.observableArrayList();
+	ObservableList<String> genderChoices = FXCollections.observableArrayList();
+	
+	//Selected Patient's information
+	private Patient patient = new Patient();
+	
 	public void initialize() {
+		initEthnicities();
+	}
+	
+	public void initEthnicities(){
+		ethnicityChoices.add("Caucasian");
+		ethnicityChoices.add("African American");
+		ethnicityChoices.add("Latino/Hispanic");
+		ethnicityChoices.add("Asian");
+		ethnicityChoices.add("Other");
 		
+		ethnicityComboBox.setItems(ethnicityChoices);
+	}
+	
+	public void initGenders(){
+		genderChoices.add("Male");
+		genderChoices.add("Female");
+		
+		genderComboBox.setItems(genderChoices);
 	}
 	
 	public void middleInitialKeyTyped() {
