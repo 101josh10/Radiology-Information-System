@@ -420,6 +420,8 @@ public class ReceptionistController {
 			Scene scene = new Scene(root, 800, 600);//should match the above view's dimensions **look in scenebuilder to find dimensions**
 			stage.setTitle("Patient Information");
 			stage.setScene(scene);
+			
+			stage.show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
