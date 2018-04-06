@@ -35,13 +35,23 @@ public class PatientInfoController {
 	//Other variables
 	ObservableList<String> ethnicityChoices = FXCollections.observableArrayList();
 	ObservableList<String> genderChoices = FXCollections.observableArrayList();
+	ObservableList<Integer> feetChoices = FXCollections.observableArrayList();
+	ObservableList<Integer> inchesChoices = FXCollections.observableArrayList();
 	
 	//Selected Patient's information
 	private Patient patient = new Patient();
 	
+	public PatientInfoController(ReceptionistController rc){
+		patient = rc.getSelectedPatient();
+	}
+	
 	public void initialize() {
 		initEthnicities();
 		initGenders();
+		initFeet();
+		initInches();
+		
+		System.out.println(patient.getLastName());
 	}
 	
 	public void initEthnicities(){
@@ -61,12 +71,34 @@ public class PatientInfoController {
 		genderComboBox.setItems(genderChoices);
 	}
 	
+	public void initFeet(){
+		for(int a = 3; a <= 8; a++){
+			feetChoices.add(a);
+		}
+		
+		feetComboBox.setItems(feetChoices);
+	}
+	
+	public void initInches(){
+		for(int a = 0; a <= 11; a++){
+			inchesChoices.add(a);
+		}
+		
+		inchesComboBox.setItems(inchesChoices);
+	}
+	
 	public void middleInitialKeyTyped() {
 		
 	}
 	
 	public void ethnicitySelected() {
+		String selection = ethnicityComboBox.getValue();
 		
+		if(selection.equals("Other")){
+			otherEthnicityTextField.setDisable(false);
+		} else{
+			otherEthnicityTextField.setDisable(true);
+		}
 	}
 	
 	public void editButtonPressed() {
