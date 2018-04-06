@@ -41,10 +41,6 @@ public class PatientInfoController {
 	//Selected Patient's information
 	private Patient patient = new Patient();
 	
-	public PatientInfoController(ReceptionistController rc){
-		patient = rc.getSelectedPatient();
-	}
-	
 	public void initialize() {
 		initEthnicities();
 		initGenders();
