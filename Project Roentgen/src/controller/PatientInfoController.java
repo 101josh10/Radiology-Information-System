@@ -21,9 +21,9 @@ public class PatientInfoController {
 	@FXML private TextField otherEthnicityTextField;
 	@FXML private TextField ssnTextField;
 	@FXML private DatePicker dobDatePicker;
-	@FXML private ComboBox feetComboBox;
-	@FXML private ComboBox inchesComboBox;
-	@FXML private Spinner weightSpinner;
+	@FXML private ComboBox<Integer> feetComboBox;
+	@FXML private ComboBox<Integer> inchesComboBox;
+	@FXML private Spinner<Integer> weightSpinner;
 	@FXML private TextField phoneNumTextField;
 	@FXML private TextField emailTextField;
 	@FXML private TextField addressTextField;
@@ -41,6 +41,7 @@ public class PatientInfoController {
 	
 	public void initialize() {
 		initEthnicities();
+		initGenders();
 	}
 	
 	public void initEthnicities(){
