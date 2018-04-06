@@ -485,7 +485,10 @@ public class ReceptionistController {
 		
 		if(result.get() == ButtonType.OK) {
 			//Delete the appointment if they click ok
-			
+			Appointment selected = appointmentTableView.getSelectionModel().getSelectedItem();
+			appointmentList.remove(selected);
+			dayView = getAppointmentsForDate(selectedDate);
+			appointmentTableView.setItems(dayView);
 		}
 	}
 }
