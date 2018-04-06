@@ -19,7 +19,7 @@
       <Button fx:id="clickLogin" layoutX="112.0" layoutY="313.0" mnemonicParsing="false" text="Login" />
       <TextField fx:id="txtUsername" alignment="CENTER" layoutX="60.0" layoutY="242.0" promptText="Username" />
       <TextField fx:id="txtPassword" alignment="CENTER" layoutX="61.0" layoutY="280.0" promptText="Password" />
-      <MenuButton layoutX="80.0" layoutY="205.0" mnemonicParsing="false" text="View Selection">
+      <MenuButton fx:id="clickSelect" layoutX="80.0" layoutY="205.0" mnemonicParsing="false" text="View Selection">
         <items>
           <MenuItem fx:id="viewRad" mnemonicParsing="false" text="Radiologist" />
           <MenuItem fx:id="viewRec" mnemonicParsing="false" text="Receptionist" />
