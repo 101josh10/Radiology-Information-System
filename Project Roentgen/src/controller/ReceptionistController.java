@@ -17,6 +17,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -76,6 +77,32 @@ public class ReceptionistController {
 	private ObservableList<Appointment> dayView = FXCollections.observableArrayList();
 	private ObservableList<Patient> patientList = FXCollections.observableArrayList();
 	private LocalDate selectedDate = LocalDate.now();
+
+	//Patient Info Tab
+	@FXML private TextField firstNameTextField;
+	@FXML private TextField lastNameTextField;
+	@FXML private TextField middleInitialTextField;
+	@FXML private ComboBox<String> genderComboBox;
+	@FXML private ComboBox<String> ethnicityComboBox;
+	@FXML private TextField otherEthnicityTextField;
+	@FXML private TextField ssnTextField;
+	@FXML private DatePicker dobDatePicker;
+	@FXML private ComboBox<Integer> feetComboBox;
+	@FXML private ComboBox<Integer> inchesComboBox;
+	@FXML private Spinner<Integer> weightSpinner;
+	@FXML private TextField phoneNumTextField;
+	@FXML private TextField emailTextField;
+	@FXML private TextField addressTextField;
+	@FXML private TextField stateTextField;
+	@FXML private TextField cityTextField;
+	@FXML private TextField zipTextField;
+	@FXML private Button editPatInfoButton;
+
+	//Other variables
+	ObservableList<String> ethnicityChoices = FXCollections.observableArrayList();
+	ObservableList<String> genderChoices = FXCollections.observableArrayList();
+	ObservableList<Integer> feetChoices = FXCollections.observableArrayList();
+	ObservableList<Integer> inchesChoices = FXCollections.observableArrayList();
 
 
 	public void initialize(){
