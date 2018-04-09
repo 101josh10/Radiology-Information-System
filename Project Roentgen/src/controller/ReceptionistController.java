@@ -185,7 +185,7 @@ public class ReceptionistController {
 		//using static data for now
 			Appointment a1 = new Appointment();
 			a1.setPatient(patientList.get(0));
-			LocalDateTime a1Time = LocalDateTime.of(2018, 4, 6, 9, 30);
+			LocalDateTime a1Time = LocalDateTime.of(2018, 4, 9, 9, 30);
 			a1.setDateTime(a1Time);
 			a1.setBodyPart("Arm");
 			a1.setDesc("Test Description");
@@ -193,7 +193,7 @@ public class ReceptionistController {
 
 			Appointment a2 = new Appointment();
 			a2.setPatient(patientList.get(1));
-			LocalDateTime a2Time = LocalDateTime.of(2018, 4, 6, 13, 30);
+			LocalDateTime a2Time = LocalDateTime.of(2018, 4, 9, 13, 30);
 			a2.setDateTime(a2Time);
 			a2.setBodyPart("Leg");
 			a2.setDesc("Another Test");
@@ -201,7 +201,7 @@ public class ReceptionistController {
 
 			Appointment a3 = new Appointment();
 			a3.setPatient(patientList.get(2));
-			LocalDateTime a3Time = LocalDateTime.of(2018, 4, 6, 16, 15);
+			LocalDateTime a3Time = LocalDateTime.of(2018, 4, 9, 16, 15);
 			a3.setDateTime(a3Time);
 			a3.setBodyPart("Brain");
 			a3.setDesc("I dunno anymore");
@@ -209,7 +209,7 @@ public class ReceptionistController {
 
 			Appointment a4 = new Appointment();
 			a4.setPatient(patientList.get(0));
-			LocalDateTime a4Time = LocalDateTime.of(2018, 4, 6, 12, 0);
+			LocalDateTime a4Time = LocalDateTime.of(2018, 4, 9, 12, 0);
 			a4.setDateTime(a3Time);
 			a4.setBodyPart("Brain");
 			a4.setDesc("I dunno anymore");
@@ -353,7 +353,23 @@ public class ReceptionistController {
 			appt.setBodyPart(bodyPartTextField.getText());
 			appt.setDesc(additionalTextArea.getText());
 
-			System.out.println("\"" + bodyPartTextField.getText() + "\"");
+			ObservableList<Appointment> daysAppts = getAppointmentsForDate(newApptDate);
+			for(Appointment a : daysAppts){
+				if(a.getPatient() == newApptPatientComboBox.getValue() && a.getDateTime().equals(newApptDateTime)){//if patient is already supposed to be somewhere else
+					String message = "Patient already scheduled at that time.\n Please select another time for the patient.";
+					IllegalArgumentException e = new IllegalArgumentException(message);
+
+					throw e;
+				}
+				if(a.getModality() == modalityComboBox.getValue() && a.getDateTime().equals(newApptDateTime)){//if modality is already scheduled
+					String message = modalityComboBox.getValue() + " already scheduled at that time.\n Please select another time for the patient.";
+					IllegalArgumentException e = new IllegalArgumentException(message);
+
+					throw e;
+				}
+			}
+
+			//System.out.println("\"" + bodyPartTextField.getText() + "\"");//uncomment for testing
 			appointmentList.add(appt);
 
 			newApptDatePicker.setValue(null);
@@ -380,6 +396,13 @@ public class ReceptionistController {
 			alert.setTitle("Error!");
 			alert.setHeaderText("Fields left blank");
 			alert.setContentText("Make sure you have filled in all information neccessary to create an appointment.");
+
+			alert.showAndWait();
+		} catch(IllegalArgumentException e){
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error!");
+			alert.setHeaderText("Cannot Create Appointment");
+			alert.setContentText(e.getMessage());
 
 			alert.showAndWait();
 		}
