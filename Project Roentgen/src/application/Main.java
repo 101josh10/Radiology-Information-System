@@ -20,7 +20,7 @@ public class Main extends Application {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("../view/ReceptionistView.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("../view/RadiologistView.fxml"));
-			Scene scene = new Scene(root, 1200, 700);//should match the above view's dimensions **look in scenebuilder to find dimensions**
+			Scene scene = new Scene(root, 1200, 700);//should match the above view's dimensions **look in scene builder to find dimensions**
 			stage.setTitle("RIS Radiologist View");
 			stage.setScene(scene);
 			stage.show();
