@@ -10,11 +10,11 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1011.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.4" fx:controller="controller.MDController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="631.0" prefWidth="1011.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MDController">
   <tabs>
     <Tab closable="false" text="M.D. View">
       <content>
@@ -34,7 +34,7 @@
                                     <ListView id="mdListView" layoutY="36.0" prefHeight="565.0" prefWidth="260.0" />
                                  </children>
                               </AnchorPane>
-                              <ScrollPane layoutX="258.0" prefHeight="600.0" prefWidth="503.0">
+                              <ScrollPane id="imagesScroll" layoutX="258.0" prefHeight="600.0" prefWidth="503.0">
                                 <content>
                                   <AnchorPane id="images" minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="503.0">
                                        <children>
@@ -43,6 +43,7 @@
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
+                                          <ImageView id="images" fitHeight="539.0" fitWidth="459.0" layoutX="14.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
                                        </children>
                                     </AnchorPane>
                                 </content>
@@ -60,7 +61,7 @@
                                        </font>
                                     </Label>
                                     <ListView id="mdPatientInfoListView" layoutX="5.0" layoutY="37.0" prefHeight="253.0" prefWidth="239.0" />
-                                    <MediaView id="radiologistReportMediaView" fitHeight="280.0" fitWidth="238.0" layoutX="5.0" layoutY="314.0" />
+                                    <ImageView fitHeight="279.0" fitWidth="238.0" layoutX="5.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                            </children>
