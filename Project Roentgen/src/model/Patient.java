@@ -20,6 +20,7 @@ public class Patient {
 	private String ethnicity;
 	private LocalDate mostRecentAppt;
 	private LocalDate nextAppt;
+	private int feet, inches;
 
 	private ArrayList<LocalDateTime> appointmentHistory = new ArrayList<>();
 
@@ -98,6 +99,14 @@ public class Patient {
 	public String getProtectedSSN() {
 		return protectedSSN;
 	}
+	
+	public int getFeet() {
+		return feet;
+	}
+	
+	public int getInches() {
+		return inches;
+	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -167,6 +176,8 @@ public class Patient {
 
 	public void setHeight(int height) {
 		this.height = height;
+		this.feet = height / 12;
+		this.inches = height % 12;
 	}
 
 	public void setMale(boolean isMale) {
