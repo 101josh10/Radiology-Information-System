@@ -31,7 +31,7 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		DBConnection idb = new DBConnection();
-		Thread t = new Thread(idb);
+		Thread t = new Thread();
 		t.start();
 		launch(args);
 	}
