@@ -1,14 +1,18 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import model.Patient;
 
 public class PatientInfoController {
 
+	//View Objects
 	@FXML private TextField firstNameTextField;
 	@FXML private TextField lastNameTextField;
 	@FXML private TextField middleInitialTextField;
@@ -17,9 +21,9 @@ public class PatientInfoController {
 	@FXML private TextField otherEthnicityTextField;
 	@FXML private TextField ssnTextField;
 	@FXML private DatePicker dobDatePicker;
-	@FXML private ComboBox feetComboBox;
-	@FXML private ComboBox inchesComboBox;
-	@FXML private Spinner weightSpinner;
+	@FXML private ComboBox<Integer> feetComboBox;
+	@FXML private ComboBox<Integer> inchesComboBox;
+	@FXML private Spinner<Integer> weightSpinner;
 	@FXML private TextField phoneNumTextField;
 	@FXML private TextField emailTextField;
 	@FXML private TextField addressTextField;
@@ -28,8 +32,55 @@ public class PatientInfoController {
 	@FXML private TextField zipTextField;
 	@FXML private Button editButton;
 	
+	//Other variables
+	ObservableList<String> ethnicityChoices = FXCollections.observableArrayList();
+	ObservableList<String> genderChoices = FXCollections.observableArrayList();
+	ObservableList<Integer> feetChoices = FXCollections.observableArrayList();
+	ObservableList<Integer> inchesChoices = FXCollections.observableArrayList();
+	
+	//Selected Patient's information
+	private Patient patient = new Patient();
+	
 	public void initialize() {
+		initEthnicities();
+		initGenders();
+		initFeet();
+		initInches();
 		
+		System.out.println(patient.getLastName());
+	}
+	
+	public void initEthnicities(){
+		ethnicityChoices.add("Caucasian");
+		ethnicityChoices.add("African American");
+		ethnicityChoices.add("Latino/Hispanic");
+		ethnicityChoices.add("Asian");
+		ethnicityChoices.add("Other");
+		
+		ethnicityComboBox.setItems(ethnicityChoices);
+	}
+	
+	public void initGenders(){
+		genderChoices.add("Male");
+		genderChoices.add("Female");
+		
+		genderComboBox.setItems(genderChoices);
+	}
+	
+	public void initFeet(){
+		for(int a = 3; a <= 8; a++){
+			feetChoices.add(a);
+		}
+		
+		feetComboBox.setItems(feetChoices);
+	}
+	
+	public void initInches(){
+		for(int a = 0; a <= 11; a++){
+			inchesChoices.add(a);
+		}
+		
+		inchesComboBox.setItems(inchesChoices);
 	}
 	
 	public void middleInitialKeyTyped() {
@@ -37,7 +88,13 @@ public class PatientInfoController {
 	}
 	
 	public void ethnicitySelected() {
+		String selection = ethnicityComboBox.getValue();
 		
+		if(selection.equals("Other")){
+			otherEthnicityTextField.setDisable(false);
+		} else{
+			otherEthnicityTextField.setDisable(true);
+		}
 	}
 	
 	public void editButtonPressed() {
