@@ -18,6 +18,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -38,7 +41,10 @@ public class ReceptionistController {
 	private final LocalTime OPENING_TIME = LocalTime.of(8, 0);
 	private final LocalTime CLOSING_TIME = LocalTime.of(17, 0);
 
+	@FXML private TabPane receptionistTabPane;
+	
 	//Declare variables
+	@FXML private Tab appointmentsTab;
 	@FXML private DatePicker displayDatePicker;
 	@FXML private CheckBox xRayFilterCheckBox;
 	@FXML private CheckBox ctFilterCheckBox;
@@ -79,9 +85,10 @@ public class ReceptionistController {
 	private LocalDate selectedDate = LocalDate.now();
 
 	//Patient Info Tab
+	@FXML private Tab patInfoTab;
 	@FXML private TextField firstNameTextField;
 	@FXML private TextField lastNameTextField;
-	@FXML private TextField middleInitialTextField;
+	@FXML private TextField middleNameTextField;
 	@FXML private ComboBox<String> genderComboBox;
 	@FXML private ComboBox<String> ethnicityComboBox;
 	@FXML private TextField otherEthnicityTextField;
@@ -111,6 +118,11 @@ public class ReceptionistController {
 		initPatientCombos();//populates patient Combos
 		initModalityCombos();//populates modality Combos
 		initAppointmentList();//creates static appointment data
+		
+		initEthnicities();//populates ethnicity combo
+		initGenders();//populates gender combo
+		initFeet();//populates feet combo
+		initInches();//populates inches combo
 
 		displayDatePicker.setValue(selectedDate);
 
@@ -144,6 +156,17 @@ public class ReceptionistController {
 		p1 = new Patient();
 		p1.setFirstName("Joshua");
 		p1.setLastName("Knight");
+		p1.setMiddleName("Matthew");
+		p1.setMale(true);
+		p1.setAddress("17 Bluebird Tr.");
+		p1.setCity("Dahlonega");
+		p1.setState("GA");
+		p1.setZip("30533");
+		p1.setEthnicity("Buddhist or some shit");
+		p1.setHeight(69);
+		p1.setWeight(195);
+		p1.setPhoneNum("(706) 201-9393");
+		p1.setEmail("jmknig0314@ung.edu");
 		LocalDate dob = LocalDate.of(1995, 7, 24);
 		p1.setDob(dob);
 		p1.setSsn("123-45-6789");
@@ -212,7 +235,7 @@ public class ReceptionistController {
 		//using static data for now
 			Appointment a1 = new Appointment();
 			a1.setPatient(patientList.get(0));
-			LocalDateTime a1Time = LocalDateTime.of(2018, 4, 9, 9, 30);
+			LocalDateTime a1Time = LocalDateTime.of(2018, 4, 11, 9, 30);
 			a1.setDateTime(a1Time);
 			a1.setBodyPart("Arm");
 			a1.setDesc("Test Description");
@@ -220,7 +243,7 @@ public class ReceptionistController {
 
 			Appointment a2 = new Appointment();
 			a2.setPatient(patientList.get(1));
-			LocalDateTime a2Time = LocalDateTime.of(2018, 4, 9, 13, 30);
+			LocalDateTime a2Time = LocalDateTime.of(2018, 4, 11, 13, 30);
 			a2.setDateTime(a2Time);
 			a2.setBodyPart("Leg");
 			a2.setDesc("Another Test");
@@ -228,7 +251,7 @@ public class ReceptionistController {
 
 			Appointment a3 = new Appointment();
 			a3.setPatient(patientList.get(2));
-			LocalDateTime a3Time = LocalDateTime.of(2018, 4, 9, 16, 15);
+			LocalDateTime a3Time = LocalDateTime.of(2018, 4, 11, 16, 15);
 			a3.setDateTime(a3Time);
 			a3.setBodyPart("Brain");
 			a3.setDesc("I dunno anymore");
@@ -236,7 +259,7 @@ public class ReceptionistController {
 
 			Appointment a4 = new Appointment();
 			a4.setPatient(patientList.get(0));
-			LocalDateTime a4Time = LocalDateTime.of(2018, 4, 9, 12, 0);
+			LocalDateTime a4Time = LocalDateTime.of(2018, 4, 11, 12, 0);
 			a4.setDateTime(a3Time);
 			a4.setBodyPart("Brain");
 			a4.setDesc("I dunno anymore");
@@ -253,7 +276,40 @@ public class ReceptionistController {
 			}
 			// */
 	}
-
+	
+	public void initEthnicities(){
+		ethnicityChoices.add("Caucasian");
+		ethnicityChoices.add("African American");
+		ethnicityChoices.add("Latino/Hispanic");
+		ethnicityChoices.add("Asian");
+		ethnicityChoices.add("Other");
+		
+		ethnicityComboBox.setItems(ethnicityChoices);
+	}
+	
+	public void initGenders(){
+		genderChoices.add("Male");
+		genderChoices.add("Female");
+		
+		genderComboBox.setItems(genderChoices);
+	}
+	
+	public void initFeet(){
+		for(int a = 3; a <= 8; a++){
+			feetChoices.add(a);
+		}
+		
+		feetComboBox.setItems(feetChoices);
+	}
+	
+	public void initInches(){
+		for(int a = 0; a <= 11; a++){
+			inchesChoices.add(a);
+		}
+		
+		inchesComboBox.setItems(inchesChoices);
+	}
+	
 	public ObservableList<Appointment> getAppointmentsForDate(LocalDate date) {
 		//input SQL Select statement
 
@@ -464,19 +520,49 @@ public class ReceptionistController {
 	}
 
 	public void viewPatInfoPushed() {
-		Stage stage = new Stage();
-		Parent root;
-		try {
-			root = FXMLLoader.load(getClass().getResource("../view/PatientInfoView.fxml"));
-			Scene scene = new Scene(root, 800, 600);//should match the above view's dimensions **look in scenebuilder to find dimensions**
-			stage.setTitle("Patient Information");
-			stage.setScene(scene);
-
-			stage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		receptionistTabPane.getSelectionModel().selectNext();
+		String m = "Male";
+		String f = "Female";
+		
+		//Take patient info and put it into the fields
+		Patient pat = appointmentTableView.getSelectionModel().getSelectedItem().getPatient();
+		firstNameTextField.setText(pat.getFirstName());
+		lastNameTextField.setText(pat.getLastName());
+		middleNameTextField.setText(pat.getMiddleName());
+		if(pat.isMale()) {
+			genderComboBox.getSelectionModel().select(m);
+		} else {
+			genderComboBox.getSelectionModel().select(f);
 		}
+
+		String ethnicity = pat.getEthnicity();
+		boolean ethnicityExists = false;
+		
+		for(String s : ethnicityChoices) {
+			if(s.equals(ethnicity)) {
+				ethnicityExists = true;
+				break;
+			}
+		}
+		
+		if(ethnicityExists) {
+			ethnicityComboBox.getSelectionModel().select(ethnicity);
+		} else {
+			ethnicityComboBox.getSelectionModel().select("Other");
+			otherEthnicityTextField.setText(ethnicity);
+		}
+		
+		ssnTextField.setText(pat.getSsn());
+		dobDatePicker.setValue(pat.getDob());
+		feetComboBox.getSelectionModel().select(pat.getFeet());
+		inchesComboBox.getSelectionModel().select(pat.getInches());
+		weightSpinner.getValueFactory().setValue(pat.getWeight());
+		phoneNumTextField.setText(pat.getPhoneNum());
+		emailTextField.setText(pat.getEmail());
+		addressTextField.setText(pat.getAddress());
+		cityTextField.setText(pat.getCity());
+		stateTextField.setText(pat.getState());
+		zipTextField.setText(pat.getZip());
 	}
 
 	public void editAppointmentPushed() {
@@ -543,8 +629,65 @@ public class ReceptionistController {
 			appointmentTableView.setItems(dayView);
 		}
 	}
-
-	public Patient getSelectedPatient(){
-		return appointmentTableView.getSelectionModel().getSelectedItem().getPatient();
+	
+	public void ethnicitySelected() {
+		String selection = ethnicityComboBox.getValue();
+		
+		if(selection.equals("Other")){
+			otherEthnicityTextField.setDisable(false);
+		} else{
+			otherEthnicityTextField.setDisable(true);
+		}
+	}
+	
+	public void editPatButtonPressed() {
+		if(editPatInfoButton.getText().equals("Edit Patient")) {
+			firstNameTextField.setEditable(true);
+			lastNameTextField.setEditable(true);
+			middleNameTextField.setEditable(true);
+			genderComboBox.setDisable(false);
+			ethnicityComboBox.setDisable(false);
+			ssnTextField.setEditable(true);
+			dobDatePicker.setDisable(false);
+			feetComboBox.setDisable(false);
+			inchesComboBox.setDisable(false);
+			weightSpinner.setDisable(false);
+			phoneNumTextField.setEditable(true);
+			emailTextField.setEditable(true);
+			addressTextField.setEditable(true);
+			cityTextField.setEditable(true);
+			stateTextField.setEditable(true);
+			zipTextField.setEditable(true);
+			
+			editPatInfoButton.setText("Save Patient");
+		} else {
+			
+			firstNameTextField.setEditable(false);
+			lastNameTextField.setEditable(false);
+			middleNameTextField.setEditable(false);
+			genderComboBox.setDisable(true);
+			ethnicityComboBox.setDisable(true);
+			ssnTextField.setEditable(false);
+			dobDatePicker.setDisable(true);
+			feetComboBox.setDisable(true);
+			inchesComboBox.setDisable(true);
+			weightSpinner.setDisable(true);
+			phoneNumTextField.setEditable(false);
+			emailTextField.setEditable(false);
+			addressTextField.setEditable(false);
+			cityTextField.setEditable(false);
+			stateTextField.setEditable(false);
+			zipTextField.setEditable(false);
+			
+			editPatInfoButton.setText("Edit Patient");
+		}
+	}
+	
+	public void deletePatButtonPressed() {
+		
+	}
+	
+	public void appointmentsTabClicked() {
+		System.out.println("Clicked");
 	}
 }
