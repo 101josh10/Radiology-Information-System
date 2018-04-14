@@ -15,8 +15,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 
-public class LoginController 
+public class LoginController implements Initializable
 {
 
 	@FXML private ChoiceBox<String> viewSelect;
@@ -39,63 +40,89 @@ public class LoginController
 		viewSelect.getItems().add("MD");
 		if(viewSelect.getValue() == "Radiologist") 
 		{
-			String query = "SELECT * FROM RadLogin WHERE username = ? and password = ?";
+			String query = "SELECT * FROM radlogin WHERE username = ? and password = ?";
 			
 			PreparedStatement pst = conn.prepareStatement(query);
 			pst.setString(1, txtUsername.getText() );
 			pst.setString(2, txtPassword.getText() );
 
-			ResultSet rs = conn.prepareStatement(query).executeQuery();
+			ResultSet rs = pst.executeQuery();
 			
 			if (rs.next())
 			{
+				System.out.println("Login Successful!");
 				stage = (Stage) txtPassword.getScene().getWindow();
-				root = FXMLLoader.load(getClass().getResource("/view/RadiologistView.fxml"));
+				root = FXMLLoader.load(getClass().getResource("../view/RadiologistView.fxml"));
 				scene = new Scene(root);
 				stage.setScene(scene);
 				
 				stage.show();
 			}
 			
+			
 		}
 		
 		else if(viewSelect.getValue() == "Technician") 
 		{
-			String query = "SELECT * FROM TechLogin WHERE username = ? and password = ?";
+			String query = "SELECT * FROM techlogin WHERE username = ? and password = ?";
 			
 			PreparedStatement pst = conn.prepareStatement(query);
 			pst.setString(1, txtUsername.getText() );
 			pst.setString(2, txtPassword.getText() );
-			status = pst.execute();
-			if (status) 
+
+			ResultSet rs = pst.executeQuery();
+			
+			if (rs.next())
 			{
 				System.out.println("Login Successful!");
+				stage = (Stage) txtPassword.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("../view/technician.fxml"));
+				scene = new Scene(root);
+				stage.setScene(scene);
+				
+				stage.show();
 			}
 		}
 		else if(viewSelect.getValue() == "Receptionist")
 		{
-			String query = "SELECT * FROM FrontLogin WHERE username = ? and password = ?";
+			String query = "SELECT * FROM frontlogin WHERE username = ? and password = ?";
 			
 			PreparedStatement pst = conn.prepareStatement(query);
 			pst.setString(1, txtUsername.getText() );
 			pst.setString(2, txtPassword.getText() );
-			status = pst.execute();
-			if (status) 
+			
+			ResultSet rs = pst.executeQuery();
+			
+			if (rs.next())
 			{
 				System.out.println("Login Successful!");
+				stage = (Stage) txtPassword.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("../view/ReceptionistView.fxml"));
+				scene = new Scene(root);
+				stage.setScene(scene);
+				
+				stage.show();
 			}
 		}
 		else if(viewSelect.getValue() == "MD")
 		{
-			String query = "SELECT * FROM MDLogin WHERE username = ? and password = ?";
+			String query = "SELECT * FROM mdlogin WHERE username = ? and password = ?";
 			
 			PreparedStatement pst = conn.prepareStatement(query);
 			pst.setString(1, txtUsername.getText() );
 			pst.setString(2, txtPassword.getText() );
-			status = pst.execute();
-			if (status) 
+
+			ResultSet rs = pst.executeQuery();
+			
+			if (rs.next())
 			{
 				System.out.println("Login Successful!");
+				stage = (Stage) txtPassword.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("../view/MDView.fxml"));
+				scene = new Scene(root);
+				stage.setScene(scene);
+				
+				stage.show();
 			}
 		}
 	}
@@ -103,7 +130,10 @@ public class LoginController
 	
 	public void initialize(URL location, ResourceBundle recources) 
 	{
-		throw new UnsupportedOperationException("Not Supported.");
+		viewSelect.getItems().add("Radiologist");
+		viewSelect.getItems().add("Technician");
+		viewSelect.getItems().add("Receptionist");
+		viewSelect.getItems().add("MD");
 	}
 	
 }
