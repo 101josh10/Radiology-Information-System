@@ -21,9 +21,9 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("../view/LoginView.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("../view/ReceptionistView.fxml"));
 			//Parent root = FXMLLoader.load(getClass().getResource("../view/RadiologistView.fxml"));
-			//Scene scene = new Scene(root, 1200, 700);//should match the above view's dimensions **look in scene builder to find dimensions**
-			Scene scene = new Scene(root);
-			stage.setTitle("RIS Radiologist View");
+			Scene scene = new Scene(root, 270, 350);//should match the above view's dimensions **look in scene builder to find dimensions**
+			//Scene scene = new Scene(root);
+			stage.setTitle("RIS Login");
 			stage.setScene(scene);
 			stage.show();
 		} catch(Exception e) {
