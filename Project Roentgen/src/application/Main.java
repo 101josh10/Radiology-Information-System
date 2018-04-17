@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 import model.DBConnection;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
