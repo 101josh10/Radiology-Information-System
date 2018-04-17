@@ -25,12 +25,12 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <SplitPane dividerPositions="0.17445742904841402" prefHeight="700.0" prefWidth="1200.0">
+                  <SplitPane dividerPositions="0.17445742904841402" prefHeight="668.0" prefWidth="1200.0">
                      <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
                               <DatePicker fx:id="displayDatePicker" layoutX="6.0" layoutY="2.0" onAction="#updateTimeSlots" promptText="Display Date" />
-                              <AnchorPane layoutY="40.0" prefHeight="155.0" prefWidth="186.0" style="-fx-border-color: black;">
+                              <AnchorPane layoutX="10.0" layoutY="40.0" prefHeight="155.0" prefWidth="186.0" style="-fx-border-color: black;">
                                  <children>
                                     <Label layoutX="77.0" layoutY="6.0" text="Filters">
                                        <font>
@@ -44,7 +44,7 @@
                                     <Button layoutX="54.0" layoutY="117.0" mnemonicParsing="false" onAction="#clearFiltersPressed" text="Select All" />
                                  </children>
                               </AnchorPane>
-                              <Button layoutX="18.0" layoutY="648.0" mnemonicParsing="false" onAction="#createAppointmentPushed" text="Create New Appointment" />
+                              <Button layoutX="18.0" layoutY="625.0" mnemonicParsing="false" onAction="#createAppointmentPushed" text="Create New Appointment" />
                               <Label layoutX="20.0" layoutY="195.0" text="New Appointment">
                                  <font>
                                     <Font size="18.0" />
@@ -60,7 +60,7 @@
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="588.0" prefWidth="632.0">
                            <children>
-                              <SplitPane dividerPositions="0.600597609561753" prefHeight="707.0" prefWidth="1006.0">
+                              <SplitPane dividerPositions="0.600597609561753" prefHeight="668.0" prefWidth="1006.0">
                                  <items>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
