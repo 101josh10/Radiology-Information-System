@@ -3,22 +3,22 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="352.0" prefWidth="269.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <Label layoutX="51.0" layoutY="99.0" text="RIS Login">
+      <Label layoutX="67.0" layoutY="56.0" text="RIS Login">
          <font>
             <Font size="40.0" />
          </font>
       </Label>
-      <Button fx:id="clickLogin" layoutX="112.0" layoutY="313.0" mnemonicParsing="false" onAction="#Login" text="Login" />
-      <TextField fx:id="txtUsername" alignment="CENTER" layoutX="60.0" layoutY="242.0" promptText="Username" />
-      <TextField fx:id="txtPassword" alignment="CENTER" layoutX="61.0" layoutY="280.0" promptText="Password" />
-      <ImageView fitHeight="143.0" fitWidth="200.0" layoutX="35.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-      <ChoiceBox fx:id="viewSelect" layoutX="59.0" layoutY="190.0" prefWidth="150.0" />
+      <Button fx:id="clickLogin" layoutX="128.0" layoutY="270.0" mnemonicParsing="false" onAction="#Login" text="Login" />
+      <TextField fx:id="txtUsername" alignment="CENTER" layoutX="76.0" layoutY="199.0" promptText="Username" />
+      <PasswordField fx:id="txtPassword" alignment="CENTER" layoutX="75.0" layoutY="236.0" promptText="Password" />
+      <ChoiceBox fx:id="viewSelect" layoutX="75.0" layoutY="147.0" prefWidth="150.0" />
+      <Button fx:id="clickRegister" layoutX="14.0" layoutY="313.0" mnemonicParsing="false" onAction="#register" text="Register" />
    </children>
 </AnchorPane>

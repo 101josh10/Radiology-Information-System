@@ -22,8 +22,9 @@ public class LoginController implements Initializable
 
 	@FXML private ChoiceBox<String> viewSelect;
 	@FXML private TextField txtUsername;
-	@FXML private TextField txtPassword;
+	@FXML private PasswordField txtPassword;
 	@FXML private Button clickLogin;
+	@FXML private Button clickRegister;
 	
 	@FXML Stage stage;
 	@FXML Parent root;
@@ -34,10 +35,6 @@ public class LoginController implements Initializable
 	
 	public void Login(ActionEvent event) throws Exception
 	{
-		viewSelect.getItems().add("Radiologist");
-		viewSelect.getItems().add("Technician");
-		viewSelect.getItems().add("Receptionist");
-		viewSelect.getItems().add("MD");
 		if(viewSelect.getValue() == "Radiologist") 
 		{
 			String query = "SELECT * FROM radlogin WHERE username = ? and password = ?";
@@ -58,10 +55,7 @@ public class LoginController implements Initializable
 				
 				stage.show();
 			}
-			
-			
 		}
-		
 		else if(viewSelect.getValue() == "Technician") 
 		{
 			String query = "SELECT * FROM techlogin WHERE username = ? and password = ?";
@@ -125,6 +119,15 @@ public class LoginController implements Initializable
 				stage.show();
 			}
 		}
+	}
+	public void register(ActionEvent event) throws Exception
+	{
+		root = FXMLLoader.load(getClass().getResource("../view/RegisterView.fxml"));
+		stage = (Stage) clickRegister.getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		
+		stage.show();
 	}
 	
 	
