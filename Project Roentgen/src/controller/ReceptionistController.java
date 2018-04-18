@@ -1,6 +1,11 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -34,6 +39,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 import model.Appointment;
+import model.DBConnection;
 import model.Patient;
 
 public class ReceptionistController {
@@ -110,7 +116,7 @@ public class ReceptionistController {
 	ObservableList<String> genderChoices = FXCollections.observableArrayList();
 	ObservableList<Integer> feetChoices = FXCollections.observableArrayList();
 	ObservableList<Integer> inchesChoices = FXCollections.observableArrayList();
-
+	Connection conn = DBConnection.dbConnection();
 
 	public void initialize(){
 
@@ -151,7 +157,7 @@ public class ReceptionistController {
 	}
 
 	public void initPatientCombos() {
-		Patient p1, p2, p3;
+		/*Patient p1, p2, p3;
 
 		p1 = new Patient();
 		p1.setFirstName("Joshua");
@@ -187,7 +193,27 @@ public class ReceptionistController {
 
 		patientList.add(p1);
 		patientList.add(p2);
-		patientList.add(p3);
+		patientList.add(p3);*/
+		
+		String query = "SELECT * from patient";
+		try {
+			PreparedStatement pst = conn.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			while(rs.next()) {
+				Patient temp = new Patient();
+				temp.setFirstName(rs.getString(1));
+				temp.setLastName(rs.getString(2));
+				temp.setMiddleInit(rs.getString(3));
+				Date dob = rs.getDate(4);
+				temp.setDob(dob.toLocalDate());
+				temp.setSsn(rs.getString(5));
+				
+				patientList.add(temp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		newApptPatientComboBox.setItems(patientList);
 		apptInfoPatientComboBox.setItems(patientList);
@@ -233,7 +259,7 @@ public class ReceptionistController {
 		//input SQL Select Statement
 
 		//using static data for now
-			Appointment a1 = new Appointment();
+			/*Appointment a1 = new Appointment();
 			a1.setPatient(patientList.get(0));
 			LocalDateTime a1Time = LocalDateTime.of(2018, 4, 17, 9, 30);
 			a1.setDateTime(a1Time);
@@ -268,7 +294,19 @@ public class ReceptionistController {
 			appointmentList.add(a1);
 			appointmentList.add(a2);
 			appointmentList.add(a3);
-			appointmentList.add(a4);
+			appointmentList.add(a4);*/
+		
+		String query = "SELECT * from appointments";
+		try {
+			PreparedStatement pst = conn.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			while(rs.next()) {
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 			/* Comment for Testing purposes
 			for(Appointment appt: appointmentList) {
@@ -528,7 +566,7 @@ public class ReceptionistController {
 		Patient pat = appointmentTableView.getSelectionModel().getSelectedItem().getPatient();
 		firstNameTextField.setText(pat.getFirstName());
 		lastNameTextField.setText(pat.getLastName());
-		middleNameTextField.setText(pat.getMiddleName());
+		middleNameTextField.setText(pat.getMiddleInit());
 		if(pat.isMale()) {
 			genderComboBox.getSelectionModel().select(m);
 		} else {
@@ -665,7 +703,7 @@ public class ReceptionistController {
 			Patient p = new Patient();
 			p.setLastName(lastNameTextField.getText());
 			p.setFirstName(firstNameTextField.getText());
-			p.setMiddleName(middleNameTextField.getText());
+			p.setMiddleInit(middleNameTextField.getText());
 			boolean isMale = false;
 			if(genderComboBox.getValue().equals("Male")) {
 				isMale = true;
@@ -741,7 +779,7 @@ public class ReceptionistController {
 				Patient p = new Patient();
 				p.setLastName(lastNameTextField.getText());
 				p.setFirstName(firstNameTextField.getText());
-				p.setMiddleName(middleNameTextField.getText());
+				p.setMiddleInit(middleNameTextField.getText());
 				boolean isMale = false;
 				if(genderComboBox.getValue().equals("Male")) {
 					isMale = true;

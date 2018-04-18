@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Patient {
 	private int id;
-	private String lastName, firstName, middleName;
+	private String lastName, firstName, middleInit;
 	private String displayName;
 	private String ssn;
 	private LocalDate dob;
@@ -40,8 +40,8 @@ public class Patient {
 		return firstName;
 	}
 
-	public String getMiddleName() {
-		return middleName;
+	public String getMiddleInit() {
+		return middleInit;
 	}
 	
 	public String getDisplayName() {
@@ -122,8 +122,8 @@ public class Patient {
 		this.displayName = lastName + ", " + firstName;
 	}
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setMiddleInit(String middleInit) {
+		this.middleInit = middleInit;
 	}
 
 	public void setSsn(String ssn) {
