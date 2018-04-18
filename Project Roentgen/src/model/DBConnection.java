@@ -9,7 +9,7 @@ public class DBConnection
 	//public static final String DBPASSWORD = "Chrome777";
 	Connection conn = null;
 	
-	public static Connection dbConnection(){
+	public Connection dbConnection(){
 		System.out.println("Establishing connection to database");
 		
 		try {
