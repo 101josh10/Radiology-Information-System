@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 import model.DBConnection;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
@@ -18,10 +16,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("../view/ReceptionistView.fxml"));
-			//Parent root = FXMLLoader.load(getClass().getResource("../view/RadiologistView.fxml"));
-			Scene scene = new Scene(root, 1200, 700);//should match the above view's dimensions **look in scene builder to find dimensions**
-			stage.setTitle("RIS Radiologist View");
+			Parent root = FXMLLoader.load(getClass().getResource("../view/LoginView.fxml"));
+			Scene scene = new Scene(root, 300, 350);//should match the above view's dimensions **look in scene builder to find dimensions**
+			//Scene scene = new Scene(root);
+			stage.setTitle("RIS Login");
 			stage.setScene(scene);
 			stage.show();
 		} catch(Exception e) {

@@ -6,17 +6,17 @@ import application.Main;
 
 public class DBConnection 
 {
-	public static final String DBPASSWORD = "Chrome777";
-	Connection Con1 = null;
+	//public static final String DBPASSWORD = "Chrome777";
+	Connection conn = null;
 	
 	public static Connection dbConnection(){
 		System.out.println("Establishing connection to database");
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection Con1 = DriverManager.getConnection("jdbc:mysql://50.62.209.15:3306/ris","wesmdonald", DBPASSWORD);
+			Connection conn = DriverManager.getConnection("jdbc:mysql://Localhost:8080/ris","root", "");
 			System.out.println("Connection Successful");
-			return Con1;
+			return conn;
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;

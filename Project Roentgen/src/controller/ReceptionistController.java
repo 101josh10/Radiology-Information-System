@@ -1,6 +1,11 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -34,6 +39,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 import model.Appointment;
+import model.DBConnection;
 import model.Patient;
 
 public class ReceptionistController {
@@ -110,7 +116,7 @@ public class ReceptionistController {
 	ObservableList<String> genderChoices = FXCollections.observableArrayList();
 	ObservableList<Integer> feetChoices = FXCollections.observableArrayList();
 	ObservableList<Integer> inchesChoices = FXCollections.observableArrayList();
-
+	Connection conn = DBConnection.dbConnection();
 
 	public void initialize(){
 
@@ -151,7 +157,7 @@ public class ReceptionistController {
 	}
 
 	public void initPatientCombos() {
-		Patient p1, p2, p3;
+		/*Patient p1, p2, p3;
 
 		p1 = new Patient();
 		p1.setFirstName("Joshua");
@@ -187,7 +193,27 @@ public class ReceptionistController {
 
 		patientList.add(p1);
 		patientList.add(p2);
-		patientList.add(p3);
+		patientList.add(p3);*/
+		
+		String query = "SELECT * from patient";
+		try {
+			PreparedStatement pst = conn.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			while(rs.next()) {
+				Patient temp = new Patient();
+				temp.setFirstName(rs.getString(1));
+				temp.setLastName(rs.getString(2));
+				temp.setMiddleInit(rs.getString(3));
+				Date dob = rs.getDate(4);
+				temp.setDob(dob.toLocalDate());
+				temp.setSsn(rs.getString(5));
+				
+				patientList.add(temp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		newApptPatientComboBox.setItems(patientList);
 		apptInfoPatientComboBox.setItems(patientList);
@@ -233,9 +259,9 @@ public class ReceptionistController {
 		//input SQL Select Statement
 
 		//using static data for now
-			Appointment a1 = new Appointment();
+			/*Appointment a1 = new Appointment();
 			a1.setPatient(patientList.get(0));
-			LocalDateTime a1Time = LocalDateTime.of(2018, 4, 11, 9, 30);
+			LocalDateTime a1Time = LocalDateTime.of(2018, 4, 17, 9, 30);
 			a1.setDateTime(a1Time);
 			a1.setBodyPart("Arm");
 			a1.setDesc("Test Description");
@@ -243,7 +269,7 @@ public class ReceptionistController {
 
 			Appointment a2 = new Appointment();
 			a2.setPatient(patientList.get(1));
-			LocalDateTime a2Time = LocalDateTime.of(2018, 4, 11, 13, 30);
+			LocalDateTime a2Time = LocalDateTime.of(2018, 4, 17, 13, 30);
 			a2.setDateTime(a2Time);
 			a2.setBodyPart("Leg");
 			a2.setDesc("Another Test");
@@ -251,7 +277,7 @@ public class ReceptionistController {
 
 			Appointment a3 = new Appointment();
 			a3.setPatient(patientList.get(2));
-			LocalDateTime a3Time = LocalDateTime.of(2018, 4, 11, 16, 15);
+			LocalDateTime a3Time = LocalDateTime.of(2018, 4, 17, 16, 15);
 			a3.setDateTime(a3Time);
 			a3.setBodyPart("Brain");
 			a3.setDesc("I dunno anymore");
@@ -259,7 +285,7 @@ public class ReceptionistController {
 
 			Appointment a4 = new Appointment();
 			a4.setPatient(patientList.get(0));
-			LocalDateTime a4Time = LocalDateTime.of(2018, 4, 11, 12, 0);
+			LocalDateTime a4Time = LocalDateTime.of(2018, 4, 17, 12, 0);
 			a4.setDateTime(a3Time);
 			a4.setBodyPart("Brain");
 			a4.setDesc("I dunno anymore");
@@ -268,7 +294,19 @@ public class ReceptionistController {
 			appointmentList.add(a1);
 			appointmentList.add(a2);
 			appointmentList.add(a3);
-			appointmentList.add(a4);
+			appointmentList.add(a4);*/
+		
+		String query = "SELECT * from appointments";
+		try {
+			PreparedStatement pst = conn.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			while(rs.next()) {
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 			/* Comment for Testing purposes
 			for(Appointment appt: appointmentList) {
@@ -528,7 +566,7 @@ public class ReceptionistController {
 		Patient pat = appointmentTableView.getSelectionModel().getSelectedItem().getPatient();
 		firstNameTextField.setText(pat.getFirstName());
 		lastNameTextField.setText(pat.getLastName());
-		middleNameTextField.setText(pat.getMiddleName());
+		middleNameTextField.setText(pat.getMiddleInit());
 		if(pat.isMale()) {
 			genderComboBox.getSelectionModel().select(m);
 		} else {
@@ -614,15 +652,15 @@ public class ReceptionistController {
 	}
 
 	public void deleteAppointmentPushed() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
+		Alert alert = new Alert(AlertType.CONFIRMATION,"", ButtonType.YES, ButtonType.NO);
 		alert.setTitle("Confirm Delete");
 		alert.setHeaderText("Are you sure you want to delete this appointment?");
 		//alert.setContentText("Make sure you have filled in all information necessary to create an appointment.");
 
 		Optional<ButtonType> result = alert.showAndWait();
 
-		if(result.get() == ButtonType.OK) {
-			//Delete the appointment if they click ok
+		if(result.get() == ButtonType.YES) {
+			//Delete the appointment if they click yes
 			Appointment selected = appointmentTableView.getSelectionModel().getSelectedItem();
 			appointmentList.remove(selected);
 			dayView = getAppointmentsForDate(selectedDate);
@@ -661,6 +699,35 @@ public class ReceptionistController {
 			
 			editPatInfoButton.setText("Save Patient");
 		} else {
+			Patient temp = appointmentTableView.getSelectionModel().getSelectedItem().getPatient();
+			Patient p = new Patient();
+			p.setLastName(lastNameTextField.getText());
+			p.setFirstName(firstNameTextField.getText());
+			p.setMiddleInit(middleNameTextField.getText());
+			boolean isMale = false;
+			if(genderComboBox.getValue().equals("Male")) {
+				isMale = true;
+			}
+			p.setMale(isMale);
+			if(ethnicityComboBox.getValue().equals("Other")) {
+				p.setEthnicity(otherEthnicityTextField.getText());
+			} else {
+				p.setEthnicity(ethnicityComboBox.getValue());
+			}
+			p.setSsn(ssnTextField.getText());
+			p.setDob(dobDatePicker.getValue());
+			int height = feetComboBox.getValue() * 12 + inchesComboBox.getValue();
+			p.setHeight(height);
+			p.setWeight(weightSpinner.getValue());
+			p.setPhoneNum(phoneNumTextField.getText());
+			p.setEmail(emailTextField.getText());
+			p.setAddress(addressTextField.getText());
+			p.setCity(cityTextField.getText());
+			p.setState(stateTextField.getText());
+			p.setZip(zipTextField.getText());
+			
+			patientList.remove(temp);
+			patientList.add(p);
 			
 			firstNameTextField.setEditable(false);
 			lastNameTextField.setEditable(false);
@@ -684,10 +751,60 @@ public class ReceptionistController {
 	}
 	
 	public void deletePatButtonPressed() {
-		
+		Alert alert = new Alert(AlertType.CONFIRMATION,"", ButtonType.YES, ButtonType.NO);
+		alert.setTitle("Confirm Delete");
+		alert.setHeaderText("Are you sure you want to delete this Patient?");
+		//alert.setContentText("Make sure you have filled in all information necessary to create an appointment.");
+
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if(result.get() == ButtonType.YES) {
+			//Delete the appointment if they click yes
+			Patient p = appointmentTableView.getSelectionModel().getSelectedItem().getPatient();
+			patientList.remove(p);
+		}
 	}
 	
 	public void appointmentsTabClicked() {
-		System.out.println("Clicked");
+		if(editPatInfoButton.getText().equals("Save Patient")) {
+			Alert alert = new Alert(AlertType.CONFIRMATION,"", ButtonType.YES, ButtonType.NO);
+			alert.setTitle("Save Patient");
+			alert.setHeaderText("There are unsaved changes. Would you like to save the patient info?");
+			//alert.setContentText("Make sure you have filled in all information necessary to create an appointment.");
+
+			Optional<ButtonType> result = alert.showAndWait();
+
+			if(result.get() == ButtonType.YES) {
+				Patient temp = appointmentTableView.getSelectionModel().getSelectedItem().getPatient();
+				Patient p = new Patient();
+				p.setLastName(lastNameTextField.getText());
+				p.setFirstName(firstNameTextField.getText());
+				p.setMiddleInit(middleNameTextField.getText());
+				boolean isMale = false;
+				if(genderComboBox.getValue().equals("Male")) {
+					isMale = true;
+				}
+				p.setMale(isMale);
+				if(ethnicityComboBox.getValue().equals("Other")) {
+					p.setEthnicity(otherEthnicityTextField.getText());
+				} else {
+					p.setEthnicity(ethnicityComboBox.getValue());
+				}
+				p.setSsn(ssnTextField.getText());
+				p.setDob(dobDatePicker.getValue());
+				int height = feetComboBox.getValue() * 12 + inchesComboBox.getValue();
+				p.setHeight(height);
+				p.setWeight(weightSpinner.getValue());
+				p.setPhoneNum(phoneNumTextField.getText());
+				p.setEmail(emailTextField.getText());
+				p.setAddress(addressTextField.getText());
+				p.setCity(cityTextField.getText());
+				p.setState(stateTextField.getText());
+				p.setZip(zipTextField.getText());
+				
+				patientList.remove(temp);
+				patientList.add(p);
+			}
+		}
 	}
 }
