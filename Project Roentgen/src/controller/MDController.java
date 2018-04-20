@@ -83,6 +83,10 @@ public class MDController
 		//ConfigureReportTableColumns
 		radiologistReportTitleColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("title"));
 		radiologistReportDownloadColumn.setCellValueFactory(new PropertyValueFactory<Report, Button>("downloadButton"));
+		
+		//Setting up the choice box
+		ObservableList<String> options = FXCollections.observableArrayList("X-ray","MRI","Ultrasound","CT-Scan");
+		procedureType.setValue(options);
 
 		//M.D. View Current Patients Click
 		mdTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
