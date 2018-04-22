@@ -56,14 +56,15 @@ public class RegisterController implements Initializable
 				try
 				{
 					String query = "INSERT INTO radlogin (name, username, password) VALUES (?,?,?)";
+					
 					PreparedStatement pst = conn.prepareStatement(query);
 					pst.setString(1, txtName.getText() );
 					pst.setString(2, txtUsername.getText() );
 					pst.setString(3, txtPassword.getText() );
 		
-					ResultSet rs = pst.executeQuery();
+					boolean rs = pst.execute();
 					
-					if (rs.next())
+					if (rs)
 					{
 						System.out.println("Registration Successful!");
 						stage = (Stage) txtPassword.getScene().getWindow();
@@ -103,10 +104,10 @@ public class RegisterController implements Initializable
 					pst.setString(1, txtName.getText() );
 					pst.setString(2, txtUsername.getText() );
 					pst.setString(3, txtPassword.getText() );
-		
-					ResultSet rs = pst.executeQuery();
+
+					boolean rs = pst.execute();
 					
-					if (rs.next())
+					if (rs)
 					{
 						System.out.println("Registration Successful!");
 						stage = (Stage) txtPassword.getScene().getWindow();
@@ -147,9 +148,9 @@ public class RegisterController implements Initializable
 					pst.setString(2, txtUsername.getText() );
 					pst.setString(3, txtPassword.getText() );
 		
-					ResultSet rs = pst.executeQuery();
+					boolean rs = pst.execute();
 					
-					if (rs.next())
+					if (rs)
 					{
 						System.out.println("Registration Successful!");
 						stage = (Stage) txtPassword.getScene().getWindow();
@@ -188,11 +189,11 @@ public class RegisterController implements Initializable
 					PreparedStatement pst = conn.prepareStatement(query);
 					pst.setString(1, txtName.getText() );
 					pst.setString(2, txtUsername.getText() );
-					pst.setString(3, txtPassword.getText() );
-		
-					ResultSet rs = pst.executeQuery();
+					pst.setString(3, txtPassword.getText() );		
+
+					boolean rs = pst.execute();
 					
-					if (rs.next())
+					if (rs)
 					{
 						System.out.println("Registration Successful!");
 						stage = (Stage) txtPassword.getScene().getWindow();
