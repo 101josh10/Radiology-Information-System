@@ -28,7 +28,7 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
-		DBConnection idb = new DBConnection();
+		DBConnection con = new DBConnection();
 		Thread t = new Thread();
 		t.start();
 		launch(args);

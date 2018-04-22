@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-/model/
 /application/
->>>>>>> branch 'master' of https://github.com/101josh10/Radiology-Information-System.git
 /controller/
-/view/
+/model/
