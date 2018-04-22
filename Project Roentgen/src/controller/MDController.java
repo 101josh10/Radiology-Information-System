@@ -3,6 +3,8 @@ import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
+import application.DBConfig;
+
 import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -61,13 +63,13 @@ public class MDController
 	private ObservableList<Report> patientReports = FXCollections.observableArrayList();
 	private ObservableList<PatientImage> patientImages = FXCollections.observableArrayList();
 	private Patient selectedPatient;
+	//DB Connection
+	Connection conn = DBConnection.dbConnection();
 	
 	//M.D. Current Patients Setup
 	public void initialize(){
-		//Using radiologist for now until I figure out database stuff
-		RadiologistController rc = new RadiologistController();
-		rc.pullInfoFromDB();
-		rc.addStaticPatientData();
+		//Patient Information from DB
+		pullInfoFromDB();
 		//Configure Patient Table Columns
 		mdCurrentPatientsTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("firstName" + " " + "lastName"));
 		mdPatientIDTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("patientID"));
@@ -134,14 +136,39 @@ public class MDController
 				{
 					//send request to technician
 					//JOptionPane.showMessageDialog(MDController,"Request Has been sent to the Technician");
+					String query = "INSERT INTO .. VALUES (" + selectedPatient.getId() + ", " + selectedPatient.getFirstName() + ", " + selectedPatient.getLastName() + ")";
+					try {
+						conn.prepareStatement(query);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		});;
 	}
 	
-	
-	
-	
 	//Database Stuff
+	private void pullInfoFromDB()
+	{
+		String query = "SELECT * from patient";
+		try {
+			PreparedStatement pst = conn.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			while(rs.next()) {
+				Patient temp = new Patient();
+				temp.setFirstName(rs.getString(1));
+				temp.setLastName(rs.getString(2));
+				temp.setMiddleInit(rs.getString(3));
+				Date dob = rs.getDate(4);
+				temp.setDob(dob.toLocalDate());
+				temp.setSsn(rs.getString(5));
+				
+				patientList.add(temp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }
