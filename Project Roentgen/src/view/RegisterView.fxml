@@ -13,14 +13,13 @@
       <TextField fx:id="txtUsername" alignment="CENTER" layoutX="75.0" layoutY="181.0" promptText="Enter a Username" />
       <TextField fx:id="txtName" alignment="CENTER" layoutX="75.0" layoutY="146.0" promptText="Enter your Name" />
       <PasswordField fx:id="txtPassword" alignment="CENTER" layoutX="75.0" layoutY="217.0" promptText="Enter a Password" />
-      <Button layoutX="119.0" layoutY="285.0" mnemonicParsing="false" onAction="#Register" text="Register" />
+      <Button layoutX="119.0" layoutY="272.0" mnemonicParsing="false" onAction="#Register" text="Register" />
       <Button fx:id="clickGoBack" layoutX="14.0" layoutY="311.0" mnemonicParsing="false" onAction="#GoBack" text="Go Back" />
       <Label layoutX="73.0" layoutY="33.0" text="Register">
          <font>
             <Font name="System Bold" size="40.0" />
          </font>
       </Label>
-      <PasswordField fx:id="txtAdmin" alignment="CENTER" layoutX="76.0" layoutY="252.0" promptText="Administrator Password" />
       <ChoiceBox fx:id="selectView" layoutX="74.0" layoutY="106.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

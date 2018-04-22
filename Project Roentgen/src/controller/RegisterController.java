@@ -24,7 +24,6 @@ public class RegisterController implements Initializable
 	@FXML private TextField txtName;
 	@FXML private TextField txtUsername;
 	@FXML private PasswordField txtPassword;
-	@FXML private PasswordField txtAdmin;
 	@FXML private Button clickRegister;
 	@FXML private Button clickGoBack;
 	@FXML private ChoiceBox<String> selectView;
@@ -37,8 +36,6 @@ public class RegisterController implements Initializable
 	
 	public void Register(ActionEvent event) throws Exception
 	{
-		if(txtAdmin.getText() == "Admin") 
-		{
 			if(selectView.getValue() == "Radiologist")
 			{
 				try
@@ -211,11 +208,6 @@ public class RegisterController implements Initializable
 					ex.printStackTrace();
 				}
 			}
-		}
-		else 
-		{
-			System.out.println("Admin Password Required");
-		}
 	}
 	
 	public void GoBack(ActionEvent event) throws Exception 
