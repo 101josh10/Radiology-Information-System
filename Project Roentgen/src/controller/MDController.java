@@ -1,5 +1,8 @@
 package controller;
 import java.util.Calendar;
+
+import javax.swing.JOptionPane;
+
 import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -130,6 +133,7 @@ public class MDController
 				if(mouseEvent.getButton().equals(MouseButton.PRIMARY))
 				{
 					//send request to technician
+					//JOptionPane.showMessageDialog(MDController,"Request Has been sent to the Technician");
 				}
 			}
 		});;
