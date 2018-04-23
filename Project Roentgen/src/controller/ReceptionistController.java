@@ -48,7 +48,7 @@ public class ReceptionistController {
 	private final LocalTime CLOSING_TIME = LocalTime.of(17, 0);
 
 	@FXML private TabPane receptionistTabPane;
-	
+
 	//Declare variables
 	@FXML private Tab appointmentsTab;
 	@FXML private DatePicker displayDatePicker;
@@ -103,13 +103,9 @@ public class ReceptionistController {
 	@FXML private ComboBox<Integer> feetComboBox;
 	@FXML private ComboBox<Integer> inchesComboBox;
 	@FXML private Spinner<Integer> weightSpinner;
-	@FXML private TextField phoneNumTextField;
-	@FXML private TextField emailTextField;
-	@FXML private TextField addressTextField;
-	@FXML private TextField stateTextField;
-	@FXML private TextField cityTextField;
-	@FXML private TextField zipTextField;
 	@FXML private Button editPatInfoButton;
+	@FXML private Button newPatButton;
+	@FXML private Button deletePatButton;
 
 	//Other variables
 	ObservableList<String> ethnicityChoices = FXCollections.observableArrayList();
@@ -124,7 +120,7 @@ public class ReceptionistController {
 		initPatientCombos();//populates patient Combos
 		initModalityCombos();//populates modality Combos
 		initAppointmentList();//creates static appointment data
-		
+
 		initEthnicities();//populates ethnicity combo
 		initGenders();//populates gender combo
 		initFeet();//populates feet combo
@@ -194,21 +190,22 @@ public class ReceptionistController {
 		patientList.add(p1);
 		patientList.add(p2);
 		patientList.add(p3);*/
-		
+
 		String query = "SELECT * from patient";
 		try {
 			PreparedStatement pst = conn.prepareStatement(query);
 			ResultSet rs = pst.executeQuery();
 			while(rs.next()) {
 				Patient temp = new Patient();
-				temp.setFirstName(rs.getString(1));
-				temp.setLastName(rs.getString(2));
-				temp.setMiddleInit(rs.getString(3));
-				Date dob = rs.getDate(4);
+				temp.setFirstName(rs.getString(2));
+				temp.setLastName(rs.getString(3));
+				temp.setMiddleInit(rs.getString(4));
+				Date dob = rs.getDate(5);
 				temp.setDob(dob.toLocalDate());
-				temp.setSsn(rs.getString(5));
-				
+				temp.setSsn(rs.getString(6));
+
 				patientList.add(temp);
+				System.out.println("Name: " + temp.getLastName() + ", " + temp.getFirstName());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -295,13 +292,13 @@ public class ReceptionistController {
 			appointmentList.add(a2);
 			appointmentList.add(a3);
 			appointmentList.add(a4);*/
-		
-		String query = "SELECT * from appointments";
+
+		String query = "SELECT * from appointment";
 		try {
 			PreparedStatement pst = conn.prepareStatement(query);
 			ResultSet rs = pst.executeQuery();
 			while(rs.next()) {
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -314,40 +311,40 @@ public class ReceptionistController {
 			}
 			// */
 	}
-	
+
 	public void initEthnicities(){
 		ethnicityChoices.add("Caucasian");
 		ethnicityChoices.add("African American");
 		ethnicityChoices.add("Latino/Hispanic");
 		ethnicityChoices.add("Asian");
 		ethnicityChoices.add("Other");
-		
+
 		ethnicityComboBox.setItems(ethnicityChoices);
 	}
-	
+
 	public void initGenders(){
 		genderChoices.add("Male");
 		genderChoices.add("Female");
-		
+
 		genderComboBox.setItems(genderChoices);
 	}
-	
+
 	public void initFeet(){
 		for(int a = 3; a <= 8; a++){
 			feetChoices.add(a);
 		}
-		
+
 		feetComboBox.setItems(feetChoices);
 	}
-	
+
 	public void initInches(){
 		for(int a = 0; a <= 11; a++){
 			inchesChoices.add(a);
 		}
-		
+
 		inchesComboBox.setItems(inchesChoices);
 	}
-	
+
 	public ObservableList<Appointment> getAppointmentsForDate(LocalDate date) {
 		//input SQL Select statement
 
@@ -488,6 +485,7 @@ public class ReceptionistController {
 
 					throw e;
 				}
+
 			}
 
 			//System.out.println("\"" + bodyPartTextField.getText() + "\"");//uncomment for testing
@@ -561,7 +559,7 @@ public class ReceptionistController {
 		receptionistTabPane.getSelectionModel().selectNext();
 		String m = "Male";
 		String f = "Female";
-		
+
 		//Take patient info and put it into the fields
 		Patient pat = appointmentTableView.getSelectionModel().getSelectedItem().getPatient();
 		firstNameTextField.setText(pat.getFirstName());
@@ -575,32 +573,26 @@ public class ReceptionistController {
 
 		String ethnicity = pat.getEthnicity();
 		boolean ethnicityExists = false;
-		
+
 		for(String s : ethnicityChoices) {
 			if(s.equals(ethnicity)) {
 				ethnicityExists = true;
 				break;
 			}
 		}
-		
+
 		if(ethnicityExists) {
 			ethnicityComboBox.getSelectionModel().select(ethnicity);
 		} else {
 			ethnicityComboBox.getSelectionModel().select("Other");
 			otherEthnicityTextField.setText(ethnicity);
 		}
-		
+
 		ssnTextField.setText(pat.getSsn());
 		dobDatePicker.setValue(pat.getDob());
 		feetComboBox.getSelectionModel().select(pat.getFeet());
 		inchesComboBox.getSelectionModel().select(pat.getInches());
 		weightSpinner.getValueFactory().setValue(pat.getWeight());
-		phoneNumTextField.setText(pat.getPhoneNum());
-		emailTextField.setText(pat.getEmail());
-		addressTextField.setText(pat.getAddress());
-		cityTextField.setText(pat.getCity());
-		stateTextField.setText(pat.getState());
-		zipTextField.setText(pat.getZip());
 	}
 
 	public void editAppointmentPushed() {
@@ -667,17 +659,17 @@ public class ReceptionistController {
 			appointmentTableView.setItems(dayView);
 		}
 	}
-	
+
 	public void ethnicitySelected() {
 		String selection = ethnicityComboBox.getValue();
-		
+
 		if(selection.equals("Other")){
 			otherEthnicityTextField.setDisable(false);
 		} else{
 			otherEthnicityTextField.setDisable(true);
 		}
 	}
-	
+
 	public void editPatButtonPressed() {
 		if(editPatInfoButton.getText().equals("Edit Patient")) {
 			firstNameTextField.setEditable(true);
@@ -690,13 +682,7 @@ public class ReceptionistController {
 			feetComboBox.setDisable(false);
 			inchesComboBox.setDisable(false);
 			weightSpinner.setDisable(false);
-			phoneNumTextField.setEditable(true);
-			emailTextField.setEditable(true);
-			addressTextField.setEditable(true);
-			cityTextField.setEditable(true);
-			stateTextField.setEditable(true);
-			zipTextField.setEditable(true);
-			
+
 			editPatInfoButton.setText("Save Patient");
 		} else {
 			Patient temp = appointmentTableView.getSelectionModel().getSelectedItem().getPatient();
@@ -719,16 +705,10 @@ public class ReceptionistController {
 			int height = feetComboBox.getValue() * 12 + inchesComboBox.getValue();
 			p.setHeight(height);
 			p.setWeight(weightSpinner.getValue());
-			p.setPhoneNum(phoneNumTextField.getText());
-			p.setEmail(emailTextField.getText());
-			p.setAddress(addressTextField.getText());
-			p.setCity(cityTextField.getText());
-			p.setState(stateTextField.getText());
-			p.setZip(zipTextField.getText());
-			
+
 			patientList.remove(temp);
 			patientList.add(p);
-			
+
 			firstNameTextField.setEditable(false);
 			lastNameTextField.setEditable(false);
 			middleNameTextField.setEditable(false);
@@ -739,17 +719,11 @@ public class ReceptionistController {
 			feetComboBox.setDisable(true);
 			inchesComboBox.setDisable(true);
 			weightSpinner.setDisable(true);
-			phoneNumTextField.setEditable(false);
-			emailTextField.setEditable(false);
-			addressTextField.setEditable(false);
-			cityTextField.setEditable(false);
-			stateTextField.setEditable(false);
-			zipTextField.setEditable(false);
-			
+
 			editPatInfoButton.setText("Edit Patient");
 		}
 	}
-	
+
 	public void deletePatButtonPressed() {
 		Alert alert = new Alert(AlertType.CONFIRMATION,"", ButtonType.YES, ButtonType.NO);
 		alert.setTitle("Confirm Delete");
@@ -764,9 +738,9 @@ public class ReceptionistController {
 			patientList.remove(p);
 		}
 	}
-	
+
 	public void appointmentsTabClicked() {
-		if(editPatInfoButton.getText().equals("Save Patient")) {
+		/*if(editPatInfoButton.getText().equals("Save Patient")) {
 			Alert alert = new Alert(AlertType.CONFIRMATION,"", ButtonType.YES, ButtonType.NO);
 			alert.setTitle("Save Patient");
 			alert.setHeaderText("There are unsaved changes. Would you like to save the patient info?");
@@ -801,10 +775,81 @@ public class ReceptionistController {
 				p.setCity(cityTextField.getText());
 				p.setState(stateTextField.getText());
 				p.setZip(zipTextField.getText());
-				
+
 				patientList.remove(temp);
 				patientList.add(p);
 			}
+		}*/
+	}
+
+	public void newPatButtonPressed(){
+		if(newPatButton.getText().equals("New Patient")){
+			editPatInfoButton.setDisable(true);
+			deletePatButton.setDisable(true);
+			newPatButton.setText("Save Patient");
+
+			firstNameTextField.setEditable(true);
+			lastNameTextField.setEditable(true);
+			middleNameTextField.setEditable(true);
+			genderComboBox.setDisable(false);
+			ethnicityComboBox.setDisable(false);
+			ssnTextField.setEditable(true);
+			dobDatePicker.setDisable(false);
+			feetComboBox.setDisable(false);
+			inchesComboBox.setDisable(false);
+			weightSpinner.setDisable(false);
+		} else if(newPatButton.getText().equals("Save Patient")){
+			String fn, ln, mi, eth, ssn, phoneNum, email, address, city, state, zip;
+			LocalDate dob;
+			int height, weight;
+			boolean isMale;
+
+			fn = firstNameTextField.getText();
+			ln = lastNameTextField.getText();
+			mi = middleNameTextField.getText();
+			if(genderComboBox.getValue().equals("Male")){
+				isMale = true;
+			} else{
+				isMale = false;
+			}
+			if(ethnicityComboBox.getValue().equals("Other")){
+				eth = otherEthnicityTextField.getText();
+			} else{
+				eth = ethnicityComboBox.getValue();
+			}
+			ssn = ssnTextField.getText();
+			dob = dobDatePicker.getValue();
+			Date dobDate = new Date(dobDate);
+			height = feetComboBox.getValue() * 12 + inchesComboBox.getValue();
+			weight = weightSpinner.getValue();
+
+			String query = "INSERT INTO patient(FName, LName, Minitial, DOB, SSN, Height, Race, Gender, Weight) VALUES (?,?,?,?,?,?,?,?,?)";
+			try {
+				PreparedStatement pst = conn.prepareStatement(query);
+				pst.setString(1, fn);
+				pst.setString(2, ln);
+				pst.setString(3, mi);
+				pst.setDate(4, dobDate);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			editPatInfoButton.setDisable(false);
+			deletePatButton.setDisable(false);
+			newPatButton.setText("New Patient");
+
+			firstNameTextField.setEditable(false);
+			lastNameTextField.setEditable(false);
+			middleNameTextField.setEditable(false);
+			genderComboBox.setDisable(true);
+			ethnicityComboBox.setDisable(true);
+			ssnTextField.setEditable(false);
+			dobDatePicker.setDisable(true);
+			feetComboBox.setDisable(true);
+			inchesComboBox.setDisable(true);
+			weightSpinner.setDisable(true);
+			otherEthnicityTextField.setEditable(false);
 		}
 	}
 }
