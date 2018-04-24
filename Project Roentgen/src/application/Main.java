@@ -19,7 +19,7 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("../view/LoginView.fxml"));
 			Scene scene = new Scene(root, 300, 350);//should match the above view's dimensions **look in scene builder to find dimensions**
 			//Scene scene = new Scene(root);
-			stage.setTitle("RIS Login");
+			stage.setTitle("Radiology Information System");
 			stage.setScene(scene);
 			stage.show();
 		} catch(Exception e) {
