@@ -25,6 +25,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.MediaView;
+import model.Appointment;
 import model.DBConnection;
 import model.Patient;
 import model.PatientImage;
@@ -136,7 +137,13 @@ public class MDController
 				{
 					//send request to technician
 					//JOptionPane.showMessageDialog(MDController,"Request Has been sent to the Technician");
-					String query = "INSERT INTO .. VALUES (" + selectedPatient.getId() + ", " + selectedPatient.getFirstName() + ", " + selectedPatient.getLastName() + ")";
+					Appointment app = new Appointment();
+					app.setPatient(selectedPatient);
+					app.setDateTime(java.time.LocalDateTime.now());
+					app.setBodyPart((String)procedureType.getValue());
+					app.setDesc(requestDescription.getText());
+					String query = "INSERT INTO appointment (`date', 'time', 'modality', 'bodypart', 'notes', 'Patient_idPatient') VALUES (" + app.getDateTime() + ", " + 
+					app.getDisplayTime() + ", " + app.getBodyPart() + ", " + app.getDesc() + ", " + selectedPatient.getId() + ")";
 					try {
 						conn.prepareStatement(query);
 					} catch (SQLException e) {
@@ -145,7 +152,7 @@ public class MDController
 					}
 				}
 			}
-		});;
+		});
 	}
 	
 	//Database Stuff
