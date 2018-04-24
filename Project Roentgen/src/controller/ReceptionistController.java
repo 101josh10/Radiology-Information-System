@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -137,6 +138,18 @@ public class ReceptionistController {
 
 		appointmentTableView.setItems(dayView);
 	}
+	
+	private Patient getPatient(int patientID) {
+		Patient p = null;
+		for(Patient pat : patientList) {
+			if(pat.getId() == patientID) {
+				p = pat;
+				break;
+			}
+		}
+		
+		return p;
+	}
 
 	public void initTimeCombos() {
 		for(int hours = OPENING_TIME.getHour(); hours < CLOSING_TIME.getHour(); hours++) {
@@ -197,6 +210,7 @@ public class ReceptionistController {
 			ResultSet rs = pst.executeQuery();
 			while(rs.next()) {
 				Patient temp = new Patient();
+				temp.setId(rs.getInt(1));
 				temp.setFirstName(rs.getString(2));
 				temp.setLastName(rs.getString(3));
 				temp.setMiddleInit(rs.getString(4));
@@ -255,8 +269,8 @@ public class ReceptionistController {
 	public void initAppointmentList(){
 		//input SQL Select Statement
 
-		//using static data for now
-			/*Appointment a1 = new Appointment();
+		/*using static data for now
+			Appointment a1 = new Appointment();
 			a1.setPatient(patientList.get(0));
 			LocalDateTime a1Time = LocalDateTime.of(2018, 4, 17, 9, 30);
 			a1.setDateTime(a1Time);
@@ -298,7 +312,19 @@ public class ReceptionistController {
 			PreparedStatement pst = conn.prepareStatement(query);
 			ResultSet rs = pst.executeQuery();
 			while(rs.next()) {
-
+				Appointment appt = new Appointment();
+				Date apptDate = rs.getDate(2);
+				Time apptTime = rs.getTime(3);
+				LocalDateTime ldt = LocalDateTime.of(apptDate.toLocalDate(), apptTime.toLocalTime());
+				appt.setDateTime(ldt);
+				appt.setModality(rs.getString(4));
+				appt.setBodyPart(rs.getString(5));
+				appt.setDesc(rs.getString(6));
+				
+				int patID = rs.getInt(7);
+				appt.setPatient(getPatient(patID));
+				
+				appointmentList.add(appt);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -708,6 +734,27 @@ public class ReceptionistController {
 
 			patientList.remove(temp);
 			patientList.add(p);
+			
+			Date d = Date.valueOf(p.getDob());
+			
+			String query = "INSERT INTO patient(FName, LName, Minitial, DOB, SSN, Height, Race, Gender, Weight) VALUES (?,?,?,?,?,?,?,?,?)";
+			try {
+				PreparedStatement pst = conn.prepareStatement(query);
+				pst.setString(1, p.getFirstName());
+				pst.setString(2, p.getLastName());
+				pst.setString(3, p.getMiddleInit());
+				pst.setDate(4, d);
+				pst.setString(5, p.getSsn());
+				pst.setInt(6, height);
+				pst.setString(7, p.getEthnicity());
+				pst.setBoolean(8, isMale);
+				pst.setInt(9, p.getWeight());
+				
+				boolean rs = pst.execute();
+				
+				if(rs) {
+					System.out.println("Registration Successful!");
+				}
 
 			firstNameTextField.setEditable(false);
 			lastNameTextField.setEditable(false);
@@ -799,7 +846,7 @@ public class ReceptionistController {
 			inchesComboBox.setDisable(false);
 			weightSpinner.setDisable(false);
 		} else if(newPatButton.getText().equals("Save Patient")){
-			String fn, ln, mi, eth, ssn, phoneNum, email, address, city, state, zip;
+			String fn, ln, mi, eth, ssn;
 			LocalDate dob;
 			int height, weight;
 			boolean isMale;
@@ -819,7 +866,7 @@ public class ReceptionistController {
 			}
 			ssn = ssnTextField.getText();
 			dob = dobDatePicker.getValue();
-			Date dobDate = new Date(dobDate);
+			Date dobDate = Date.valueOf(dob);
 			height = feetComboBox.getValue() * 12 + inchesComboBox.getValue();
 			weight = weightSpinner.getValue();
 
@@ -830,6 +877,17 @@ public class ReceptionistController {
 				pst.setString(2, ln);
 				pst.setString(3, mi);
 				pst.setDate(4, dobDate);
+				pst.setString(5, ssn);
+				pst.setInt(6, height);
+				pst.setString(7, eth);
+				pst.setBoolean(8, isMale);
+				pst.setInt(9, weight);
+				
+				boolean rs = pst.execute();
+				
+				if(rs) {
+					System.out.println("Registration Successful!");
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
