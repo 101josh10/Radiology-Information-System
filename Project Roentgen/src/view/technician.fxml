@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane layoutY="33.0" prefHeight="382.0" prefWidth="127.0">
+      <SplitPane prefHeight="415.0" prefWidth="127.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="372.0" prefWidth="125.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="372.0" prefWidth="125.0">
+               <children>
+                  <TableView layoutY="-1.0" prefHeight="415.0" prefWidth="125.0">
+                    <columns>
+                      <TableColumn prefWidth="124.0" text="Patent List" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
         </items>
       </SplitPane>
       <SplitPane dividerPositions="0.6754098360655738" layoutX="127.0" layoutY="33.0" prefHeight="382.0" prefWidth="307.0">
@@ -96,7 +107,6 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <Label layoutX="33.0" layoutY="14.0" text="Patent list" />
       <Label layoutX="237.0" layoutY="14.0" text="Current Scans" />
       <TabPane layoutX="434.0" prefHeight="415.0" prefWidth="220.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -104,12 +114,16 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                      <AnchorPane layoutY="1.0" minHeight="0.0" minWidth="0.0" prefHeight="380.0" prefWidth="220.0">
+                      <AnchorPane layoutY="14.0" minHeight="0.0" minWidth="0.0" prefHeight="380.0" prefWidth="220.0">
                            <children>
-                              <CheckBox layoutX="10.0" layoutY="14.0" mnemonicParsing="false" text="Scan 1" />
-                              <CheckBox layoutX="9.0" layoutY="42.0" mnemonicParsing="false" text="Scan 2" />
-                              <CheckBox layoutX="9.0" layoutY="72.0" mnemonicParsing="false" text="Scan 3" />
-                              <CheckBox layoutX="9.0" layoutY="104.0" mnemonicParsing="false" text="Scan 4" />
+                              <CheckBox layoutX="9.0" mnemonicParsing="false" text="Scan 1" />
+                              <CheckBox layoutX="9.0" layoutY="90.0" mnemonicParsing="false" text="Scan 2" />
+                              <CheckBox layoutX="9.0" layoutY="182.0" mnemonicParsing="false" text="Scan 3" />
+                              <CheckBox layoutX="9.0" layoutY="282.0" mnemonicParsing="false" text="Scan 4" />
+                              <TextArea layoutX="10.0" layoutY="23.0" prefHeight="58.0" prefWidth="200.0" />
+                              <TextArea layoutX="10.0" layoutY="117.0" prefHeight="58.0" prefWidth="200.0" />
+                              <TextArea layoutX="10.0" layoutY="208.0" prefHeight="58.0" prefWidth="200.0" />
+                              <TextArea layoutX="10.0" layoutY="308.0" prefHeight="58.0" prefWidth="200.0" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -118,7 +132,15 @@
           </Tab>
           <Tab text="Upload scan">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView prefHeight="331.0" prefWidth="220.0">
+                          <columns>
+                            <TableColumn prefWidth="219.0" text="Selected Scans" />
+                          </columns>
+                        </TableView>
+                        <Button layoutX="154.0" layoutY="347.0" mnemonicParsing="false" text="Send" />
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>
