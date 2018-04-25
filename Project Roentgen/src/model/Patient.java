@@ -18,8 +18,6 @@ public class Patient {
 	private String ethnicity;
 	private int feet, inches;
 
-	private ArrayList<LocalDateTime> appointmentHistory = new ArrayList<>();
-
 	public Patient() {
 		super();
 	}
