@@ -41,8 +41,6 @@ public class RadiologistController {
 	@FXML private TableColumn<Patient, String> firstNameTableColumn;
 	@FXML private TableColumn<Patient, String> dobTableColumn;
 	@FXML private TableColumn<Patient, String> ssnTableColumn;
-	@FXML private TableColumn<Patient, Calendar> lastApptTableColumn;
-	@FXML private TableColumn<Patient, Calendar> nextApptTableColumn;
 
 	//** Images Tab
 	@FXML private Tab patImagesTab;
@@ -84,8 +82,6 @@ public class RadiologistController {
 		firstNameTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("lastName"));
 		dobTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("dobString"));
 		ssnTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("ssn"));
-		lastApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Calendar>("mostRecentAppt"));
-		nextApptTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, Calendar>("nextAppt"));
 
 		patientTableView.setItems(patientList);
 
@@ -187,7 +183,7 @@ public class RadiologistController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		patientTableView.setItems(patientList);
 	}
 

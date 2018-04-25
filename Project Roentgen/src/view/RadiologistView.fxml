@@ -22,11 +22,9 @@
                   <TableView fx:id="patientTableView" prefHeight="510.0" prefWidth="972.0">
                     <columns>
                       <TableColumn fx:id="lastNameTableColumn" prefWidth="196.0" text="Last Name" />
-                      <TableColumn fx:id="firstNameTableColumn" minWidth="0.0" prefWidth="182.0" text="First Name" />
-                        <TableColumn fx:id="dobTableColumn" prefWidth="176.0" text="DOB" />
-                        <TableColumn fx:id="ssnTableColumn" prefWidth="176.0" text="SSN" />
-                        <TableColumn fx:id="lastApptTableColumn" prefWidth="125.0" text="Last Appt." />
-                        <TableColumn fx:id="nextApptTableColumn" prefWidth="116.0" text="Next Appt." />
+                      <TableColumn fx:id="firstNameTableColumn" minWidth="0.0" prefWidth="241.0" text="First Name" />
+                        <TableColumn fx:id="dobTableColumn" prefWidth="276.0" text="DOB" />
+                        <TableColumn fx:id="ssnTableColumn" prefWidth="257.0" text="SSN" />
                     </columns>
                   </TableView>
                </children>
