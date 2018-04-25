@@ -13,13 +13,9 @@ public class Patient {
 	private LocalDate dob;
 	private String dobString;
 	private String protectedSSN;
-	private String phoneNum, email;
-	private String address, city, state, zip;
 	private int weight, height;
 	private boolean isMale;
 	private String ethnicity;
-	private LocalDate mostRecentAppt;
-	private LocalDate nextAppt;
 	private int feet, inches;
 
 	private ArrayList<LocalDateTime> appointmentHistory = new ArrayList<>();
@@ -54,30 +50,6 @@ public class Patient {
 
 	public LocalDate getDob() {
 		return dob;
-	}
-
-	public String getPhoneNum() {
-		return phoneNum;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public String getZip() {
-		return zip;
 	}
 
 	public int getWeight() {
@@ -146,30 +118,6 @@ public class Patient {
 		//System.out.println(dobString);//uncomment for testing
 	}
 
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
-
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
@@ -186,23 +134,5 @@ public class Patient {
 
 	public void setEthnicity(String ethnicity) {
 		this.ethnicity = ethnicity;
-	}
-
-	public LocalDate getMostRecentAppointment(){
-		
-
-		return mostRecentAppt;
-	}
-
-	public LocalDate getNextAppointment(){
-
-		return nextAppt;
-	}
-
-	private void sortApptHistory(){
-		ArrayList<LocalDateTime> temp = appointmentHistory;
-		//Comparator<Calendar> comparator = Comparator.comparingLong(keyExtractor);
-
-		//FXCollections.sort(appointmentHistory, comparator);
 	}
 }
