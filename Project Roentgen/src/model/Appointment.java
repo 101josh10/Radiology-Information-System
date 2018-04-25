@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Appointment {
+	private int id;
 	private LocalDateTime dateTime;
 	private String displayTime;
 	private Patient patient;
@@ -19,7 +20,15 @@ public class Appointment {
 	public Appointment() {
 		
 	}
+	
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public LocalDateTime getDateTime() {
 		return dateTime;
 	}
