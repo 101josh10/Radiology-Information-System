@@ -25,6 +25,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import model.DBConnection;
 import model.Patient;
 import model.Report;
 import model.PatientImage;
@@ -73,10 +74,11 @@ public class RadiologistController {
 	private ObservableList<PatientImage> patientImages = FXCollections.observableArrayList();
 	private Patient selectedPatient;
 	private File reportFile;
+	Connection conn = DBConnection.dbConnection();
 
 	public void initialize(){
 		pullInfoFromDB();
-		addStaticPatientData();
+		//addStaticPatientData();
 		//Configure Patient Table Columns
 		lastNameTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("firstName"));
 		firstNameTableColumn.setCellValueFactory(new PropertyValueFactory<Patient, String>("lastName"));
@@ -164,7 +166,29 @@ public class RadiologistController {
 	 * available patients along with their images and reports
 	 */
 	public void pullInfoFromDB(){
+		String query = "SELECT * from patient";
+		try {
+			PreparedStatement pst = conn.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			while(rs.next()) {
+				Patient temp = new Patient();
+				temp.setId(rs.getInt(1));
+				temp.setFirstName(rs.getString(2));
+				temp.setLastName(rs.getString(3));
+				temp.setMiddleInit(rs.getString(4));
+				Date dob = rs.getDate(5);
+				temp.setDob(dob.toLocalDate());
+				temp.setSsn(rs.getString(6));
+
+				patientList.add(temp);
+				System.out.println("Name: " + temp.getLastName() + ", " + temp.getFirstName());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		patientTableView.setItems(patientList);
 	}
 
 	/* selectFilePressed()

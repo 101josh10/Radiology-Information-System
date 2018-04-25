@@ -498,20 +498,47 @@ public class ReceptionistController {
 			appt.setDesc(additionalTextArea.getText());
 
 			ObservableList<Appointment> daysAppts = getAppointmentsForDate(newApptDate);
+			boolean isTaken = false;
 			for(Appointment a : daysAppts){
 				if(a.getPatient() == newApptPatientComboBox.getValue() && a.getDateTime().equals(newApptDateTime)){//if patient is already supposed to be somewhere else
 					String message = "Patient already scheduled at that time.\n Please select another time for the patient.";
 					IllegalArgumentException e = new IllegalArgumentException(message);
-
+					isTaken = true;
 					throw e;
 				}
 				if(a.getModality() == modalityComboBox.getValue() && a.getDateTime().equals(newApptDateTime)){//if modality is already scheduled
 					String message = modalityComboBox.getValue() + " already scheduled at that time.\n Please select another time for the patient.";
 					IllegalArgumentException e = new IllegalArgumentException(message);
-
+					isTaken = true;
 					throw e;
 				}
 
+			}
+			
+			if(!isTaken) {
+				String query = "INSERT INTO appointment (date, time, modality, bodypart, notes, Patient_idPatient) VALUES (?,?,?,?,?,?)";
+				try {
+					PreparedStatement pst = conn.prepareStatement(query);
+					Date d = Date.valueOf(newApptDate);
+					Time t = Time.valueOf(newApptTime);
+					
+					pst.setDate(1, d);
+					pst.setTime(2, t);
+					pst.setString(3, appt.getModality());
+					pst.setString(4, appt.getBodyPart());
+					pst.setString(5, appt.getDesc());
+					pst.setInt(6, appt.getPatient().getId());
+					
+					boolean rs = pst.execute();
+					
+					if(rs) {
+						System.out.println("Appointment Created Successfully");
+						
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 			//System.out.println("\"" + bodyPartTextField.getText() + "\"");//uncomment for testing
@@ -645,8 +672,41 @@ public class ReceptionistController {
 			altered.setModality(apptInfoModalityComboBox.getValue());
 			altered.setDesc(apptInfoDescTextArea.getText());
 
-			appointmentList.remove(selected);
-			appointmentList.add(selIndex, altered);
+			/*appointmentList.remove(selected);
+			appointmentList.add(selIndex, altered);*/
+			
+			String query = "DROP * FROM appointment WHERE idappointment = ?";
+			try {
+				PreparedStatement pst = conn.prepareStatement(query);
+				ResultSet rs = pst.executeQuery();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			query = "INSERT INTO appointment (date, time, modality, bodypart, notes, Patient_idPatient) VALUES (?,?,?,?,?,?)";
+			try {
+				PreparedStatement pst = conn.prepareStatement(query);
+				Date d = Date.valueOf(alteredDate);
+				Time t = Time.valueOf(alteredTime);
+				
+				pst.setDate(1, d);
+				pst.setTime(2, t);
+				pst.setString(3, altered.getModality());
+				pst.setString(4, altered.getBodyPart());
+				pst.setString(5, altered.getDesc());
+				pst.setInt(6, altered.getPatient().getId());
+				
+				boolean rs = pst.execute();
+				
+				if(rs) {
+					System.out.println("Appointment Saved Successfully");
+					initAppointmentList();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			apptInfoDatePicker.setDisable(true);
 			apptInfoTimeComboBox.setDisable(true);
@@ -683,6 +743,8 @@ public class ReceptionistController {
 			appointmentList.remove(selected);
 			dayView = getAppointmentsForDate(selectedDate);
 			appointmentTableView.setItems(dayView);
+			
+			//INSERT SQL statement here
 		}
 	}
 
@@ -768,6 +830,9 @@ public class ReceptionistController {
 			weightSpinner.setDisable(true);
 
 			editPatInfoButton.setText("Edit Patient");
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
